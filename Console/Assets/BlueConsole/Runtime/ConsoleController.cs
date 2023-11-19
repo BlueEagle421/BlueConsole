@@ -19,11 +19,28 @@ public class ConsoleController : MonoBehaviour
 
     private void Awake()
     {
+        SetEvents();
+        CheckEventSystem();
+    }
+
+    private void CheckEventSystem()
+    {
+        if (EventSystem.current == null)
+        {
+            _targetConsole.ToggleConsoleInput();
+            Debug.LogError("Missing EventSystem. Console will not work properly.");
+            enabled = false;
+        }
+    }
+
+    private void SetEvents()
+    {
         _consoleInputField.onValueChanged.AddListener(_targetConsole.InputFieldChangedInput);
         _targetConsole.OnConsoleToggled += OnConsoleToggled;
         _targetConsole.OnContentChanged += OnConsoleContentChanged;
         _targetConsole.OnHintsChanged += OnHintsChanged;
     }
+
     private void Update()
     {
         CheckConsoleInput();
