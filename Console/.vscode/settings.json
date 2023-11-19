@@ -58,6 +58,7 @@
     },
     "dotnet.defaultSolution": "Console.sln",
     "cSpell.words": [
+        "backquote",
         "Whitespaces"
     ]
 }

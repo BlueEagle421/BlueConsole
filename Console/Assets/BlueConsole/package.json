@@ -1,0 +1,20 @@
+{
+  "name": "com.blueeagle421.blueconsole",
+  "version": "1.1.0",
+  "displayName": "BlueConsole",
+  "description": "A versatile in-game debug console with built-in commands, logging messages, and a regex-based hint system.",
+  "unity": "2020.3",
+  "unityRelease": "13f1",
+  "dependencies": {
+    "com.unity.textmeshpro": "3.0.6"
+ },
+  "keywords": [
+    "console",
+    "blue",
+    "eagle"
+  ],
+  "author": {
+    "name": "BlueEagle421",
+    "url": "https://blueeagle421.itch.io"
+  }
+}
