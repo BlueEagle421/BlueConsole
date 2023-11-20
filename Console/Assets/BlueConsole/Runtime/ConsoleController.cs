@@ -39,6 +39,7 @@ public class ConsoleController : MonoBehaviour
         _targetConsole.OnConsoleToggled += OnConsoleToggled;
         _targetConsole.OnContentChanged += OnConsoleContentChanged;
         _targetConsole.OnHintsChanged += OnHintsChanged;
+        _targetConsole.OnHistoryRecall += OnHistoryRecall;
     }
 
     private void Update()
@@ -62,6 +63,12 @@ public class ConsoleController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Return))
             PerformEnterInput();
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+            PerformHistoryRecallDownInput();
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+            PerformHistoryRecallUpInput();
     }
 
     private void CheckInputSystemInput()
@@ -88,6 +95,16 @@ public class ConsoleController : MonoBehaviour
 
         _targetConsole.EnterInput(_consoleInputField.text);
         ClearAndSelectInputField();
+    }
+
+    private void PerformHistoryRecallUpInput()
+    {
+        _targetConsole.RecallHistoryUpInput();
+    }
+
+    private void PerformHistoryRecallDownInput()
+    {
+        _targetConsole.RecallHistoryDownInput();
     }
 
     private void OnConsoleToggled(bool toggled)
@@ -122,6 +139,17 @@ public class ConsoleController : MonoBehaviour
 
             _hintsInputFields[i].gameObject.SetActive(i < hintsCount);
         }
+    }
+
+    private void OnHistoryRecall(string recalledInput)
+    {
+        _consoleInputField.text = recalledInput;
+        RepositionInputFieldCaret();
+    }
+
+    private void RepositionInputFieldCaret()
+    {
+        _consoleInputField.caretPosition = _consoleInputField.text.Length;
     }
 
     private void ResizeContentRect()

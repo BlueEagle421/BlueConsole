@@ -62,6 +62,6 @@ public class ConsoleCommands : MonoBehaviour
     public void History()
     {
         for (int i = 0; i < Console.History.Count; i++)
-            Debug.Log(Console.History[i]);
+            Debug.Log(i + ". " + Console.History[i]);
     }
 }

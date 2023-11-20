@@ -25,10 +25,12 @@ public class Console : MonoBehaviour
     private static readonly Dictionary<Type, string> _typeRegexKeysDictionary = new();
     private static bool _wasToggledGlobally;
     private bool _wasToggledInScene;
+    private int _currentHistoryRecall = 0;
 
     public Action<bool> OnConsoleToggled;
     public Action OnContentChanged;
     public Action OnHintsChanged;
+    public Action<string> OnHistoryRecall;
 
     private void Start()
     {
@@ -59,6 +61,16 @@ public class Console : MonoBehaviour
     public void ToggleConsoleInput()
     {
         ToggleConsole(!IsToggled);
+    }
+
+    public void RecallHistoryUpInput()
+    {
+        RecallHistory(-1);
+    }
+
+    public void RecallHistoryDownInput()
+    {
+        RecallHistory(1);
     }
 
     private void SetupTypeParameters()
@@ -108,35 +120,36 @@ public class Console : MonoBehaviour
     private void ToggleConsole(bool toggle)
     {
         if (!IsToggled && toggle)
-            ConsoleToggledOn();
+            ToggleOn();
 
         if (!_wasToggledGlobally)
-            FirstGlobalConsoleToggleOn();
+            FirstGlobalToggleOn();
 
         if (!_wasToggledInScene)
-            FirstConsoleToggleOnInScene();
+            FirstToggleOnInScene();
 
         IsToggled = toggle;
 
         OnConsoleToggled?.Invoke(toggle);
     }
 
-    private void ConsoleToggledOn()
+    private void ToggleOn()
     {
 
     }
 
-    private void FirstGlobalConsoleToggleOn()
+    private void FirstGlobalToggleOn()
     {
         _wasToggledGlobally = true;
         SetupTypeParameters();
         ClearContent();
     }
 
-    private void FirstConsoleToggleOnInScene()
+    private void FirstToggleOnInScene()
     {
         _wasToggledInScene = true;
         SetupCommands();
+        ResetCurrentHistoryRecall();
     }
 
     public void ClearContent()
@@ -234,13 +247,59 @@ public class Console : MonoBehaviour
         if (!IsToggled)
             return;
 
-        History.Add(input);
+        _currentHistoryRecall = 0;
+
+        AppendHistory(input);
 
         if (FoundMatchingCommand(input))
             ExecuteCommandByInput(input);
         else
             Debug.Log(input);
 
+    }
+
+    private void AppendHistory(string input)
+    {
+        if (!string.IsNullOrEmpty(input))
+            History.Add(input);
+
+        ResetCurrentHistoryRecall();
+    }
+
+    private void ResetCurrentHistoryRecall()
+    {
+        _currentHistoryRecall = History.Count;
+    }
+
+    private void RecallHistory(int indexOffset)
+    {
+        int historySize = History.Count;
+
+        if (historySize == 0)
+            return;
+
+        int indexToRecall = _currentHistoryRecall + indexOffset;
+        string inputToRecall = string.Empty;
+
+        if (indexToRecall >= historySize - 1)
+            indexToRecall = historySize - 1;
+
+        if (indexToRecall <= 0)
+            indexToRecall = 0;
+
+        if (indexOffset > 0 && _currentHistoryRecall >= historySize - 1)
+        {
+            inputToRecall = string.Empty;
+            ResetCurrentHistoryRecall();
+        }
+        else
+        {
+            inputToRecall = History[indexToRecall];
+            _currentHistoryRecall = indexToRecall;
+        }
+
+
+        OnHistoryRecall?.Invoke(inputToRecall);
     }
 
     public void DisplayHelp()
