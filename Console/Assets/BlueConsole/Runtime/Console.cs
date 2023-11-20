@@ -247,8 +247,6 @@ public class Console : MonoBehaviour
         if (!IsToggled)
             return;
 
-        _currentHistoryRecall = 0;
-
         AppendHistory(input);
 
         if (FoundMatchingCommand(input))
