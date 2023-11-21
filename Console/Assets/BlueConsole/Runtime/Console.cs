@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class Console : MonoBehaviour
 {
@@ -23,7 +22,7 @@ public class Console : MonoBehaviour
     public static List<string> Hints { get; private set; } = new();
     public static List<string> History { get; private set; } = new();
     public const string NO_TRACE = " [no stack trace] ";
-    private static readonly List<string> _commandsRegexKeys = new(), _commandsIDs = new();
+    private static readonly List<string> _commandsIDs = new();
     private static readonly List<ConsoleCommand> _commands = new();
     private static readonly List<TypeParameter> _typeParameters = new();
     private static readonly Dictionary<Type, string> _typeRegexKeysDictionary = new();
@@ -121,7 +120,6 @@ public class Console : MonoBehaviour
                 }
 
                 _commands.Add(consoleCommand);
-                _commandsRegexKeys.Add(consoleCommand.RegexKey);
                 _commandsIDs.Add(consoleCommand.ID);
             }
         }
@@ -447,7 +445,6 @@ public class Console : MonoBehaviour
     {
         public string ID { get; private set; }
         public string Description { get; private set; }
-        public string RegexKey { get; private set; }
         public string Format { get; private set; }
         public MethodInfo MethodInfo { get; private set; }
         public object InvokingObject { get; private set; }
@@ -456,7 +453,6 @@ public class Console : MonoBehaviour
         {
             ID = attribute.ID;
             Description = attribute.Description;
-            RegexKey = DefineRegexKey(ID, methodInfo);
             Format = DefineFormat(ID, methodInfo);
             MethodInfo = methodInfo;
             InvokingObject = invokingObject;
@@ -480,27 +476,6 @@ public class Console : MonoBehaviour
             }
 
             return true;
-        }
-
-        private string DefineRegexKey(string ID, MethodInfo methodInfo)
-        {
-            string result = ID;
-            bool isCorrect = true;
-
-            for (int i = 0; i < methodInfo.GetParameters().Length; i++)
-            {
-                Type type = methodInfo.GetParameters()[i].ParameterType;
-
-                if (_typeRegexKeysDictionary.TryGetValue(type, out string typeKey))
-                    result += " " + typeKey;
-                else
-                {
-                    Debug.LogWarning(string.Format("Undefined type key in \"{0}\" console command argument. Missing type key is: {1}", ID, type.Name));
-                    isCorrect = false;
-                }
-            }
-
-            return isCorrect ? result : string.Empty;
         }
 
         private string DefineFormat(string ID, MethodInfo methodInfo)
