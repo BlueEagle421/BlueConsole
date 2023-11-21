@@ -2,6 +2,7 @@
 
 ## [1.1.1] - 20.11.2023
  - Added input history recalling
+ - Added hint accepting
  - Added a check for EventSystem in ConsoleController
  - Improved commands parameters formatting
  - Fixed "ArgumentException" from regex matching while typing in console input
