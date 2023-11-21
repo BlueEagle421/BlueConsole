@@ -261,12 +261,6 @@ public class ConsoleController : MonoBehaviour
         return EventSystem.current.currentSelectedGameObject == _consoleInputField.gameObject;
     }
 
-    private enum InputType
-    {
-        InputManager,
-        InputSystem
-    }
-
     [Serializable]
     private class ScalableRect
     {
@@ -277,12 +271,17 @@ public class ConsoleController : MonoBehaviour
         public ScaleType ScaleType { get { return scaleType; } }
     }
 
+    private enum InputType
+    {
+        InputManager,
+        InputSystem
+    }
+
     private enum ScaleType
     {
         Height,
         Width,
         Both,
         FontSize,
-        TransformScale,
     }
 }
