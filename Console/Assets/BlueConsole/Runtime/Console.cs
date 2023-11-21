@@ -10,13 +10,14 @@ public class Console : MonoBehaviour
     [SerializeField] private ConsoleCommands _consoleCommands;
     [SerializeField] private ConsoleTypeParameters _consoleTypeParameters;
     [Tooltip("The amount of hints the console should generate for the user")]
-    [SerializeField] private int _hintsAmount = 5;
+    [SerializeField] private int _maxHintsAmount = 5;
     [Tooltip("A message that will always appear after toggling the console for the first time")]
     [SerializeField] private string _welcomeMessage = "Welcome to <color=#4895EF>BlueConsole</color>!";
 
     [Tooltip("A color that the message will appear in")]
     [SerializeField] private Color _logColor = Color.white, _errorColor = Color.red, _warningColor = Color.yellow, _exceptionColor = Color.red, _assertColor = Color.yellow, _executableColor = Color.cyan, _parametersColor;
 
+    public int MaxHintsAmount { get { return _maxHintsAmount; } }
     public static string Content { get; private set; }
     public static bool IsToggled { get; private set; }
     public static List<string> Hints { get; private set; } = new();
@@ -184,7 +185,7 @@ public class Console : MonoBehaviour
         {
             string id = _commandsIDs[i];
 
-            if (Hints.Count >= _hintsAmount)
+            if (Hints.Count >= _maxHintsAmount)
                 continue;
 
             if (Hints.Contains(id))

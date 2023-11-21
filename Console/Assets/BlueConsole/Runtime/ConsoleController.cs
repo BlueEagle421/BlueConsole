@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.WSA;
 
 public class ConsoleController : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class ConsoleController : MonoBehaviour
     [SerializeField] private TMP_InputField _consoleInputField, _consoleContentField;
     [SerializeField] private ScrollRect _consoleContentScrollRect;
     [SerializeField] private RectTransform _consoleContentRect;
-    [SerializeField] private List<TMP_InputField> _hintsInputFields;
+    [SerializeField] private TMP_InputField _hintInputField;
+    private List<TMP_InputField> _hintsInputFields = new();
     [SerializeField] private List<ScalableRect> _reckTransformsToScale;
 
 
@@ -28,6 +30,7 @@ public class ConsoleController : MonoBehaviour
 
     private void Start()
     {
+        CloneHintField();
         SetGUIHeight(_height);
         SetGUIScale(_scale);
     }
@@ -50,6 +53,19 @@ public class ConsoleController : MonoBehaviour
         _targetConsole.OnHintsChanged += OnHintsChanged;
         _targetConsole.OnHistoryRecall += OnHistoryRecall;
         _targetConsole.OnHintAccept += OnHintAccept;
+    }
+
+    private void CloneHintField()
+    {
+        for (int i = 0; i < _targetConsole.MaxHintsAmount; i++)
+        {
+            TMP_InputField toAdd = Instantiate(_hintInputField);
+            toAdd.transform.SetParent(_hintInputField.transform.parent, false);
+            _hintsInputFields.Add(toAdd);
+            _reckTransformsToScale.Add(new ScalableRect(toAdd.GetComponent<RectTransform>(), ScaleType.Height));
+            _reckTransformsToScale.Add(new ScalableRect(toAdd.textComponent.GetComponent<RectTransform>(), ScaleType.FontSize));
+        }
+        Destroy(_hintInputField.gameObject);
     }
 
     private void Update()
@@ -266,6 +282,12 @@ public class ConsoleController : MonoBehaviour
     {
         [SerializeField] private RectTransform rectTransform;
         [SerializeField] private ScaleType scaleType;
+
+        public ScalableRect(RectTransform rectTransform, ScaleType scaleType)
+        {
+            this.rectTransform = rectTransform;
+            this.scaleType = scaleType;
+        }
 
         public RectTransform RectTransform { get { return rectTransform; } }
         public ScaleType ScaleType { get { return scaleType; } }

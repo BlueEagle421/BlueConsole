@@ -135,18 +135,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Console
       objectReference: {fileID: 0}
-    - target: {fileID: 2396021479817540645, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2396021479817540645, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2396021479817540645, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4611218274913177977, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -186,10 +174,6 @@ PrefabInstance:
     - target: {fileID: 4611218274913177977, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6049728064694921893, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
