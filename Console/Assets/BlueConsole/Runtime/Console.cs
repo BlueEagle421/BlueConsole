@@ -300,14 +300,13 @@ public class Console : MonoBehaviour
             return;
 
         int indexToRecall = _currentHistoryRecall + indexOffset;
-        string inputToRecall = string.Empty;
-
         if (indexToRecall >= historySize - 1)
             indexToRecall = historySize - 1;
 
         if (indexToRecall <= 0)
             indexToRecall = 0;
 
+        string inputToRecall;
         if (indexOffset > 0 && _currentHistoryRecall >= historySize - 1)
         {
             inputToRecall = string.Empty;
@@ -521,9 +520,18 @@ public class ConsoleCommandAttribute : Attribute
     public string ID { get; private set; }
     public string Description { get; private set; }
 
-    public ConsoleCommandAttribute(string id, string description)
+    public ConsoleCommandAttribute()
+    {
+
+    }
+
+    public ConsoleCommandAttribute(string id) : this()
     {
         ID = id;
+    }
+
+    public ConsoleCommandAttribute(string id, string description) : this(id)
+    {
         Description = description;
     }
 }
@@ -532,9 +540,14 @@ public class ConsoleCommandAttribute : Attribute
 public class TypeParameterAttribute : Attribute
 {
     public string RegexKey { get; private set; }
-    public bool AllowWhitespaces { get; private set; }
+    public bool AllowWhitespaces { get; private set; } = false;
 
-    public TypeParameterAttribute(string description, bool allowWhitespaces)
+    public TypeParameterAttribute(string description)
+    {
+        RegexKey = description;
+    }
+
+    public TypeParameterAttribute(string description, bool allowWhitespaces) : this(description)
     {
         RegexKey = description;
         AllowWhitespaces = allowWhitespaces;
