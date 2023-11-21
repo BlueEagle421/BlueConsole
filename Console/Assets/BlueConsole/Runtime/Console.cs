@@ -9,9 +9,12 @@ public class Console : MonoBehaviour
 {
     [SerializeField] private ConsoleCommands _consoleCommands;
     [SerializeField] private ConsoleTypeParameters _consoleTypeParameters;
+    [Tooltip("The amount of hints the console should generate for the user")]
     [SerializeField] private int _hintsAmount = 5;
+    [Tooltip("A message that will always appear after toggling the console for the first time")]
     [SerializeField] private string _welcomeMessage = "Welcome to <color=#4895EF>BlueConsole</color>!";
 
+    [Tooltip("A color that the message will appear in")]
     [SerializeField] private Color _logColor = Color.white, _errorColor = Color.red, _warningColor = Color.yellow, _exceptionColor = Color.red, _assertColor = Color.yellow, _executableColor = Color.cyan;
 
     public static string Content { get; private set; }
@@ -168,23 +171,23 @@ public class Console : MonoBehaviour
     {
         Hints.Clear();
 
-        string id = input.Split(" ")[0];
+        string inputToCheck = input.Split(" ")[0];
 
         for (int i = 0; i < _commandsIDs.Count; i++)
         {
-            string toAdd = _commandsIDs[i];
+            string id = _commandsIDs[i];
 
             if (Hints.Count >= _hintsAmount)
                 continue;
 
-            if (Hints.Contains(toAdd))
+            if (Hints.Contains(id))
                 continue;
 
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(inputToCheck))
                 continue;
 
-            if (Regex.IsMatch(toAdd, id))
-                Hints.Add(toAdd);
+            if (Regex.IsMatch(id, inputToCheck))
+                Hints.Add(_commands.Find(x => x.ID == id).Format);
         }
 
         OnHintsChanged?.Invoke();
@@ -477,8 +480,7 @@ public class Console : MonoBehaviour
 
             for (int i = 0; i < methodInfo.GetParameters().Length; i++)
             {
-                Type type = methodInfo.GetParameters()[i].ParameterType;
-                result += " " + type.Name;
+                result += string.Format(" <color=#5C676C>{0}</color>", methodInfo.GetParameters()[i].Name);
             }
 
             return result;

@@ -41,21 +41,21 @@ public class ConsoleCommands : MonoBehaviour
     }
 
     [ConsoleCommand("log", "logs")]
-    public void Log(string input)
+    public void Log(string message)
     {
-        Debug.Log(input);
+        Debug.Log(message);
     }
 
     [ConsoleCommand("log_error", "logs an error without stack trace")]
-    public void Log_Error(string input)
+    public void Log_Error(string message)
     {
-        Debug.LogError(input + Console.NO_TRACE);
+        Debug.LogError(message + Console.NO_TRACE);
     }
 
     [ConsoleCommand("log_warning", "logs warning")]
-    public void Log_Warning(string input)
+    public void Log_Warning(string message)
     {
-        Debug.LogWarning(input);
+        Debug.LogWarning(message);
     }
 
     [ConsoleCommand("history", "logs input history")]

@@ -59,6 +59,8 @@
     "dotnet.defaultSolution": "Console.sln",
     "cSpell.words": [
         "backquote",
+        "Behaviour",
+        "Mathf",
         "Whitespaces"
     ]
 }

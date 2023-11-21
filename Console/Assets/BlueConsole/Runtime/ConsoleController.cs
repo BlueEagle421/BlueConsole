@@ -135,7 +135,10 @@ public class ConsoleController : MonoBehaviour
         for (int i = 0; i < _hintsInputFields.Count; i++)
         {
             if (i < hintsCount)
+            {
                 _hintsInputFields[i].text = Console.Hints[i];
+                _hintsInputFields[i].textComponent.ForceMeshUpdate();
+            }
 
             _hintsInputFields[i].gameObject.SetActive(i < hintsCount);
         }
