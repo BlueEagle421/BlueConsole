@@ -15,7 +15,7 @@ public class Console : MonoBehaviour
     [SerializeField] private string _welcomeMessage = "Welcome to <color=#4895EF>BlueConsole</color>!";
 
     [Tooltip("A color that the message will appear in")]
-    [SerializeField] private Color _logColor = Color.white, _errorColor = Color.red, _warningColor = Color.yellow, _exceptionColor = Color.red, _assertColor = Color.yellow, _executableColor = Color.cyan;
+    [SerializeField] private Color _logColor = Color.white, _errorColor = Color.red, _warningColor = Color.yellow, _exceptionColor = Color.red, _assertColor = Color.yellow, _executableColor = Color.cyan, _parametersColor;
 
     public static string Content { get; private set; }
     public static bool IsToggled { get; private set; }
@@ -112,7 +112,7 @@ public class Console : MonoBehaviour
             if (Attribute.IsDefined(methodInfos[i], typeof(ConsoleCommandAttribute)))
             {
                 ConsoleCommandAttribute attribute = methodInfos[i].GetCustomAttribute(typeof(ConsoleCommandAttribute)) as ConsoleCommandAttribute;
-                ConsoleCommand consoleCommand = new(methodInfos[i], _consoleCommands, attribute);
+                ConsoleCommand consoleCommand = new(methodInfos[i], _consoleCommands, attribute, _parametersColor);
                 if (!consoleCommand.IsValid())
                 {
                     Debug.LogWarning(string.Format("Command ({0}) is invalid and will not be executable", consoleCommand.Format));
@@ -453,11 +453,15 @@ public class Console : MonoBehaviour
         {
             ID = attribute.ID;
             Description = attribute.Description;
-            Format = DefineFormat(ID, methodInfo);
+            Format = DefineFormat(ID, methodInfo, ColorUtility.ToHtmlStringRGB(Color.white));
             MethodInfo = methodInfo;
             InvokingObject = invokingObject;
         }
 
+        public ConsoleCommand(MethodInfo methodInfo, object invokingObject, ConsoleCommandAttribute attribute, Color parametersColor) : this(methodInfo, invokingObject, attribute)
+        {
+            Format = DefineFormat(ID, methodInfo, ColorUtility.ToHtmlStringRGB(parametersColor));
+        }
         public bool IsValid()
         {
             if (!HasAllTypeParameters(MethodInfo))
@@ -478,13 +482,13 @@ public class Console : MonoBehaviour
             return true;
         }
 
-        private string DefineFormat(string ID, MethodInfo methodInfo)
+        private string DefineFormat(string ID, MethodInfo methodInfo, string colorHex)
         {
             string result = ID;
 
             for (int i = 0; i < methodInfo.GetParameters().Length; i++)
             {
-                result += string.Format(" <color=#5C676C>{0}</color>", methodInfo.GetParameters()[i].Name);
+                result += string.Format(" <color=#{0}>{1}</color>", colorHex, methodInfo.GetParameters()[i].Name);
             }
 
             return result;
