@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Console : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class Console : MonoBehaviour
     public Action OnContentChanged;
     public Action OnHintsChanged;
     public Action<string> OnHistoryRecall;
+    public Action<string> OnHintAccept;
 
     private void Start()
     {
@@ -74,6 +76,11 @@ public class Console : MonoBehaviour
     public void RecallHistoryDownInput()
     {
         RecallHistory(1);
+    }
+
+    public void AcceptHintInput()
+    {
+        AcceptHint();
     }
 
     private void SetupTypeParameters()
@@ -173,6 +180,8 @@ public class Console : MonoBehaviour
 
         string inputToCheck = input.Split(" ")[0];
 
+        string perfectMatch = string.Empty;
+
         for (int i = 0; i < _commandsIDs.Count; i++)
         {
             string id = _commandsIDs[i];
@@ -186,9 +195,21 @@ public class Console : MonoBehaviour
             if (string.IsNullOrEmpty(inputToCheck))
                 continue;
 
-            if (Regex.IsMatch(id, inputToCheck))
-                Hints.Add(_commands.Find(x => x.ID == id).Format);
+            try
+            {
+                string format = _commands.Find(x => x.ID == id).Format;
+
+                if (Regex.IsMatch(id, inputToCheck))
+                    Hints.Add(format);
+
+                if (inputToCheck == id)
+                    perfectMatch = format;
+            }
+            catch { }
         }
+
+        if (!string.IsNullOrEmpty(perfectMatch) && Hints.Count > 0 && input.Contains(" "))
+            Hints.RemoveRange(1, Hints.Count - 1);
 
         OnHintsChanged?.Invoke();
     }
@@ -301,6 +322,14 @@ public class Console : MonoBehaviour
 
 
         OnHistoryRecall?.Invoke(inputToRecall);
+    }
+
+    private void AcceptHint()
+    {
+        if (Hints.Count == 0)
+            return;
+
+        OnHintAccept?.Invoke(_commands.Find(x => x.Format == Hints[0]).ID + " ");
     }
 
     public void DisplayHelp()

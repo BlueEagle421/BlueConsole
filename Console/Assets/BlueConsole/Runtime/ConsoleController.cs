@@ -40,6 +40,7 @@ public class ConsoleController : MonoBehaviour
         _targetConsole.OnContentChanged += OnConsoleContentChanged;
         _targetConsole.OnHintsChanged += OnHintsChanged;
         _targetConsole.OnHistoryRecall += OnHistoryRecall;
+        _targetConsole.OnHintAccept += OnHintAccept;
     }
 
     private void Update()
@@ -69,6 +70,10 @@ public class ConsoleController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
             PerformHistoryRecallUpInput();
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+            PerformAcceptHintInput();
+
     }
 
     private void CheckInputSystemInput()
@@ -81,6 +86,15 @@ public class ConsoleController : MonoBehaviour
 
         if (Keyboard.current.backquoteKey.wasPressedThisFrame)
             PerformEnterInput();
+
+        if (Keyboard.current.downArrowKey.wasPressedThisFrame)
+            PerformHistoryRecallDownInput();
+
+        if (Keyboard.current.upArrowKey.wasPressedThisFrame)
+            PerformHistoryRecallUpInput();
+
+        if (Keyboard.current.tabKey.wasPressedThisFrame)
+            PerformAcceptHintInput();
     }
 
     private void PerformToggleInput()
@@ -105,6 +119,11 @@ public class ConsoleController : MonoBehaviour
     private void PerformHistoryRecallDownInput()
     {
         _targetConsole.RecallHistoryDownInput();
+    }
+
+    private void PerformAcceptHintInput()
+    {
+        _targetConsole.AcceptHintInput();
     }
 
     private void OnConsoleToggled(bool toggled)
@@ -147,6 +166,12 @@ public class ConsoleController : MonoBehaviour
     private void OnHistoryRecall(string recalledInput)
     {
         _consoleInputField.text = recalledInput;
+        RepositionInputFieldCaret();
+    }
+
+    private void OnHintAccept(string hint)
+    {
+        _consoleInputField.text = hint;
         RepositionInputFieldCaret();
     }
 
