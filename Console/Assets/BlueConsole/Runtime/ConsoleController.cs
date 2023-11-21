@@ -10,17 +10,26 @@ public class ConsoleController : MonoBehaviour
 {
     [SerializeField] private InputType _inputType;
     [SerializeField] private Console _targetConsole;
-    [SerializeField] private GameObject _consoleParent;
+    [SerializeField] private float _height;
+    [SerializeField] private float _scale;
+    [SerializeField] private RectTransform _consoleGUIParent;
     [SerializeField] private TMP_InputField _consoleInputField, _consoleContentField;
     [SerializeField] private ScrollRect _consoleContentScrollRect;
     [SerializeField] private RectTransform _consoleContentRect;
     [SerializeField] private List<TMP_InputField> _hintsInputFields;
+    [SerializeField] private List<ScalableRect> _reckTransformsToScale;
 
 
     private void Awake()
     {
         SetEvents();
         CheckEventSystem();
+    }
+
+    private void Start()
+    {
+        SetGUIHeight(_height);
+        SetGUIScale(_scale);
     }
 
     private void CheckEventSystem()
@@ -128,7 +137,7 @@ public class ConsoleController : MonoBehaviour
 
     private void OnConsoleToggled(bool toggled)
     {
-        _consoleParent.SetActive(toggled);
+        _consoleGUIParent.gameObject.SetActive(toggled);
 
         if (toggled)
         {
@@ -180,6 +189,44 @@ public class ConsoleController : MonoBehaviour
         _consoleInputField.caretPosition = _consoleInputField.text.Length;
     }
 
+    private void SetGUIHeight(float height)
+    {
+        _consoleGUIParent.sizeDelta = new Vector2(_consoleGUIParent.sizeDelta.x, height);
+    }
+
+    private void SetGUIScale(float scale)
+    {
+        for (int i = 0; i < _reckTransformsToScale.Count; i++)
+        {
+            ScalableRect scalableRect = _reckTransformsToScale[i];
+            RectTransform rectToScale = scalableRect.RectTransform;
+            switch (scalableRect.ScaleType)
+            {
+                case ScaleType.Height:
+                    {
+                        rectToScale.sizeDelta = new(rectToScale.sizeDelta.x, rectToScale.sizeDelta.y * scale);
+                        break;
+                    }
+                case ScaleType.Width:
+                    {
+                        rectToScale.sizeDelta = new(rectToScale.sizeDelta.x * scale, rectToScale.sizeDelta.y);
+                        break;
+                    }
+                case ScaleType.Both:
+                    {
+                        rectToScale.sizeDelta *= scale;
+                        break;
+                    }
+                case ScaleType.FontSize:
+                    {
+                        TMP_Text componentTMP = rectToScale.GetComponent<TMP_Text>();
+                        componentTMP.fontSize *= scale;
+                        break;
+                    }
+            }
+        }
+    }
+
     private void ResizeContentRect()
     {
         TMP_Text textComponent = _consoleContentField.textComponent;
@@ -218,5 +265,24 @@ public class ConsoleController : MonoBehaviour
     {
         InputManager,
         InputSystem
+    }
+
+    [Serializable]
+    private class ScalableRect
+    {
+        [SerializeField] private RectTransform rectTransform;
+        [SerializeField] private ScaleType scaleType;
+
+        public RectTransform RectTransform { get { return rectTransform; } }
+        public ScaleType ScaleType { get { return scaleType; } }
+    }
+
+    private enum ScaleType
+    {
+        Height,
+        Width,
+        Both,
+        FontSize,
+        TransformScale,
     }
 }
