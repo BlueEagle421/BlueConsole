@@ -5,11 +5,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 //using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using UnityEngine.WSA;
 
 public class ConsoleController : MonoBehaviour
 {
-    [SerializeField] private InputType _inputType;
     [SerializeField] private Console _targetConsole;
     [SerializeField] private float _height;
     [SerializeField] private float _scale;
@@ -81,9 +79,6 @@ public class ConsoleController : MonoBehaviour
 
     private void CheckInputManagerInput()
     {
-        if (_inputType != InputType.InputManager)
-            return;
-
         if (Input.GetKeyDown(KeyCode.BackQuote))
             PerformToggleInput();
 
@@ -104,9 +99,6 @@ public class ConsoleController : MonoBehaviour
     private void CheckInputSystemInput()
     {
         //uncomment this to use the InputSystem
-
-        // if (_inputType != InputType.InputSystem)
-        //     return;
 
         // if (Keyboard.current.backquoteKey.wasPressedThisFrame)
         //     PerformToggleInput();
