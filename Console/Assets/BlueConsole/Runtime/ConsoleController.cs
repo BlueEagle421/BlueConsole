@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.WSA;
 
@@ -103,23 +103,25 @@ public class ConsoleController : MonoBehaviour
 
     private void CheckInputSystemInput()
     {
-        if (_inputType != InputType.InputSystem)
-            return;
+        //uncomment this to use the InputSystem
 
-        if (Keyboard.current.backquoteKey.wasPressedThisFrame)
-            PerformToggleInput();
+        // if (_inputType != InputType.InputSystem)
+        //     return;
 
-        if (Keyboard.current.backquoteKey.wasPressedThisFrame)
-            PerformEnterInput();
+        // if (Keyboard.current.backquoteKey.wasPressedThisFrame)
+        //     PerformToggleInput();
 
-        if (Keyboard.current.downArrowKey.wasPressedThisFrame)
-            PerformHistoryRecallDownInput();
+        // if (Keyboard.current.backquoteKey.wasPressedThisFrame)
+        //     PerformEnterInput();
 
-        if (Keyboard.current.upArrowKey.wasPressedThisFrame)
-            PerformHistoryRecallUpInput();
+        // if (Keyboard.current.downArrowKey.wasPressedThisFrame)
+        //     PerformHistoryRecallDownInput();
 
-        if (Keyboard.current.tabKey.wasPressedThisFrame)
-            PerformAcceptHintInput();
+        // if (Keyboard.current.upArrowKey.wasPressedThisFrame)
+        //     PerformHistoryRecallUpInput();
+
+        // if (Keyboard.current.tabKey.wasPressedThisFrame)
+        //     PerformAcceptHintInput();
     }
 
     private void PerformToggleInput()
