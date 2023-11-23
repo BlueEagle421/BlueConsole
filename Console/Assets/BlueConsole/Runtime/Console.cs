@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class Console : MonoBehaviour
 {
+    [SerializeField] private List<AssemblyDefinitionAsset> _assembliesWithCommands;
     [SerializeField] private ConsoleCommands _consoleCommands;
     [SerializeField] private ConsoleTypeParameters _consoleTypeParameters;
     [Tooltip("The amount of hints the console should generate for the user")]
@@ -24,7 +26,7 @@ public class Console : MonoBehaviour
     public static List<string> History { get; private set; } = new();
     public const string NO_TRACE = " [no stack trace] ";
     private static readonly List<string> _commandsIDs = new();
-    private static readonly List<ConsoleCommand> _commands = new();
+    private static readonly List<Command> _commands = new();
     private static readonly List<TypeParameter> _typeParameters = new();
     private static readonly Dictionary<Type, string> _typeRegexKeysDictionary = new();
     private static bool _wasToggledGlobally;
@@ -100,30 +102,90 @@ public class Console : MonoBehaviour
         }
     }
 
-    private void SetupCommands()
+    private void LoadStaticCommands()
     {
-        _consoleCommands.AttachConsole(this);
+        // Debug.Log(_assembliesWithCommands[0]);
+        // Debug.Log(this.GetType().Assembly.GetName().Name);
 
-        _commands.Clear();
+        //_assembliesWithCommands[0].text
 
-        MethodInfo[] methodInfos = _consoleCommands.GetType().GetMethods();
+        // Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-        for (int i = 0; i < methodInfos.Length; i++)
+        List<Assembly> assemblies = new()
         {
-            if (Attribute.IsDefined(methodInfos[i], typeof(ConsoleCommandAttribute)))
-            {
-                ConsoleCommandAttribute attribute = methodInfos[i].GetCustomAttribute(typeof(ConsoleCommandAttribute)) as ConsoleCommandAttribute;
-                ConsoleCommand consoleCommand = new(methodInfos[i], _consoleCommands, attribute, _parametersColor);
-                if (!consoleCommand.IsValid())
-                {
-                    Debug.LogWarning(string.Format("Command ({0}) is invalid and will not be executable", consoleCommand.Format));
-                    continue;
-                }
+            this.GetType().Assembly,
+            AppDomain.CurrentDomain.GetAssemblies().ToList().Find(x => x.GetName().Name == "Assembly-CSharp")
+        };
 
-                _commands.Add(consoleCommand);
-                _commandsIDs.Add(consoleCommand.ID);
+        foreach (Assembly assembly in assemblies)
+        {
+            //Debug.Log(assembly.GetName().Name);
+
+            Type[] assemblyClasses = Array.FindAll(assembly.GetTypes(), x => x.IsClass);
+
+            foreach (Type assemblyClass in assemblyClasses)
+            {
+                //Debug.Log(assemblyClass.Name);
+
+                MethodInfo[] methodInfos = assemblyClass.GetMethods();
+
+                for (int i = 0; i < methodInfos.Length; i++)
+                {
+                    if (!methodInfos[i].IsStatic)
+                        continue;
+
+                    AddCommandToList(methodInfos[i], null);
+                }
             }
         }
+    }
+
+    private void LoadMonoBehaviourCommands()
+    {
+
+    }
+
+    private void AddCommandToList(MethodInfo methodInfo, List<object> invokingObjects)
+    {
+        if (Attribute.IsDefined(methodInfo, typeof(CommandAttribute)))
+        {
+            CommandAttribute attribute = methodInfo.GetCustomAttribute(typeof(CommandAttribute)) as CommandAttribute;
+            Command consoleCommand = new(methodInfo, attribute, _parametersColor);
+            if (!consoleCommand.IsValid())
+            {
+                Debug.LogWarning(string.Format("Command ({0}) is invalid and will not be executable", consoleCommand.Format));
+                return;
+            }
+
+            _commands.Add(consoleCommand);
+            _commandsIDs.Add(consoleCommand.ID);
+        }
+    }
+
+    private void SetupCommands()
+    {
+        // _consoleCommands.AttachConsole(this);
+
+        // _commands.Clear();
+
+        // MethodInfo[] methodInfos = _consoleCommands.GetType().GetMethods();
+
+        // for (int i = 0; i < methodInfos.Length; i++)
+        // {
+        //     if (Attribute.IsDefined(methodInfos[i], typeof(CommandAttribute)))
+        //     {
+        //         CommandAttribute attribute = methodInfos[i].GetCustomAttribute(typeof(CommandAttribute)) as CommandAttribute;
+        //         Command consoleCommand = new(methodInfos[i], _consoleCommands, attribute, _parametersColor);
+        //         if (!consoleCommand.IsValid())
+        //         {
+        //             Debug.LogWarning(string.Format("Command ({0}) is invalid and will not be executable", consoleCommand.Format));
+        //             continue;
+        //         }
+
+        //         _commands.Add(consoleCommand);
+        //         _commandsIDs.Add(consoleCommand.ID);
+        //     }
+        // }
     }
 
     private void ToggleConsole(bool toggle)
@@ -151,13 +213,14 @@ public class Console : MonoBehaviour
     {
         _wasToggledGlobally = true;
         SetupTypeParameters();
+        LoadStaticCommands();
         ClearContent();
     }
 
     private void FirstToggleOnInScene()
     {
         _wasToggledInScene = true;
-        SetupCommands();
+        //SetupCommands();
         ResetCurrentHistoryRecall();
     }
 
@@ -348,18 +411,18 @@ public class Console : MonoBehaviour
         string wantedID = inputSplit[0];
         inputSplit.RemoveAt(0);
 
-        ConsoleCommand toExecute = _commands.Find(x => x.ID == wantedID);
+        Command toExecute = _commands.Find(x => x.ID == wantedID);
 
         if (TryToParseParams(inputSplit, toExecute, out object[] parameters))
         {
             AppendContentLine(inputContent, "\n> ", ColorUtility.ToHtmlStringRGB(_executableColor));
-            toExecute.MethodInfo.Invoke(toExecute.InvokingObject, parameters);
+            toExecute.MethodInfo.Invoke(toExecute.InvokingObjects, parameters);
         }
         else
             Debug.LogError(string.Format("Invalid command format. Command did not execute ({0})", inputContent) + NO_TRACE);
     }
 
-    private bool TryToParseParams(List<string> inputParams, ConsoleCommand toFormat, out object[] result)
+    private bool TryToParseParams(List<string> inputParams, Command toFormat, out object[] result)
     {
         ParameterInfo[] parameterInfos = toFormat.MethodInfo.GetParameters();
         result = new object[parameterInfos.Length];
@@ -441,24 +504,39 @@ public class Console : MonoBehaviour
         return true;
     }
 
-    private class ConsoleCommand
+    private class Command
     {
         public string ID { get; private set; }
         public string Description { get; private set; }
         public string Format { get; private set; }
         public MethodInfo MethodInfo { get; private set; }
-        public object InvokingObject { get; private set; }
+        public List<object> InvokingObjects { get; private set; } = new();
+        public bool IsStatic { get; private set; }
 
-        public ConsoleCommand(MethodInfo methodInfo, object invokingObject, ConsoleCommandAttribute attribute)
+        public Command(MethodInfo methodInfo, CommandAttribute attribute)
         {
-            ID = attribute.ID;
+            ID = string.IsNullOrEmpty(attribute.ID) ? methodInfo.Name : attribute.ID;
             Description = attribute.Description;
             Format = DefineFormat(ID, methodInfo, ColorUtility.ToHtmlStringRGB(Color.white));
             MethodInfo = methodInfo;
-            InvokingObject = invokingObject;
+            IsStatic = methodInfo.IsStatic;
+
+            if (IsStatic)
+                Debug.Log("I'm static! From: " + ID);
         }
 
-        public ConsoleCommand(MethodInfo methodInfo, object invokingObject, ConsoleCommandAttribute attribute, Color parametersColor) : this(methodInfo, invokingObject, attribute)
+        public void AddInvokingObject(object invoker)
+        {
+            InvokingObjects.Add(invoker);
+        }
+
+        public void AddInvokingObjects(List<object> invokers)
+        {
+            foreach (object toAdd in invokers)
+                InvokingObjects.Add(toAdd);
+        }
+
+        public Command(MethodInfo methodInfo, CommandAttribute attribute, Color parametersColor) : this(methodInfo, attribute)
         {
             Format = DefineFormat(ID, methodInfo, ColorUtility.ToHtmlStringRGB(parametersColor));
         }
@@ -515,22 +593,22 @@ public class Console : MonoBehaviour
 }
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-public class ConsoleCommandAttribute : Attribute
+public class CommandAttribute : Attribute
 {
     public string ID { get; private set; }
     public string Description { get; private set; }
 
-    public ConsoleCommandAttribute()
+    public CommandAttribute()
     {
 
     }
 
-    public ConsoleCommandAttribute(string id) : this()
+    public CommandAttribute(string id) : this()
     {
         ID = id;
     }
 
-    public ConsoleCommandAttribute(string id, string description) : this(id)
+    public CommandAttribute(string id, string description) : this(id)
     {
         Description = description;
     }

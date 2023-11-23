@@ -10,55 +10,55 @@ public class ConsoleCommands : MonoBehaviour
         _attachedConsole = console;
     }
 
-    [ConsoleCommand("help", "displays all commands")]
+    [Command("help", "displays all commands")]
     public void Help()
     {
         _attachedConsole.DisplayHelp();
     }
 
-    [ConsoleCommand("clear", "clears the console content")]
+    [Command("clear", "clears the console content")]
     public void Clear()
     {
         _attachedConsole.ClearContent();
     }
 
-    [ConsoleCommand("quit", "closes the application")]
+    [Command("quit", "closes the application")]
     public void Quit()
     {
         Application.Quit();
     }
 
-    [ConsoleCommand("reset", "resets current scene")]
-    public void Reset()
+    [Command("reset", "resets current scene")]
+    public static void Reset()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
     }
 
-    [ConsoleCommand("version", "logs project name and version")]
+    [Command("version", "logs project name and version")]
     public void Version()
     {
         Debug.Log(string.Format("{0} version: {1}", Application.productName, Application.version));
     }
 
-    [ConsoleCommand("log", "logs")]
-    public void Log(string message)
+    [Command("log", "logs")]
+    public static void Log(string message)
     {
         Debug.Log(message);
     }
 
-    [ConsoleCommand("log_error", "logs an error without stack trace")]
-    public void Log_Error(string message)
+    [Command("log_error", "logs an error without stack trace")]
+    public static void Log_Error(string message, bool trace)
     {
-        Debug.LogError(message + Console.NO_TRACE);
+        Debug.LogError(message + (trace ? string.Empty : Console.NO_TRACE));
     }
 
-    [ConsoleCommand("log_warning", "logs warning")]
+    [Command("log_warning", "logs warning")]
     public void Log_Warning(string message)
     {
         Debug.LogWarning(message);
     }
 
-    [ConsoleCommand("history", "logs input history")]
+    [Command("history", "logs input history")]
     public void History()
     {
         for (int i = 0; i < Console.History.Count; i++)
