@@ -538,7 +538,7 @@ public class Console : MonoBehaviour
         Debug.Log(string.Format("Found {0} executable commands:", _commands.Count.ToString()));
 
         for (int i = 0; i < _commands.Count; i++)
-            Debug.Log(_commands[i].Format + " - " + _commands[i].Description);
+            Debug.Log(_commands[i].Format + (string.IsNullOrEmpty(_commands[i].Description) ? string.Empty : " - " + _commands[i].Description));
     }
 
     [Command("history", "logs input history")]
