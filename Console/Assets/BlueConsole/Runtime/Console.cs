@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Console : MonoBehaviour
 {
@@ -29,7 +30,9 @@ public class Console : MonoBehaviour
     private static readonly List<string> _commandsIDs = new();
     private static readonly List<Command> _commands = new();
     private static readonly List<TypeParameter> _typeParameters = new();
+    private static List<Assembly> _commandsAssemblies = new();
     private static readonly Dictionary<Type, string> _typeRegexKeysDictionary = new();
+    private static bool _wasEnabledGlobally;
     private static bool _wasToggledGlobally;
     private bool _wasToggledInScene;
     private int _currentHistoryRecall = 0;
@@ -48,7 +51,14 @@ public class Console : MonoBehaviour
 
     private void OnEnable()
     {
+        if (_wasEnabledGlobally)
+            return;
+
+        ClearContent();
+
         Application.logMessageReceived += HandleLog;
+
+        _wasEnabledGlobally = true;
     }
 
     private void OnDisable()
@@ -103,7 +113,7 @@ public class Console : MonoBehaviour
         }
     }
 
-    private List<Assembly> GetAllConsoleAssemblies()
+    private void LoadConsoleAssemblies()
     {
         List<string> userDefinedAssembliesNames = new();
 
@@ -112,19 +122,17 @@ public class Console : MonoBehaviour
 
         List<Assembly> allAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
 
-        List<Assembly> result = allAssemblies.FindAll(x => userDefinedAssembliesNames.Contains(x.GetName().Name));
+        _commandsAssemblies = allAssemblies.FindAll(x => userDefinedAssembliesNames.Contains(x.GetName().Name));
 
         if (_includeAssemblyCSharp)
-            result.Add(allAssemblies.Find(x => x.GetName().Name == "Assembly-CSharp"));
+            _commandsAssemblies.Add(allAssemblies.Find(x => x.GetName().Name == "Assembly-CSharp"));
 
-        result.Add(GetType().Assembly);
-
-        return result;
+        _commandsAssemblies.Add(GetType().Assembly);
     }
 
     private void LoadStaticCommands()
     {
-        foreach (Assembly assembly in GetAllConsoleAssemblies())
+        foreach (Assembly assembly in _commandsAssemblies)
         {
             Type[] assemblyClasses = Array.FindAll(assembly.GetTypes(), x => x.IsClass);
 
@@ -143,19 +151,46 @@ public class Console : MonoBehaviour
         }
     }
 
-    private void LoadMonoBehaviourCommands()
+    private void LoadInstanceCommands()
     {
         _commands.RemoveAll(x => !x.IsStatic);
 
+        MonoBehaviour[] components = FindObjectsOfType<MonoBehaviour>();
 
+        foreach (MonoBehaviour component in components)
+        {
+
+            Type componentClass = component.GetType();
+            if (_commandsAssemblies.Contains(componentClass.Assembly))
+            {
+                Debug.Log("Found component is: " + componentClass.Name);
+                MethodInfo[] methodInfos = componentClass.GetMethods();
+
+                for (int i = 0; i < methodInfos.Length; i++)
+                {
+                    AddCommandToList(methodInfos[i], component);
+                }
+            }
+        }
     }
 
-    private void AddCommandToList(MethodInfo methodInfo, List<object> invokingObjects)
+    private void AddCommandToList(MethodInfo methodInfo, object invokingObject)
     {
         if (Attribute.IsDefined(methodInfo, typeof(CommandAttribute)))
         {
             CommandAttribute attribute = methodInfo.GetCustomAttribute(typeof(CommandAttribute)) as CommandAttribute;
             Command consoleCommand = new(methodInfo, attribute, _parametersColor);
+
+            if (invokingObject != null)
+            {
+                if (_commands.Exists(x => x.MethodInfo.DeclaringType == invokingObject.GetType()))
+                    _commands[_commands.FindIndex(x => x.MethodInfo.DeclaringType == invokingObject.GetType())].AddInvokingObject(invokingObject);
+                else
+                    consoleCommand.AddInvokingObject(invokingObject);
+            }
+
+
+
             if (!consoleCommand.IsValid())
             {
                 Debug.LogWarning(string.Format("Command ({0}) is invalid and will not be executable", consoleCommand.Format));
@@ -188,15 +223,11 @@ public class Console : MonoBehaviour
         if (!IsToggled && toggle)
             ToggleOn();
 
-        if (!_wasToggledGlobally)
-            FirstGlobalToggleOn();
-
-        if (!_wasToggledInScene)
-            FirstToggleOnInScene();
-
         IsToggled = toggle;
 
         OnConsoleToggled?.Invoke(toggle);
+
+        CheckFirstToggles();
     }
 
     private void ToggleOn()
@@ -204,27 +235,28 @@ public class Console : MonoBehaviour
 
     }
 
+    private void CheckFirstToggles()
+    {
+        if (!_wasToggledGlobally)
+            FirstGlobalToggleOn();
+
+        if (!_wasToggledInScene)
+            FirstToggleOnInScene();
+    }
+
     private void FirstGlobalToggleOn()
     {
         _wasToggledGlobally = true;
         LoadTypeParameters();
+        LoadConsoleAssemblies();
         LoadStaticCommands();
-        ClearContent();
     }
 
     private void FirstToggleOnInScene()
     {
         _wasToggledInScene = true;
-        LoadMonoBehaviourCommands();
+        LoadInstanceCommands();
         ResetCurrentHistoryRecall();
-    }
-
-    [Command("clear", "clears the console content")]
-    public void ClearContent()
-    {
-        Content = string.Empty;
-        ContentChanged();
-        AppendContentLine(_welcomeMessage, "", "FFFFFF");
     }
 
     private void ContentChanged()
@@ -389,14 +421,6 @@ public class Console : MonoBehaviour
         OnHintAccept?.Invoke(_commands.Find(x => x.Format == Hints[0]).ID + " ");
     }
 
-    public static void DisplayHelp()
-    {
-        Debug.Log(string.Format("Found {0} executable commands:", _commands.Count.ToString()));
-
-        for (int i = 0; i < _commands.Count; i++)
-            Debug.Log(_commands[i].Format + " - " + _commands[i].Description);
-    }
-
     private void ExecuteCommandByInput(string inputContent)
     {
         if (string.IsNullOrEmpty(inputContent))
@@ -412,7 +436,7 @@ public class Console : MonoBehaviour
         if (TryToParseParams(inputSplit, toExecute, out object[] parameters))
         {
             AppendContentLine(inputContent, "\n> ", ColorUtility.ToHtmlStringRGB(_executableColor));
-            toExecute.MethodInfo.Invoke(toExecute.InvokingObjects, parameters);
+            toExecute.Invoke(parameters);
         }
         else
             Debug.LogError(string.Format("Invalid command format. Command did not execute ({0})", inputContent) + NO_TRACE);
@@ -500,6 +524,30 @@ public class Console : MonoBehaviour
         return true;
     }
 
+    [Command("clear", "clears the console content")]
+    public void ClearContent()
+    {
+        Content = string.Empty;
+        ContentChanged();
+        AppendContentLine(_welcomeMessage, "", "FFFFFF");
+    }
+
+    [Command("help", "displays all commands")]
+    public void DisplayHelp()
+    {
+        Debug.Log(string.Format("Found {0} executable commands:", _commands.Count.ToString()));
+
+        for (int i = 0; i < _commands.Count; i++)
+            Debug.Log(_commands[i].Format + " - " + _commands[i].Description);
+    }
+
+    [Command("history", "logs input history")]
+    public void DisplayHistory()
+    {
+        for (int i = 0; i < History.Count; i++)
+            Debug.Log(i + ". " + History[i]);
+    }
+
     private class Command
     {
         public string ID { get; private set; }
@@ -518,9 +566,31 @@ public class Console : MonoBehaviour
             IsStatic = methodInfo.IsStatic;
         }
 
+        public void Invoke(object[] parameters)
+        {
+            if (IsStatic)
+                DoStaticInvoke(parameters);
+            else
+                DoInstanceInvoke(parameters);
+        }
+
+        private void DoStaticInvoke(object[] parameters)
+        {
+            MethodInfo.Invoke(null, parameters);
+        }
+
+        private void DoInstanceInvoke(object[] parameters)
+        {
+            foreach (object invoker in InvokingObjects)
+                MethodInfo.Invoke(invoker, parameters);
+        }
+
         public void AddInvokingObject(object invoker)
         {
             InvokingObjects.Add(invoker);
+
+            if (invoker != null)
+                Debug.Log("Added invoking object: " + invoker.GetType().Name);
         }
 
         public void AddInvokingObjects(List<object> invokers)

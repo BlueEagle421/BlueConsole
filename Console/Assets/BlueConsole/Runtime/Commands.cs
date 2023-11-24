@@ -3,12 +3,6 @@ using UnityEngine.SceneManagement;
 
 public static class Commands
 {
-    [Command("help", "displays all commands")]
-    public static void Help()
-    {
-        Console.DisplayHelp();
-    }
-
     [Command("quit", "closes the application")]
     public static void Quit()
     {
@@ -43,12 +37,5 @@ public static class Commands
     public static void Log_Warning(string message)
     {
         Debug.LogWarning(message);
-    }
-
-    [Command("history", "logs input history")]
-    public static void History()
-    {
-        for (int i = 0; i < Console.History.Count; i++)
-            Debug.Log(i + ". " + Console.History[i]);
     }
 }
