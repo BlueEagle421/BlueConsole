@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Console : MonoBehaviour
 {
@@ -27,7 +27,6 @@ public class Console : MonoBehaviour
     public static List<string> Hints { get; private set; } = new();
     public static List<string> History { get; private set; } = new();
     public const string NO_TRACE = " [no stack trace] ";
-    private static readonly List<string> _commandsIDs = new();
     private static readonly List<Command> _commands = new();
     private static readonly List<TypeParameter> _typeParameters = new();
     private static List<Assembly> _commandsAssemblies = new();
@@ -51,14 +50,17 @@ public class Console : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_wasEnabledGlobally)
-            return;
-
-        ClearContent();
-
         Application.logMessageReceived += HandleLog;
 
+        if (!_wasEnabledGlobally)
+            FirstGlobalEnable();
+    }
+
+    private void FirstGlobalEnable()
+    {
         _wasEnabledGlobally = true;
+
+        ClearContent();
     }
 
     private void OnDisable()
@@ -159,7 +161,6 @@ public class Console : MonoBehaviour
 
         foreach (MonoBehaviour component in components)
         {
-
             Type componentClass = component.GetType();
             if (_commandsAssemblies.Contains(componentClass.Assembly))
             {
@@ -167,6 +168,9 @@ public class Console : MonoBehaviour
 
                 for (int i = 0; i < methodInfos.Length; i++)
                 {
+                    if (methodInfos[i].IsStatic)
+                        continue;
+
                     AddCommandToList(methodInfos[i], component);
                 }
             }
@@ -198,7 +202,6 @@ public class Console : MonoBehaviour
             }
 
             _commands.Add(consoleCommand);
-            _commandsIDs.Add(consoleCommand.ID);
         }
     }
 
@@ -272,9 +275,9 @@ public class Console : MonoBehaviour
 
         string perfectMatch = string.Empty;
 
-        for (int i = 0; i < _commandsIDs.Count; i++)
+        for (int i = 0; i < _commands.Count; i++)
         {
-            string id = _commandsIDs[i];
+            string id = _commands[i].ID;
 
             if (Hints.Count >= _maxHintsAmount)
                 continue;
@@ -409,7 +412,6 @@ public class Console : MonoBehaviour
             _currentHistoryRecall = indexToRecall;
         }
 
-
         OnHistoryRecall?.Invoke(inputToRecall);
     }
 
@@ -418,7 +420,8 @@ public class Console : MonoBehaviour
         if (Hints.Count == 0)
             return;
 
-        OnHintAccept?.Invoke(_commands.Find(x => x.Format == Hints[0]).ID + " ");
+        Command toHint = _commands.Find(x => x.Format == Hints[0]);
+        OnHintAccept?.Invoke(toHint.ID + (toHint.MethodInfo.GetParameters().Length > 0 ? " " : string.Empty));
     }
 
     private void ExecuteCommandByInput(string inputContent)
@@ -516,9 +519,9 @@ public class Console : MonoBehaviour
         if (string.IsNullOrEmpty(inputContent))
             return false;
 
-        string ID = inputContent.Split(" ")[0];
+        string id = inputContent.Split(" ")[0];
 
-        if (!_commandsIDs.Contains(ID))
+        if (!_commands.Exists(x => x.ID == id))
             return false;
 
         return true;
@@ -555,6 +558,7 @@ public class Console : MonoBehaviour
         public string Format { get; private set; }
         public MethodInfo MethodInfo { get; private set; }
         public List<object> InvokingObjects { get; private set; } = new();
+        public InstanceTargetType InstanceTargetType { get; private set; }
         public bool IsStatic { get; private set; }
 
         public Command(MethodInfo methodInfo, CommandAttribute attribute)
@@ -563,6 +567,7 @@ public class Console : MonoBehaviour
             Description = attribute.Description;
             Format = DefineFormat(ID, methodInfo, ColorUtility.ToHtmlStringRGB(Color.white));
             MethodInfo = methodInfo;
+            InstanceTargetType = attribute.InstanceTargetType;
             IsStatic = methodInfo.IsStatic;
         }
 
@@ -581,19 +586,27 @@ public class Console : MonoBehaviour
 
         private void DoInstanceInvoke(object[] parameters)
         {
-            foreach (object invoker in InvokingObjects)
-                MethodInfo.Invoke(invoker, parameters);
+            switch (InstanceTargetType)
+            {
+                case InstanceTargetType.All:
+                    {
+                        foreach (object invoker in InvokingObjects)
+                        {
+                            MethodInfo.Invoke(invoker, parameters);
+                        }
+                        break;
+                    }
+                case InstanceTargetType.First:
+                    {
+                        MethodInfo.Invoke(InvokingObjects[0], parameters);
+                        break;
+                    }
+            }
         }
 
         public void AddInvokingObject(object invoker)
         {
             InvokingObjects.Add(invoker);
-        }
-
-        public void AddInvokingObjects(List<object> invokers)
-        {
-            foreach (object toAdd in invokers)
-                InvokingObjects.Add(toAdd);
         }
 
         public Command(MethodInfo methodInfo, CommandAttribute attribute, Color parametersColor) : this(methodInfo, attribute)
@@ -657,21 +670,21 @@ public class CommandAttribute : Attribute
 {
     public string ID { get; private set; }
     public string Description { get; private set; }
+    public InstanceTargetType InstanceTargetType { get; private set; }
 
-    public CommandAttribute()
-    {
-
-    }
-
-    public CommandAttribute(string id) : this()
+    public CommandAttribute([Optional] string id, [Optional] string description, [Optional] InstanceTargetType instanceTargetType)
     {
         ID = id;
-    }
-
-    public CommandAttribute(string id, string description) : this(id)
-    {
         Description = description;
+        InstanceTargetType = instanceTargetType;
+
     }
+}
+
+public enum InstanceTargetType
+{
+    All,
+    First
 }
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
@@ -680,12 +693,7 @@ public class TypeParameterAttribute : Attribute
     public string RegexKey { get; private set; }
     public bool AllowWhitespaces { get; private set; } = false;
 
-    public TypeParameterAttribute(string description)
-    {
-        RegexKey = description;
-    }
-
-    public TypeParameterAttribute(string description, bool allowWhitespaces) : this(description)
+    public TypeParameterAttribute(string description, [Optional] bool allowWhitespaces)
     {
         RegexKey = description;
         AllowWhitespaces = allowWhitespaces;
