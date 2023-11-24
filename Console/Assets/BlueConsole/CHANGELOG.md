@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.2.0] - 23.11.2023
+## [1.2.0] - 24.11.2023
  - Reworked commands system
  - Added input history recalling
  - Added hint accepting
@@ -11,6 +11,7 @@
  - Improved commands parameters formatting
  - Made all of command attributes optional
  - Fixed "ArgumentException" from regex matching while typing in console input
+ - Fixed a bug that was causing console content to be cleared after first global toggle
 
 ## [1.1.0] - 19.11.2023
  - Added input support for old "InputSystem"
