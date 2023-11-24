@@ -8,9 +8,10 @@ using UnityEngine;
 
 public class Console : MonoBehaviour
 {
-    [SerializeField] private List<AssemblyDefinitionAsset> _assembliesWithCommands;
-    [SerializeField] private ConsoleCommands _consoleCommands;
-    [SerializeField] private ConsoleTypeParameters _consoleTypeParameters;
+    [Tooltip("Should the default assembly be searched for static commands?")]
+    [SerializeField] private bool _includeAssemblyCSharp;
+    [Tooltip("These assemblies will be searched for static commands")]
+    [SerializeField] private List<AssemblyDefinitionAsset> _assembliesWithStaticCommands;
     [Tooltip("The amount of hints the console should generate for the user")]
     [SerializeField] private int _maxHintsAmount = 5;
     [Tooltip("A message that will always appear after toggling the console for the first time")]
@@ -85,16 +86,16 @@ public class Console : MonoBehaviour
         AcceptHint();
     }
 
-    private void SetupTypeParameters()
+    private void LoadTypeParameters()
     {
-        MethodInfo[] methodInfos = _consoleTypeParameters.GetType().GetMethods();
+        MethodInfo[] methodInfos = typeof(ConsoleTypeParameters).GetMethods();
 
         for (int i = 0; i < methodInfos.Length; i++)
         {
             if (Attribute.IsDefined(methodInfos[i], typeof(TypeParameterAttribute)))
             {
                 TypeParameterAttribute attribute = methodInfos[i].GetCustomAttribute(typeof(TypeParameterAttribute)) as TypeParameterAttribute;
-                TypeParameter typeParameter = new(methodInfos[i], _consoleTypeParameters, attribute);
+                TypeParameter typeParameter = new(methodInfos[i], attribute);
                 _typeParameters.Add(typeParameter);
 
                 _typeRegexKeysDictionary.Add(typeParameter.Type, typeParameter.RegexKey);
@@ -102,31 +103,33 @@ public class Console : MonoBehaviour
         }
     }
 
+    private List<Assembly> GetAllConsoleAssemblies()
+    {
+        List<string> userDefinedAssembliesNames = new();
+
+        foreach (AssemblyDefinitionAsset assemblyAsset in _assembliesWithStaticCommands)
+            userDefinedAssembliesNames.Add(GetAssemblyNameFromAsset(assemblyAsset));
+
+        List<Assembly> allAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
+
+        List<Assembly> result = allAssemblies.FindAll(x => userDefinedAssembliesNames.Contains(x.GetName().Name));
+
+        if (_includeAssemblyCSharp)
+            result.Add(allAssemblies.Find(x => x.GetName().Name == "Assembly-CSharp"));
+
+        result.Add(GetType().Assembly);
+
+        return result;
+    }
+
     private void LoadStaticCommands()
     {
-        // Debug.Log(_assembliesWithCommands[0]);
-        // Debug.Log(this.GetType().Assembly.GetName().Name);
-
-        //_assembliesWithCommands[0].text
-
-        // Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-        List<Assembly> assemblies = new()
+        foreach (Assembly assembly in GetAllConsoleAssemblies())
         {
-            this.GetType().Assembly,
-            AppDomain.CurrentDomain.GetAssemblies().ToList().Find(x => x.GetName().Name == "Assembly-CSharp")
-        };
-
-        foreach (Assembly assembly in assemblies)
-        {
-            //Debug.Log(assembly.GetName().Name);
-
             Type[] assemblyClasses = Array.FindAll(assembly.GetTypes(), x => x.IsClass);
 
             foreach (Type assemblyClass in assemblyClasses)
             {
-                //Debug.Log(assemblyClass.Name);
-
                 MethodInfo[] methodInfos = assemblyClass.GetMethods();
 
                 for (int i = 0; i < methodInfos.Length; i++)
@@ -142,6 +145,8 @@ public class Console : MonoBehaviour
 
     private void LoadMonoBehaviourCommands()
     {
+        _commands.RemoveAll(x => !x.IsStatic);
+
 
     }
 
@@ -162,30 +167,20 @@ public class Console : MonoBehaviour
         }
     }
 
-    private void SetupCommands()
+    private string GetAssemblyNameFromAsset(AssemblyDefinitionAsset assemblyAsset)
     {
-        // _consoleCommands.AttachConsole(this);
+        string fileContent = assemblyAsset.text;
 
-        // _commands.Clear();
-
-        // MethodInfo[] methodInfos = _consoleCommands.GetType().GetMethods();
-
-        // for (int i = 0; i < methodInfos.Length; i++)
-        // {
-        //     if (Attribute.IsDefined(methodInfos[i], typeof(CommandAttribute)))
-        //     {
-        //         CommandAttribute attribute = methodInfos[i].GetCustomAttribute(typeof(CommandAttribute)) as CommandAttribute;
-        //         Command consoleCommand = new(methodInfos[i], _consoleCommands, attribute, _parametersColor);
-        //         if (!consoleCommand.IsValid())
-        //         {
-        //             Debug.LogWarning(string.Format("Command ({0}) is invalid and will not be executable", consoleCommand.Format));
-        //             continue;
-        //         }
-
-        //         _commands.Add(consoleCommand);
-        //         _commandsIDs.Add(consoleCommand.ID);
-        //     }
-        // }
+        Match match = Regex.Match(fileContent, "\"name\":\\s*\"([^\"]+)\"");
+        if (match.Success)
+        {
+            return match.Groups[1].Value;
+        }
+        else
+        {
+            Debug.LogWarning("Unable to extract assembly name from AssemblyDefinitionAsset: " + assemblyAsset.name);
+            return null;
+        }
     }
 
     private void ToggleConsole(bool toggle)
@@ -212,7 +207,7 @@ public class Console : MonoBehaviour
     private void FirstGlobalToggleOn()
     {
         _wasToggledGlobally = true;
-        SetupTypeParameters();
+        LoadTypeParameters();
         LoadStaticCommands();
         ClearContent();
     }
@@ -220,10 +215,11 @@ public class Console : MonoBehaviour
     private void FirstToggleOnInScene()
     {
         _wasToggledInScene = true;
-        //SetupCommands();
+        LoadMonoBehaviourCommands();
         ResetCurrentHistoryRecall();
     }
 
+    [Command("clear", "clears the console content")]
     public void ClearContent()
     {
         Content = string.Empty;
@@ -393,7 +389,7 @@ public class Console : MonoBehaviour
         OnHintAccept?.Invoke(_commands.Find(x => x.Format == Hints[0]).ID + " ");
     }
 
-    public void DisplayHelp()
+    public static void DisplayHelp()
     {
         Debug.Log(string.Format("Found {0} executable commands:", _commands.Count.ToString()));
 
@@ -520,9 +516,6 @@ public class Console : MonoBehaviour
             Format = DefineFormat(ID, methodInfo, ColorUtility.ToHtmlStringRGB(Color.white));
             MethodInfo = methodInfo;
             IsStatic = methodInfo.IsStatic;
-
-            if (IsStatic)
-                Debug.Log("I'm static! From: " + ID);
         }
 
         public void AddInvokingObject(object invoker)
@@ -581,13 +574,13 @@ public class Console : MonoBehaviour
         public MethodInfo MethodInfo { get; private set; }
         public object InvokingObject { get; private set; }
 
-        public TypeParameter(MethodInfo methodInfo, object invokingObject, TypeParameterAttribute attribute)
+        public TypeParameter(MethodInfo methodInfo, TypeParameterAttribute attribute)
         {
             Type = methodInfo.ReturnType;
             RegexKey = attribute.RegexKey;
             AllowWhitespaces = attribute.AllowWhitespaces;
             MethodInfo = methodInfo;
-            InvokingObject = invokingObject;
+            InvokingObject = null;
         }
     }
 }

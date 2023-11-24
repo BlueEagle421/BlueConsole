@@ -1893,8 +1893,6 @@ GameObject:
   - component: {fileID: 8565144652359426197}
   - component: {fileID: 1235129474232717365}
   - component: {fileID: 6992891763414390398}
-  - component: {fileID: 8572945580447161927}
-  - component: {fileID: 4398217772730030139}
   m_Layer: 5
   m_Name: ConsoleLogic
   m_TagString: Untagged
@@ -1929,7 +1927,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad3648cb7770024ebdcf38bd4bb3b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputType: 0
   _targetConsole: {fileID: 6992891763414390398}
   _height: 320
   _scale: 1
@@ -1970,8 +1967,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97599ff17d10e2348afedb6ebdc1c048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _consoleCommands: {fileID: 4398217772730030139}
-  _consoleTypeParameters: {fileID: 8572945580447161927}
+  _includeAssemblyCSharp: 0
+  _assembliesWithStaticCommands: []
   _maxHintsAmount: 5
   _welcomeMessage: Welcome to <color=#4895EF>BlueConsole</color>!
   _logColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1981,30 +1978,6 @@ MonoBehaviour:
   _assertColor: {r: 0.8666667, g: 0.627451, b: 0.09411765, a: 1}
   _executableColor: {r: 0.28235295, g: 0.58431375, b: 0.9372549, a: 1}
   _parametersColor: {r: 0.19449617, g: 0.21384603, b: 0.22264141, a: 1}
---- !u!114 &8572945580447161927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6049728064694921893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a05fb2b8402faa4ebd206dd167bb0f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4398217772730030139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6049728064694921893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3921cacb850ae634a9c3b61dec8de2d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6402537116912700017
 GameObject:
   m_ObjectHideFlags: 0
@@ -2410,7 +2383,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter text...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2b0af89913a791042a89e07ecb7479fa, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 4626382486989422271, guid: 2b0af89913a791042a89e07ecb7479fa, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

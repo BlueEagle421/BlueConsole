@@ -1,29 +1,16 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ConsoleCommands : MonoBehaviour
+public static class Commands
 {
-    private Console _attachedConsole;
-
-    public void AttachConsole(Console console)
-    {
-        _attachedConsole = console;
-    }
-
     [Command("help", "displays all commands")]
-    public void Help()
+    public static void Help()
     {
-        _attachedConsole.DisplayHelp();
-    }
-
-    [Command("clear", "clears the console content")]
-    public void Clear()
-    {
-        _attachedConsole.ClearContent();
+        Console.DisplayHelp();
     }
 
     [Command("quit", "closes the application")]
-    public void Quit()
+    public static void Quit()
     {
         Application.Quit();
     }
@@ -35,7 +22,7 @@ public class ConsoleCommands : MonoBehaviour
     }
 
     [Command("version", "logs project name and version")]
-    public void Version()
+    public static void Version()
     {
         Debug.Log(string.Format("{0} version: {1}", Application.productName, Application.version));
     }
@@ -53,13 +40,13 @@ public class ConsoleCommands : MonoBehaviour
     }
 
     [Command("log_warning", "logs warning")]
-    public void Log_Warning(string message)
+    public static void Log_Warning(string message)
     {
         Debug.LogWarning(message);
     }
 
     [Command("history", "logs input history")]
-    public void History()
+    public static void History()
     {
         for (int i = 0; i < Console.History.Count; i++)
             Debug.Log(i + ". " + Console.History[i]);
