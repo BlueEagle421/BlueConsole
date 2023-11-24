@@ -163,7 +163,6 @@ public class Console : MonoBehaviour
             Type componentClass = component.GetType();
             if (_commandsAssemblies.Contains(componentClass.Assembly))
             {
-                Debug.Log("Found component is: " + componentClass.Name);
                 MethodInfo[] methodInfos = componentClass.GetMethods();
 
                 for (int i = 0; i < methodInfos.Length; i++)
@@ -589,9 +588,6 @@ public class Console : MonoBehaviour
         public void AddInvokingObject(object invoker)
         {
             InvokingObjects.Add(invoker);
-
-            if (invoker != null)
-                Debug.Log("Added invoking object: " + invoker.GetType().Name);
         }
 
         public void AddInvokingObjects(List<object> invokers)
