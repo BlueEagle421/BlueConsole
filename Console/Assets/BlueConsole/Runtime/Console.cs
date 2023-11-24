@@ -183,13 +183,14 @@ public class Console : MonoBehaviour
 
             if (invokingObject != null)
             {
-                if (_commands.Exists(x => x.MethodInfo.DeclaringType == invokingObject.GetType()))
-                    _commands[_commands.FindIndex(x => x.MethodInfo.DeclaringType == invokingObject.GetType())].AddInvokingObject(invokingObject);
+                if (_commands.Exists(x => x.MethodInfo == methodInfo))
+                {
+                    _commands[_commands.FindIndex(x => x.MethodInfo == methodInfo)].AddInvokingObject(invokingObject);
+                    return;
+                }
                 else
                     consoleCommand.AddInvokingObject(invokingObject);
             }
-
-
 
             if (!consoleCommand.IsValid())
             {

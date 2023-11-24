@@ -6,7 +6,18 @@ public static class ConsoleTypeParameters
     [TypeParameter(@"[0|1]")]
     public static bool BoolParameter(string inputParam)
     {
-        return inputParam == "1";
+        switch (inputParam)
+        {
+            case "true": return true;
+            case "on": return true;
+            case "1": return true;
+            case "yes": return true;
+            case "false": return false;
+            case "off": return false;
+            case "0": return false;
+            case "no": return false;
+            default: return false;
+        }
     }
 
     [TypeParameter(@"\d+")]

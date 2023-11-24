@@ -1,11 +1,13 @@
 # Changelog
 
 ## [1.2.0] - 23.11.2023
+ - Reworked commands system
  - Added input history recalling
  - Added hint accepting
  - Added a check for EventSystem in ConsoleController
  - Added command parameters color
  - Added GUI scaling
+ - Improved bool parsing
  - Improved commands parameters formatting
  - Made all of command attributes optional
  - Fixed "ArgumentException" from regex matching while typing in console input
