@@ -1,6 +1,6 @@
 {
   "name": "com.blueeagle421.blueconsole",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "displayName": "BlueConsole",
   "description": "A versatile in-game debug console with built-in commands, logging messages, and a regex-based hint system.",
   "unity": "2020.3",

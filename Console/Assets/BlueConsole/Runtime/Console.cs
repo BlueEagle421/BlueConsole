@@ -9,9 +9,9 @@ using UnityEngine;
 
 public class Console : MonoBehaviour
 {
-    [Tooltip("Should the default assembly be searched for static commands?")]
-    [SerializeField] private bool _includeAssemblyCSharp;
-    [Tooltip("These assemblies will be searched for static commands")]
+    [Tooltip("Should the default assembly be searched for commands?")]
+    [SerializeField] private bool _includeAssemblyCSharp = true;
+    [Tooltip("These assemblies will be searched for commands")]
     [SerializeField] private List<AssemblyDefinitionAsset> _assembliesWithStaticCommands;
     [Tooltip("The amount of hints the console should generate for the user")]
     [SerializeField] private int _maxHintsAmount = 5;
@@ -683,8 +683,8 @@ public class CommandAttribute : Attribute
 
 public enum InstanceTargetType
 {
-    All,
-    First
+    First,
+    All
 }
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
