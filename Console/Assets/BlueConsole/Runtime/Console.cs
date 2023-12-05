@@ -223,7 +223,7 @@ public class Console : MonoBehaviour
 
     private void ToggleConsole(bool toggle)
     {
-        if (!IsToggled && toggle)
+        if (toggle)
             ToggledOn();
 
         IsToggled = toggle;

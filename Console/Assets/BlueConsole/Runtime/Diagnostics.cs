@@ -13,7 +13,7 @@ public class Diagnostics : MonoBehaviour
 
     private void ToggleDiagnostics(bool toggle)
     {
-        if (!IsDiagnosing && toggle)
+        if (toggle)
             ToggledOn();
 
         IsDiagnosing = toggle;
