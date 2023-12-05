@@ -62,7 +62,7 @@ public static class ConsoleTypeParameters
     }
 
     [TypeParameter(@"\S*?", false)]
-    public static Console.Command CommandParameter(string inputParam)
+    public static Command CommandParameter(string inputParam)
     {
         return Console.Commands.Find(x => x.ID == inputParam);
     }
