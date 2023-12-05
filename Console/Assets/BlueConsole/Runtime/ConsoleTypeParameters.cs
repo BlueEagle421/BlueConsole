@@ -61,6 +61,12 @@ public static class ConsoleTypeParameters
         return inputParam.Replace("\"", string.Empty);
     }
 
+    [TypeParameter(@"\S*?", false)]
+    public static Console.Command CommandParameter(string inputParam)
+    {
+        return Console.Commands.Find(x => x.ID == inputParam);
+    }
+
     [TypeParameter("'.'")]
     public static char CharParameter(string inputParam)
     {

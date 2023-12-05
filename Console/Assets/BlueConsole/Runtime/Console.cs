@@ -27,7 +27,7 @@ public class Console : MonoBehaviour
     public static List<string> Hints { get; private set; } = new();
     public static List<string> History { get; private set; } = new();
     public const string NO_TRACE = " [no stack trace] ";
-    private static readonly List<Command> _commands = new();
+    public static readonly List<Command> Commands = new();
     private static readonly List<TypeParameter> _typeParameters = new();
     private static List<Assembly> _commandsAssemblies = new();
     private static readonly Dictionary<Type, string> _typeRegexKeysDictionary = new();
@@ -155,7 +155,7 @@ public class Console : MonoBehaviour
 
     private void LoadInstanceCommands()
     {
-        _commands.RemoveAll(x => !x.IsStatic);
+        Commands.RemoveAll(x => !x.IsStatic);
 
         MonoBehaviour[] components = FindObjectsOfType<MonoBehaviour>();
 
@@ -186,9 +186,9 @@ public class Console : MonoBehaviour
 
             if (invokingObject != null)
             {
-                if (_commands.Exists(x => x.MethodInfo == methodInfo))
+                if (Commands.Exists(x => x.MethodInfo == methodInfo))
                 {
-                    _commands[_commands.FindIndex(x => x.MethodInfo == methodInfo)].AddInvokingObject(invokingObject);
+                    Commands[Commands.FindIndex(x => x.MethodInfo == methodInfo)].AddInvokingObject(invokingObject);
                     return;
                 }
                 else
@@ -201,7 +201,7 @@ public class Console : MonoBehaviour
                 return;
             }
 
-            _commands.Add(consoleCommand);
+            Commands.Add(consoleCommand);
         }
     }
 
@@ -275,9 +275,9 @@ public class Console : MonoBehaviour
 
         string perfectMatch = string.Empty;
 
-        for (int i = 0; i < _commands.Count; i++)
+        for (int i = 0; i < Commands.Count; i++)
         {
-            string id = _commands[i].ID;
+            string id = Commands[i].ID;
 
             if (Hints.Count >= _maxHintsAmount)
                 continue;
@@ -290,7 +290,7 @@ public class Console : MonoBehaviour
 
             try
             {
-                string format = _commands.Find(x => x.ID == id).Format;
+                string format = Commands.Find(x => x.ID == id).Format;
 
                 if (Regex.IsMatch(id, inputToCheck))
                     Hints.Add(format);
@@ -420,7 +420,7 @@ public class Console : MonoBehaviour
         if (Hints.Count == 0)
             return;
 
-        Command toHint = _commands.Find(x => x.Format == Hints[0]);
+        Command toHint = Commands.Find(x => x.Format == Hints[0]);
         OnHintAccept?.Invoke(toHint.ID + (toHint.MethodInfo.GetParameters().Length > 0 ? " " : string.Empty));
     }
 
@@ -434,7 +434,7 @@ public class Console : MonoBehaviour
         string wantedID = inputSplit[0];
         inputSplit.RemoveAt(0);
 
-        Command toExecute = _commands.Find(x => x.ID == wantedID);
+        Command toExecute = Commands.Find(x => x.ID == wantedID);
 
         if (TryToParseParams(inputSplit, toExecute, out object[] parameters))
         {
@@ -521,7 +521,7 @@ public class Console : MonoBehaviour
 
         string id = inputContent.Split(" ")[0];
 
-        if (!_commands.Exists(x => x.ID == id))
+        if (!Commands.Exists(x => x.ID == id))
             return false;
 
         return true;
@@ -538,10 +538,10 @@ public class Console : MonoBehaviour
     [Command("help", "displays all commands")]
     public void DisplayHelp()
     {
-        Debug.Log(string.Format("Found {0} executable commands:", _commands.Count.ToString()));
+        Debug.Log(string.Format("Found {0} executable commands:", Commands.Count.ToString()));
 
-        for (int i = 0; i < _commands.Count; i++)
-            Debug.Log(_commands[i].Format + (string.IsNullOrEmpty(_commands[i].Description) ? string.Empty : " - " + _commands[i].Description));
+        for (int i = 0; i < Commands.Count; i++)
+            Debug.Log(Commands[i].Format + (string.IsNullOrEmpty(Commands[i].Description) ? string.Empty : " - " + Commands[i].Description));
     }
 
     [Command("history", "logs input history")]
@@ -554,7 +554,7 @@ public class Console : MonoBehaviour
     [Command("man", "displays extended information about a command")]
     public void Man(string commandID)
     {
-        Command toCheck = _commands.Find(x => x.ID == commandID);
+        Command toCheck = Commands.Find(x => x.ID == commandID);
 
         Debug.Log("ID: " + toCheck.ID);
         Debug.Log("Description: " + toCheck.Description);
@@ -563,7 +563,7 @@ public class Console : MonoBehaviour
         Debug.Log("Source: " + toCheck.InvokingClassLabel());
     }
 
-    private class Command
+    public class Command
     {
         public string ID { get; private set; }
         public string Description { get; private set; }
