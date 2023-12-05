@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.3.0] - 5.12.2023
+ - Added diagnostics
+
 ## [1.2.0] - 24.11.2023
  - Reworked commands system
  - Added input history recalling
