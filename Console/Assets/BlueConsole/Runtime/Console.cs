@@ -551,6 +551,18 @@ public class Console : MonoBehaviour
             Debug.Log(i + ". " + History[i]);
     }
 
+    [Command("man", "displays extended information about a command")]
+    public void Man(string commandID)
+    {
+        Command toCheck = _commands.Find(x => x.ID == commandID);
+
+        Debug.Log("ID: " + toCheck.ID);
+        Debug.Log("Description: " + toCheck.Description);
+        Debug.Log("Parameters: " + toCheck.ParametersTypesLabel());
+        Debug.Log("Target type: " + toCheck.TargetTypeLabel());
+        Debug.Log("Source: " + toCheck.InvokingObjects[0].GetType().Name);
+    }
+
     private class Command
     {
         public string ID { get; private set; }
@@ -643,6 +655,33 @@ public class Console : MonoBehaviour
             }
 
             return result;
+        }
+
+        public string ParametersTypesLabel()
+        {
+            if (MethodInfo.GetParameters().Length == 0)
+                return "none";
+
+            List<string> parameters = new();
+
+            foreach (ParameterInfo param in MethodInfo.GetParameters())
+                parameters.Add(string.Format("({0}) {1}", param.ParameterType.Name, param.Name));
+
+            return parameters.Aggregate((a, b) => a + " " + b);
+
+        }
+
+        public string TargetTypeLabel()
+        {
+            if (IsStatic)
+                return "static";
+
+            return InstanceTargetType switch
+            {
+                InstanceTargetType.All => "all instances",
+                InstanceTargetType.First => "first instance",
+                _ => "invalid",
+            };
         }
     }
 
