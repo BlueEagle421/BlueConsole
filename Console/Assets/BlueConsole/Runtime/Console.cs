@@ -224,7 +224,7 @@ public class Console : MonoBehaviour
     private void ToggleConsole(bool toggle)
     {
         if (!IsToggled && toggle)
-            ToggleOn();
+            ToggledOn();
 
         IsToggled = toggle;
 
@@ -233,7 +233,7 @@ public class Console : MonoBehaviour
         CheckFirstToggles();
     }
 
-    private void ToggleOn()
+    private void ToggledOn()
     {
 
     }
