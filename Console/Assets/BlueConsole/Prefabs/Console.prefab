@@ -401,6 +401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _diagnosticsGUIParent: {fileID: 5835137365992088134}
+  _diagnosticsColor: {r: 0.09787818, g: 0.8792453, b: 0.09787818, a: 1}
 --- !u!1 &1607684849195335962
 GameObject:
   m_ObjectHideFlags: 0
