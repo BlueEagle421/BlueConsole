@@ -560,7 +560,7 @@ public class Console : MonoBehaviour
         Debug.Log("Description: " + toCheck.Description);
         Debug.Log("Parameters: " + toCheck.ParametersTypesLabel());
         Debug.Log("Target type: " + toCheck.TargetTypeLabel());
-        Debug.Log("Source: " + toCheck.InvokingObjects[0].GetType().Name);
+        Debug.Log("Source: " + toCheck.InvokingClassLabel());
     }
 
     private class Command
@@ -655,6 +655,14 @@ public class Console : MonoBehaviour
             }
 
             return result;
+        }
+
+        public string InvokingClassLabel()
+        {
+            if (IsStatic)
+                return InvokingObjects[0].ToString();
+
+            return InvokingObjects[0].GetType().Name;
         }
 
         public string ParametersTypesLabel()
