@@ -552,15 +552,13 @@ public class Console : MonoBehaviour
     }
 
     [Command("man", "displays extended information about a command")]
-    public void Man(string commandID)
+    public void Man(Command command)
     {
-        Command toCheck = Commands.Find(x => x.ID == commandID);
-
-        Debug.Log("ID: " + toCheck.ID);
-        Debug.Log("Description: " + toCheck.Description);
-        Debug.Log("Parameters: " + toCheck.ParametersTypesLabel());
-        Debug.Log("Target type: " + toCheck.TargetTypeLabel());
-        Debug.Log("Source: " + toCheck.InvokingClassLabel());
+        Debug.Log("ID: " + command.ID);
+        Debug.Log("Description: " + command.Description);
+        Debug.Log("Parameters: " + command.ParametersTypesLabel());
+        Debug.Log("Target type: " + command.TargetTypeLabel());
+        Debug.Log("Source: " + command.InvokingClassLabel());
     }
 }
 
