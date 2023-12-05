@@ -99,6 +99,14 @@ public class Command
         return result;
     }
 
+    public string AssemblyLabel()
+    {
+        if (IsStatic)
+            return (InvokingObjects[0] as Type).Assembly.GetName().Name;
+
+        return InvokingObjects[0].GetType().Assembly.GetName().Name;
+    }
+
     public string InvokingClassLabel()
     {
         if (IsStatic)

@@ -558,7 +558,8 @@ public class Console : MonoBehaviour
         Debug.Log("Description: " + command.Description);
         Debug.Log("Parameters: " + command.ParametersTypesLabel());
         Debug.Log("Target type: " + command.TargetTypeLabel());
-        Debug.Log("Source: " + command.InvokingClassLabel());
+        Debug.Log("Source class name: " + command.InvokingClassLabel());
+        Debug.Log("Source assembly name: " + command.AssemblyLabel());
     }
 }
 
