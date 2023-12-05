@@ -2866,7 +2866,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'CPU: <color=#00FF00>(5%)</color> GPU: <color=#FF6F00>(56%)</color>'
+  m_text: CPU:<color=#00FF00>(5%)</color> GPU:<color=#FF6F00>(56%)</color>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fbf8e3ed829863d4c92dac2b8aedcf73, type: 2}
   m_sharedMaterial: {fileID: 4626382486989422271, guid: fbf8e3ed829863d4c92dac2b8aedcf73, type: 2}

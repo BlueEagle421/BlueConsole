@@ -6,7 +6,8 @@ public class Diagnostics : MonoBehaviour
     [SerializeField] private RectTransform _diagnosticsGUIParent;
     [SerializeField] private Color _diagnosticsColor;
     public static bool IsFullySupported { get; private set; }
-    public static bool IsToggled { get; private set; }
+    public static bool IsFPSToggled { get; private set; }
+    public static bool IsHWUsageToggled { get; private set; }
     private static bool _wasEnabledGlobally;
     private static bool _wasToggledGlobally;
     private bool _wasToggledInScene;
@@ -22,48 +23,6 @@ public class Diagnostics : MonoBehaviour
     {
         _wasEnabledGlobally = true;
         IsFullySupported = SystemInfo.operatingSystemFamily != OperatingSystemFamily.Other;
-    }
-
-    private void Start()
-    {
-        if (IsToggled)
-            ToggleDiagnostics(true);
-    }
-
-    private void ToggleDiagnostics(bool toggle)
-    {
-        CheckFirstToggles();
-
-        if (toggle)
-            ToggledOn();
-
-        IsToggled = toggle;
-
-    }
-
-    private void CheckFirstToggles()
-    {
-        if (!_wasToggledGlobally)
-            FirstGlobalToggleOn();
-
-        if (!_wasToggledInScene)
-            FirstToggleOnInScene();
-    }
-
-    private void FirstGlobalToggleOn()
-    {
-        _wasToggledGlobally = true;
-
-    }
-
-    private void FirstToggleOnInScene()
-    {
-        _wasToggledInScene = true;
-    }
-
-    private void ToggledOn()
-    {
-        LogSystemInfo();
     }
 
     private void LogSystemInfo()
@@ -82,6 +41,18 @@ public class Diagnostics : MonoBehaviour
         }
     }
 
+    [Command("fps", "toggles fps counter", InstanceTargetType.First)]
+    public void FPS(bool on)
+    {
+
+    }
+
+    [Command("hwusage", "toggles hardware usage counter", InstanceTargetType.First)]
+    public void HWUsage(bool on)
+    {
+
+    }
+
     [Command("hwinfo", "logs os, cpu and gpu types", InstanceTargetType.First)]
     public void Hwinfo()
     {
@@ -91,7 +62,8 @@ public class Diagnostics : MonoBehaviour
     [Command("diagnose", "toggles fps, hwinfo and hwusage", InstanceTargetType.First)]
     public void Diagnose(bool on)
     {
-        Hwinfo();
-        ToggleDiagnostics(on);
+        if (on) Hwinfo();
+        FPS(on);
+        HWUsage(on);
     }
 }
