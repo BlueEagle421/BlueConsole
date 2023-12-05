@@ -11,8 +11,7 @@ public class ConsoleController : MonoBehaviour
     [SerializeField] private Console _targetConsole;
     [SerializeField] private float _height;
     [SerializeField] private float _scale;
-    [SerializeField] private RectTransform _consoleGUIParent;
-    [SerializeField] private RectTransform _GUIParent;
+    [SerializeField] private RectTransform _consoleGUIParent, _GUIParent;
     [SerializeField] private TMP_InputField _consoleInputField, _consoleContentField;
     [SerializeField] private ScrollRect _consoleContentScrollRect;
     [SerializeField] private RectTransform _consoleContentRect;

@@ -300,6 +300,7 @@ GameObject:
   - component: {fileID: 4611218274913177977}
   - component: {fileID: 6946176888372141058}
   - component: {fileID: 25455114547283507}
+  - component: {fileID: 5762235901841213058}
   m_Layer: 0
   m_Name: Console
   m_TagString: Untagged
@@ -376,7 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97599ff17d10e2348afedb6ebdc1c048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _includeAssemblyCSharp: 0
+  _includeAssemblyCSharp: 1
   _assembliesWithCommands: []
   _maxHintsAmount: 5
   _welcomeMessage: Welcome to <color=#4895EF>BlueConsole</color>!
@@ -387,6 +388,19 @@ MonoBehaviour:
   _assertColor: {r: 0.8666667, g: 0.627451, b: 0.09411765, a: 1}
   _executableColor: {r: 0.28235295, g: 0.58431375, b: 0.9372549, a: 1}
   _parametersColor: {r: 0.19449617, g: 0.21384603, b: 0.22264141, a: 1}
+--- !u!114 &5762235901841213058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258155190466125265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 366af98fd47d62642a3615a0400a797a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _diagnosticsGUIParent: {fileID: 5835137365992088134}
 --- !u!1 &1607684849195335962
 GameObject:
   m_ObjectHideFlags: 0
