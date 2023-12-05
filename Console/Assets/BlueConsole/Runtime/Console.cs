@@ -467,7 +467,7 @@ public class Console : MonoBehaviour
             }
             catch
             {
-                Debug.LogError(string.Format("Invalid {0} parameter input in ({1})", typeParameter.Type.Name, inputParams.ElementAtOrDefault(i) == null ? string.Empty : inputParams[i]) + NO_TRACE);
+                Debug.LogError(string.Format("Expected {0} parameter input in ({1})", typeParameter.Type.Name, inputParams.ElementAtOrDefault(i) == null ? string.Empty : inputParams[i]) + NO_TRACE);
                 success = false;
             }
         }
