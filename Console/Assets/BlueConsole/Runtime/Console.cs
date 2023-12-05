@@ -12,7 +12,7 @@ public class Console : MonoBehaviour
     [Tooltip("Should the default assembly be searched for commands?")]
     [SerializeField] private bool _includeAssemblyCSharp = true;
     [Tooltip("These assemblies will be searched for commands")]
-    [SerializeField] private List<AssemblyDefinitionAsset> _assembliesWithStaticCommands;
+    [SerializeField] private List<AssemblyDefinitionAsset> _assembliesWithCommands;
     [Tooltip("The amount of hints the console should generate for the user")]
     [SerializeField] private int _maxHintsAmount = 5;
     [Tooltip("A message that will always appear after toggling the console for the first time")]
@@ -119,7 +119,7 @@ public class Console : MonoBehaviour
     {
         List<string> userDefinedAssembliesNames = new();
 
-        foreach (AssemblyDefinitionAsset assemblyAsset in _assembliesWithStaticCommands)
+        foreach (AssemblyDefinitionAsset assemblyAsset in _assembliesWithCommands)
             userDefinedAssembliesNames.Add(GetAssemblyNameFromAsset(assemblyAsset));
 
         List<Assembly> allAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
