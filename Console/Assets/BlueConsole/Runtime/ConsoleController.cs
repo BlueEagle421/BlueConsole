@@ -12,6 +12,7 @@ public class ConsoleController : MonoBehaviour
     [SerializeField] private float _height;
     [SerializeField] private float _scale;
     [SerializeField] private RectTransform _consoleGUIParent;
+    [SerializeField] private RectTransform _GUIParent;
     [SerializeField] private TMP_InputField _consoleInputField, _consoleContentField;
     [SerializeField] private ScrollRect _consoleContentScrollRect;
     [SerializeField] private RectTransform _consoleContentRect;
@@ -201,7 +202,7 @@ public class ConsoleController : MonoBehaviour
 
     private void SetGUIHeight(float height)
     {
-        _consoleGUIParent.sizeDelta = new Vector2(_consoleGUIParent.sizeDelta.x, height);
+        _GUIParent.sizeDelta = new Vector2(_GUIParent.sizeDelta.x, height);
     }
 
     private void SetGUIScale(float scale)
