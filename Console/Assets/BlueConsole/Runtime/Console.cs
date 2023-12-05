@@ -147,7 +147,7 @@ public class Console : MonoBehaviour
                     if (!methodInfos[i].IsStatic)
                         continue;
 
-                    AddCommandToList(methodInfos[i], null);
+                    AddCommandToList(methodInfos[i], assemblyClass);
                 }
             }
         }
