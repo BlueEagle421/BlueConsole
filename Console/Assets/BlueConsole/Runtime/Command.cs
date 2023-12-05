@@ -115,7 +115,7 @@ public class Command
         return InvokingObjects[0].GetType().Name;
     }
 
-    public string ParametersTypesLabel()
+    public string ParametersTypesLabel(string colorHex)
     {
         if (MethodInfo.GetParameters().Length == 0)
             return "none";
@@ -123,7 +123,7 @@ public class Command
         List<string> parameters = new();
 
         foreach (ParameterInfo param in MethodInfo.GetParameters())
-            parameters.Add(string.Format("({0}) {1}", param.ParameterType.Name, param.Name));
+            parameters.Add(string.Format("({0}) <color=#{1}>{2}</color>", param.ParameterType.Name, colorHex, param.Name));
 
         return parameters.Aggregate((a, b) => a + " " + b);
 

@@ -554,10 +554,9 @@ public class Console : MonoBehaviour
     [Command("man", "displays extended information about a command")]
     public void Man(Command command)
     {
-        Debug.Log("ID: " + command.ID);
         Debug.Log("Description: " + command.Description);
-        Debug.Log("Parameters: " + command.ParametersTypesLabel());
-        Debug.Log("Target type: " + command.TargetTypeLabel());
+        Debug.Log("Parameters: " + command.ParametersTypesLabel(ColorUtility.ToHtmlStringRGB(_parametersColor)));
+        Debug.Log("Target: " + command.TargetTypeLabel());
         Debug.Log("Source class name: " + command.InvokingClassLabel());
         Debug.Log("Source assembly name: " + command.AssemblyLabel());
     }
