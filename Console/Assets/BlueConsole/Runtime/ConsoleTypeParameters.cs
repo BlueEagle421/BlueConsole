@@ -9,7 +9,6 @@ public static class ConsoleTypeParameters
         {
             "1" => true,
             "0" => false,
-            "no" => false,
             _ => false,
         };
     }
