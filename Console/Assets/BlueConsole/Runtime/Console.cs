@@ -36,11 +36,11 @@ public class Console : MonoBehaviour
     private bool _wasToggledInScene;
     private int _currentHistoryRecall = 0;
 
-    public Action<bool> OnConsoleToggled;
-    public Action OnContentChanged;
-    public Action OnHintsChanged;
-    public Action<string> OnHistoryRecall;
-    public Action<string> OnHintAccept;
+    public static Action<bool> OnConsoleToggled;
+    public static Action OnContentChanged;
+    public static Action OnHintsChanged;
+    public static Action<string> OnHistoryRecall;
+    public static Action<string> OnHintAccept;
 
     private void Start()
     {

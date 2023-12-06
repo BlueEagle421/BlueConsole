@@ -22,8 +22,13 @@ public class ConsoleController : MonoBehaviour
 
     private void Awake()
     {
-        SetEvents();
+        SetEvents(true);
         CheckEventSystem();
+    }
+
+    private void OnDisable()
+    {
+        SetEvents(false);
     }
 
     private void Start()
@@ -43,14 +48,15 @@ public class ConsoleController : MonoBehaviour
         }
     }
 
-    private void SetEvents()
+    private void SetEvents(bool subscribe)
     {
-        _consoleInputField.onValueChanged.AddListener(_targetConsole.InputFieldChangedInput);
-        _targetConsole.OnConsoleToggled += OnConsoleToggled;
-        _targetConsole.OnContentChanged += OnConsoleContentChanged;
-        _targetConsole.OnHintsChanged += OnHintsChanged;
-        _targetConsole.OnHistoryRecall += OnHistoryRecall;
-        _targetConsole.OnHintAccept += OnHintAccept;
+        if (subscribe)
+            _consoleInputField.onValueChanged.AddListener(_targetConsole.InputFieldChangedInput);
+        ConsoleUtils.SetActionListener(ref Console.OnConsoleToggled, OnConsoleToggled, subscribe);
+        ConsoleUtils.SetActionListener(ref Console.OnContentChanged, OnConsoleContentChanged, subscribe);
+        ConsoleUtils.SetActionListener(ref Console.OnHintsChanged, OnHintsChanged, subscribe);
+        ConsoleUtils.SetActionListener(ref Console.OnHistoryRecall, OnHistoryRecall, subscribe);
+        ConsoleUtils.SetActionListener(ref Console.OnHintAccept, OnHintAccept, subscribe);
     }
 
     private void CloneHintField()
