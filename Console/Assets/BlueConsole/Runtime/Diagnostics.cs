@@ -5,6 +5,7 @@ public class Diagnostics : MonoBehaviour
 {
     [SerializeField] private RectTransform _diagnosticsGUIParent;
     [SerializeField] private Color _diagnosticsColor;
+    [SerializeField] private Gradient _usageGradient;
     public static bool IsFullySupported { get; private set; }
     public static bool IsFPSToggled { get; private set; }
     public static bool IsHWUsageToggled { get; private set; }
@@ -53,7 +54,7 @@ public class Diagnostics : MonoBehaviour
 
     }
 
-    [Command("hwinfo", "logs os, cpu and gpu types", InstanceTargetType.First)]
+    [Command("hwinfo", "logs system and hardware information", InstanceTargetType.First)]
     public void Hwinfo()
     {
         LogSystemInfo();
