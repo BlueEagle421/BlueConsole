@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 //using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class ConsoleController : MonoBehaviour
+public class ConsoleVisuals : MonoBehaviour
 {
     [SerializeField] private Console _targetConsole;
     [SerializeField] private float _height;
