@@ -34,8 +34,6 @@ public class Diagnostics : MonoBehaviour
 
         if (IsHWUsageToggled)
             HWUsage(true);
-
-        //cpuCounterText.text = "0% CPU";
     }
 
     private void OnEnable()
