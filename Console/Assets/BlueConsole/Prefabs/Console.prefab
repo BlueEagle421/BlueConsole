@@ -301,6 +301,7 @@ GameObject:
   - component: {fileID: 6946176888372141058}
   - component: {fileID: 25455114547283507}
   - component: {fileID: 5762235901841213058}
+  - component: {fileID: 1806233474293994219}
   m_Layer: 0
   m_Name: Console
   m_TagString: Untagged
@@ -432,6 +433,21 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
+--- !u!114 &1806233474293994219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258155190466125265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffe062b1bd3cb7e4bb897b26922e6fde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fpsTMP: {fileID: 6836462671555920435}
+  _usageTMP: {fileID: 5264749061868749355}
+  _consoleHeaderTextRect: {fileID: 4757656443741871070}
 --- !u!1 &1607684849195335962
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,7 +1002,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7527601877885858807
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1850,8 +1866,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3969914915414559179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5850702}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0.41460305}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2396,8 +2412,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1525421252645074896}
   m_HandleRect: {fileID: 2396021479817540645}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.4149298
+  m_Value: -0.00000039804382
+  m_Size: 0.41460305
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2848,7 +2864,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3323170749458613516
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3132,6 +3148,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0000769496}
+  m_AnchoredPosition: {x: 0, y: 345.00998}
   m_SizeDelta: {x: 0, y: 589.69}
   m_Pivot: {x: 0, y: 1}

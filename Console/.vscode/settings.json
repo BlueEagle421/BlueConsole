@@ -63,6 +63,8 @@
         "hwinfo",
         "hwusage",
         "Mathf",
+        "osinfo",
+        "sysinfo",
         "Whitespaces"
     ]
 }

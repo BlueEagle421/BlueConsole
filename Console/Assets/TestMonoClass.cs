@@ -7,4 +7,14 @@ public class TestMonoClass : MonoBehaviour
     {
         Debug.Log("Hi! My name is: " + this.name);
     }
+
+    private void Start()
+    {
+        //InvokeRepeating(nameof(Overload), 5f, 0.2f);
+    }
+
+    void Overload()
+    {
+        Debug.Log("Overload");
+    }
 }
