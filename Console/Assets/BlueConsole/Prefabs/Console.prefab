@@ -402,19 +402,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _diagnosticsGUIParent: {fileID: 5835137365992088134}
-  _diagnosticsColor: {r: 0.09787818, g: 0.8792453, b: 0.09787818, a: 1}
+  updateInterval: 0.6
+  _diagnosticsLogColor: {r: 0.09803922, g: 0.8784314, b: 0.09803922, a: 1}
+--- !u!114 &1806233474293994219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258155190466125265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffe062b1bd3cb7e4bb897b26922e6fde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fpsTMP: {fileID: 6836462671555920435}
+  _usageTMP: {fileID: 5264749061868749355}
+  _consoleHeaderTextRect: {fileID: 4757656443741871070}
+  _fpsColor: {r: 0.09803922, g: 0.8784314, b: 0.09803922, a: 1}
   _usageGradient:
     serializedVersion: 2
     key0: {r: 0.09803922, g: 0.8784314, b: 0.09803922, a: 1}
-    key1: {r: 0.8666667, g: 0.627451, b: 0.09411765, a: 1}
-    key2: {r: 0.7529412, g: 0.047058824, b: 0.047058824, a: 0}
+    key1: {r: 1, g: 0.69035536, b: 0, a: 1}
+    key2: {r: 1, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 9830
-    ctime1: 32768
+    ctime0: 16384
+    ctime1: 45875
     ctime2: 65535
     ctime3: 0
     ctime4: 0
@@ -433,21 +450,6 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
---- !u!114 &1806233474293994219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258155190466125265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffe062b1bd3cb7e4bb897b26922e6fde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fpsTMP: {fileID: 6836462671555920435}
-  _usageTMP: {fileID: 5264749061868749355}
-  _consoleHeaderTextRect: {fileID: 4757656443741871070}
 --- !u!1 &1607684849195335962
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,7 +1046,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2906,7 +2908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2975,7 +2977,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 5, y: 0, z: 5, w: 0}
+  m_margin: {x: 5, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
