@@ -366,6 +366,12 @@ MonoBehaviour:
     scaleType: 3
   - rectTransform: {fileID: 5207084699868117920}
     scaleType: 3
+  - rectTransform: {fileID: 7527601877885858807}
+    scaleType: 3
+  - rectTransform: {fileID: 3323170749458613516}
+    scaleType: 3
+  - rectTransform: {fileID: 7917878524092134929}
+    scaleType: 0
 --- !u!114 &25455114547283507
 MonoBehaviour:
   m_ObjectHideFlags: 0
