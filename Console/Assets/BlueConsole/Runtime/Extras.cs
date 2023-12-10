@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class Extras : MonoBehaviour
 {
     [SerializeField] private RectTransform _diagnosticsGUIParent;
-    [SerializeField] private Color _diagnosticsLogColor;
+    [SerializeField] private Color _infoLogColor;
     public static bool IsFPSToggled { get; private set; }
     public static Action<bool> OnFPSToggled;
 
@@ -54,7 +54,7 @@ public class Extras : MonoBehaviour
     [Command("osinfo", "logs operating system information", InstanceTargetType.First)]
     public void OsInfo()
     {
-        string hexDiagnosticsColor = ColorUtility.ToHtmlStringRGB(_diagnosticsLogColor);
+        string hexDiagnosticsColor = ColorUtility.ToHtmlStringRGB(_infoLogColor);
         UnityEngine.Debug.Log(string.Format("OS: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.operatingSystemFamily.ToString()));
     }
 
@@ -67,7 +67,7 @@ public class Extras : MonoBehaviour
             return;
         }
 
-        string hexDiagnosticsColor = ColorUtility.ToHtmlStringRGB(_diagnosticsLogColor);
+        string hexDiagnosticsColor = ColorUtility.ToHtmlStringRGB(_infoLogColor);
         UnityEngine.Debug.Log(string.Format("CPU: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.processorType));
         UnityEngine.Debug.Log(string.Format("GPU: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.graphicsDeviceName));
     }
