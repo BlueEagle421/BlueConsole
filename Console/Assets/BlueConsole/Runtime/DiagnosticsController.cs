@@ -28,8 +28,6 @@ public class DiagnosticsController : MonoBehaviour
     {
         ConsoleUtils.SetActionListener(ref Console.OnConsoleToggled, OnConsoleToggled, subscribe);
         ConsoleUtils.SetActionListener(ref Diagnostics.OnFPSToggled, OnFPSToggled, subscribe);
-        ConsoleUtils.SetActionListener(ref Diagnostics.OnUsageToggled, OnUsageToggled, subscribe);
-        ConsoleUtils.SetActionListener(ref Diagnostics.OnCpuUsageChanged, FormatTextUsage, subscribe);
     }
 
     private void OnConsoleToggled(bool toggled)
@@ -46,7 +44,6 @@ public class DiagnosticsController : MonoBehaviour
     {
         _fpsTMP.gameObject.SetActive(toggled);
         SetConsoleHeaderTextRect();
-        FormatTextUsage();
     }
     private void FormatTextFPS()
     {
@@ -55,12 +52,6 @@ public class DiagnosticsController : MonoBehaviour
 
         string colorHex = ColorUtility.ToHtmlStringRGB(_fpsColor);
         _fpsTMP.text = string.Format("<color=#{0}>{1}</color>", colorHex, Diagnostics.CurrentFPSFormatted());
-    }
-
-    private void FormatTextUsage()
-    {
-        string colorHex = ColorUtility.ToHtmlStringRGB(_usageGradient.Evaluate(Diagnostics.CpuUsage / 100f));
-        _usageTMP.text = string.Format("CPU:<color=#{0}>({1}%)</color>", colorHex, (int)Diagnostics.CpuUsage);
     }
 
     private void SetConsoleHeaderTextRect()
