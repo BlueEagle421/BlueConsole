@@ -73,15 +73,4 @@ public class Diagnostics : MonoBehaviour
         UnityEngine.Debug.Log(string.Format("CPU: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.processorType));
         UnityEngine.Debug.Log(string.Format("GPU: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.graphicsDeviceName));
     }
-
-    [Command("diagnose", "toggles fps, sysinfo, hwinfo and hwusage", InstanceTargetType.First)]
-    public void Diagnose(bool on)
-    {
-        if (on)
-        {
-            OsInfo();
-            HwInfo();
-        }
-        FPS(on);
-    }
 }
