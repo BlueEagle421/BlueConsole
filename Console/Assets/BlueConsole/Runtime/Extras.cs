@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Extras : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Extras : MonoBehaviour
     public static bool IsFPSToggled { get; private set; }
     public static Action<bool> OnFPSToggled;
 
-    private static float[] _frameDeltaTimings;
+    private static float[] _frameDeltaTimings = new float[50];
     private int _lastFrameIndex;
 
     private void Start()
@@ -69,5 +70,41 @@ public class Extras : MonoBehaviour
         string hexDiagnosticsColor = ColorUtility.ToHtmlStringRGB(_diagnosticsLogColor);
         UnityEngine.Debug.Log(string.Format("CPU: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.processorType));
         UnityEngine.Debug.Log(string.Format("GPU: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.graphicsDeviceName));
+    }
+
+    [Command("quit", "closes the application")]
+    public static void Quit()
+    {
+        Application.Quit();
+    }
+
+    [Command("reset", "resets current scene")]
+    public static void Reset()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+    }
+
+    [Command("version", "logs project name and version")]
+    public static void Version()
+    {
+        Debug.Log(string.Format("{0} version: {1}", Application.productName, Application.version));
+    }
+
+    [Command("log", "logs")]
+    public static void Log(string message)
+    {
+        Debug.Log(message);
+    }
+
+    [Command("log_error", "logs an error without stack trace")]
+    public static void Log_Error(string message, bool trace)
+    {
+        Debug.LogError(message + (trace ? string.Empty : Console.NO_TRACE));
+    }
+
+    [Command("log_warning", "logs warning")]
+    public static void Log_Warning(string message)
+    {
+        Debug.LogWarning(message);
     }
 }
