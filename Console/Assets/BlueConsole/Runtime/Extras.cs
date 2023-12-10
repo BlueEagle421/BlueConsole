@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Diagnostics : MonoBehaviour
+public class Extras : MonoBehaviour
 {
     [SerializeField] private RectTransform _diagnosticsGUIParent;
     [SerializeField] private Color _diagnosticsLogColor;

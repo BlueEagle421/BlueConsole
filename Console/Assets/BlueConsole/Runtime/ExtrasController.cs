@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class DiagnosticsController : MonoBehaviour
+public class ExtrasController : MonoBehaviour
 {
     [SerializeField] private TMP_Text _fpsTMP;
     [SerializeField] private TMP_Text _usageTMP;
@@ -27,7 +27,7 @@ public class DiagnosticsController : MonoBehaviour
     private void SetEvents(bool subscribe)
     {
         ConsoleUtils.SetActionListener(ref Console.OnConsoleToggled, OnConsoleToggled, subscribe);
-        ConsoleUtils.SetActionListener(ref Diagnostics.OnFPSToggled, OnFPSToggled, subscribe);
+        ConsoleUtils.SetActionListener(ref Extras.OnFPSToggled, OnFPSToggled, subscribe);
     }
 
     private void OnConsoleToggled(bool toggled)
@@ -47,15 +47,15 @@ public class DiagnosticsController : MonoBehaviour
     }
     private void FormatTextFPS()
     {
-        if (!Diagnostics.IsFPSToggled)
+        if (!Extras.IsFPSToggled)
             return;
 
         string colorHex = ColorUtility.ToHtmlStringRGB(_fpsColor);
-        _fpsTMP.text = string.Format("<color=#{0}>{1}</color>", colorHex, Diagnostics.CurrentFPSFormatted());
+        _fpsTMP.text = string.Format("<color=#{0}>{1}</color>", colorHex, Extras.CurrentFPSFormatted());
     }
 
     private void SetConsoleHeaderTextRect()
     {
-        _consoleHeaderTextRect.gameObject.SetActive(!Diagnostics.IsFPSToggled);
+        _consoleHeaderTextRect.gameObject.SetActive(!Extras.IsFPSToggled);
     }
 }
