@@ -1,7 +1,12 @@
 # Changelog
 
 ## [1.3.0] - 5.12.2023
- - Added diagnostics
+ - Overhauled commands class
+ - Added man command
+ - Added fps command
+ - Added hwinfo command
+ - Added osinfo command
+ - Fixed console content not wrapping correctly
 
 ## [1.2.0] - 24.11.2023
  - Reworked commands system
