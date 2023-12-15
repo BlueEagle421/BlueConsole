@@ -4,10 +4,8 @@ using UnityEngine;
 public class ExtrasController : MonoBehaviour
 {
     [SerializeField] private TMP_Text _fpsTMP;
-    [SerializeField] private TMP_Text _usageTMP;
     [SerializeField] private RectTransform _consoleHeaderTextRect;
     [SerializeField] private Color _fpsColor;
-    [SerializeField] private Gradient _usageGradient;
 
     private void Awake()
     {
@@ -33,11 +31,6 @@ public class ExtrasController : MonoBehaviour
     private void OnConsoleToggled(bool toggled)
     {
         SetConsoleHeaderTextRect();
-    }
-
-    private void OnUsageToggled(bool toggled)
-    {
-        _usageTMP.gameObject.SetActive(toggled);
     }
 
     private void OnFPSToggled(bool toggled)
