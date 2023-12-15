@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using UnityEditorInternal;
 using UnityEngine;
 
+[DefaultExecutionOrder(-1)]
 public class Console : MonoBehaviour
 {
     [Tooltip("Should the default assembly be searched for commands?")]
