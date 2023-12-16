@@ -24,8 +24,8 @@ public class ExtrasController : MonoBehaviour
 
     private void SetEvents(bool subscribe)
     {
-        ConsoleUtils.SetActionListener(ref Console.OnConsoleToggled, OnConsoleToggled, subscribe);
-        ConsoleUtils.SetActionListener(ref Extras.OnFPSToggled, OnFPSToggled, subscribe);
+        Console.Current.OnConsoleToggled += OnConsoleToggled;
+        Extras.OnFPSToggled += OnFPSToggled;
     }
 
     private void OnConsoleToggled(bool toggled)

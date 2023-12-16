@@ -36,16 +36,23 @@ public class Console : MonoBehaviour
     private bool _wasToggledInScene;
     private int _currentHistoryRecall = 0;
 
-    public static Action<bool> OnConsoleToggled;
-    public static Action OnContentChanged;
-    public static Action OnHintsChanged;
-    public static Action<string> OnHistoryRecall;
-    public static Action<string> OnHintAccept;
+    public static Console Current;
+
+    public Action<bool> OnConsoleToggled;
+    public Action OnContentChanged;
+    public Action OnHintsChanged;
+    public Action<string> OnHistoryRecall;
+    public Action<string> OnHintAccept;
+
+    private void Awake()
+    {
+        Current = this;
+    }
 
     private void Start()
     {
         if (IsToggled)
-            ToggleConsole(true);
+            Toggle(true);
     }
 
     private void OnEnable()
@@ -66,36 +73,6 @@ public class Console : MonoBehaviour
     private void OnDisable()
     {
         Application.logMessageReceived -= HandleLog;
-    }
-
-    public void InputFieldChangedInput(string input)
-    {
-        SetHintsByInput(input);
-    }
-
-    public void EnterInput(string input)
-    {
-        ReadInput(input);
-    }
-
-    public void ToggleConsoleInput()
-    {
-        ToggleConsole(!IsToggled);
-    }
-
-    public void RecallHistoryUpInput()
-    {
-        RecallHistory(-1);
-    }
-
-    public void RecallHistoryDownInput()
-    {
-        RecallHistory(1);
-    }
-
-    public void AcceptHintInput()
-    {
-        AcceptHint();
     }
 
     private void LoadTypeParameters()
@@ -221,7 +198,12 @@ public class Console : MonoBehaviour
         }
     }
 
-    private void ToggleConsole(bool toggle)
+    public void InvertToggle()
+    {
+        Toggle(!IsToggled);
+    }
+
+    public void Toggle(bool toggle)
     {
         if (toggle)
             ToggledOn();
@@ -267,7 +249,7 @@ public class Console : MonoBehaviour
         OnContentChanged?.Invoke();
     }
 
-    private void SetHintsByInput(string input)
+    public void GenerateHints(string input)
     {
         Hints.Clear();
 
@@ -316,7 +298,7 @@ public class Console : MonoBehaviour
                 break;
             case LogType.Error:
                 AppendTracedLogContent(logString, stackTrace, "\n> [error] ", ColorUtility.ToHtmlStringRGB(_errorColor));
-                ToggleConsole(true);
+                Toggle(true);
                 break;
             case LogType.Warning:
                 AppendContentLine(logString, "\n> [warning] ", ColorUtility.ToHtmlStringRGB(_warningColor));
@@ -359,7 +341,7 @@ public class Console : MonoBehaviour
         ContentChanged();
     }
 
-    private void ReadInput(string input)
+    public void ReadInput(string input)
     {
         if (!IsToggled)
             return;
@@ -386,7 +368,7 @@ public class Console : MonoBehaviour
         _currentHistoryRecall = History.Count;
     }
 
-    private void RecallHistory(int indexOffset)
+    public void RecallHistory(int indexOffset)
     {
         int historySize = History.Count;
 
@@ -415,7 +397,7 @@ public class Console : MonoBehaviour
         OnHistoryRecall?.Invoke(inputToRecall);
     }
 
-    private void AcceptHint()
+    public void AcceptHint()
     {
         if (Hints.Count == 0)
             return;

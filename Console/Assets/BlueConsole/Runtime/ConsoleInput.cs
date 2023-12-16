@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public class ConsoleInput : MonoBehaviour
 {
-    [SerializeField] private Console _targetConsole;
     [SerializeField] private TMP_InputField _consoleInputField;
 
     private void Awake()
@@ -21,10 +20,10 @@ public class ConsoleInput : MonoBehaviour
     private void SetEvents(bool subscribe)
     {
         if (subscribe)
-            _consoleInputField.onValueChanged.AddListener(_targetConsole.InputFieldChangedInput);
-        ConsoleUtils.SetActionListener(ref Console.OnConsoleToggled, OnConsoleToggled, subscribe);
-        ConsoleUtils.SetActionListener(ref Console.OnHistoryRecall, OnHistoryRecall, subscribe);
-        ConsoleUtils.SetActionListener(ref Console.OnHintAccept, OnHintAccept, subscribe);
+            _consoleInputField.onValueChanged.AddListener(Console.Current.GenerateHints);
+        Console.Current.OnConsoleToggled += OnConsoleToggled;
+        Console.Current.OnHistoryRecall += OnHistoryRecall;
+        Console.Current.OnHintAccept += OnHintAccept;
     }
 
     private void OnConsoleToggled(bool toggled)
@@ -85,7 +84,7 @@ public class ConsoleInput : MonoBehaviour
 
     private void PerformToggleInput()
     {
-        _targetConsole.ToggleConsoleInput();
+        Console.Current.InvertToggle();
     }
 
     private void PerformEnterInput()
@@ -93,23 +92,23 @@ public class ConsoleInput : MonoBehaviour
         if (!IsInputFieldSelected())
             return;
 
-        _targetConsole.EnterInput(_consoleInputField.text);
+        Console.Current.ReadInput(_consoleInputField.text);
         ClearAndSelectInputField();
     }
 
     private void PerformHistoryRecallUpInput()
     {
-        _targetConsole.RecallHistoryUpInput();
+        Console.Current.RecallHistory(-1);
     }
 
     private void PerformHistoryRecallDownInput()
     {
-        _targetConsole.RecallHistoryDownInput();
+        Console.Current.RecallHistory(1);
     }
 
     private void PerformAcceptHintInput()
     {
-        _targetConsole.AcceptHintInput();
+        Console.Current.AcceptHint();
     }
 
     private void OnHistoryRecall(string recalledInput)

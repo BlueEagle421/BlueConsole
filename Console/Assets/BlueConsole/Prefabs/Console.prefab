@@ -338,7 +338,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cff85adcc1ca684b961a95c69c6b64f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetConsole: {fileID: 25455114547283507}
   _consoleInputField: {fileID: 5213112243803470482}
 --- !u!114 &6946176888372141058
 MonoBehaviour:
@@ -352,7 +351,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad3648cb7770024ebdcf38bd4bb3b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetConsole: {fileID: 25455114547283507}
   _height: 320
   _scale: 1
   _consoleGUIParent: {fileID: 117401759784008361}
@@ -427,7 +425,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 366af98fd47d62642a3615a0400a797a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _diagnosticsGUIParent: {fileID: 0}
   _infoLogColor: {r: 0.09803922, g: 0.8784314, b: 0.09803922, a: 1}
 --- !u!114 &1806233474293994219
 MonoBehaviour:
@@ -1805,7 +1802,7 @@ GameObject:
   - component: {fileID: 1382371926020138194}
   - component: {fileID: 8020310283778822684}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ToggleOffButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1883,9 +1880,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Console, Assembly-CSharp
-        m_MethodName: ToggleConsole
+      - m_Target: {fileID: 25455114547283507}
+        m_TargetAssemblyTypeName: Console, BlueConsole
+        m_MethodName: Toggle
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

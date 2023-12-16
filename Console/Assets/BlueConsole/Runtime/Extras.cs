@@ -24,7 +24,7 @@ public class Extras : MonoBehaviour
 
     private void UpdateFPSLastFrame()
     {
-        _frameDeltaTimings[_lastFrameIndex] = Time.unscaledDeltaTime;
+        _frameDeltaTimings[_lastFrameIndex] = UnityEngine.Time.unscaledDeltaTime;
         _lastFrameIndex = (_lastFrameIndex + 1) % _frameDeltaTimings.Length;
     }
 
@@ -105,5 +105,11 @@ public class Extras : MonoBehaviour
     public static void Log_Warning(string message)
     {
         Debug.LogWarning(message);
+    }
+
+    [Command("time", "logs current time")]
+    public static void Time()
+    {
+        Debug.Log(DateTime.Now);
     }
 }

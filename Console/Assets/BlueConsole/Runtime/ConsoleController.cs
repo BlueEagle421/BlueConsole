@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class ConsoleController : MonoBehaviour
 {
-    [SerializeField] private Console _targetConsole;
     [SerializeField] private float _height;
     [SerializeField] private float _scale;
     [SerializeField] private RectTransform _consoleGUIParent, _GUIParent;
@@ -21,13 +20,8 @@ public class ConsoleController : MonoBehaviour
 
     private void Awake()
     {
-        SetEvents(true);
+        SetEvents();
         CheckEventSystem();
-    }
-
-    private void OnDisable()
-    {
-        SetEvents(false);
     }
 
     private void Start()
@@ -41,22 +35,22 @@ public class ConsoleController : MonoBehaviour
     {
         if (EventSystem.current == null)
         {
-            _targetConsole.ToggleConsoleInput();
+            Console.Current.Toggle(true);
             Debug.LogError("Missing EventSystem. Console will not work properly.");
             enabled = false;
         }
     }
 
-    private void SetEvents(bool subscribe)
+    private void SetEvents()
     {
-        ConsoleUtils.SetActionListener(ref Console.OnConsoleToggled, OnConsoleToggled, subscribe);
-        ConsoleUtils.SetActionListener(ref Console.OnContentChanged, OnConsoleContentChanged, subscribe);
-        ConsoleUtils.SetActionListener(ref Console.OnHintsChanged, OnHintsChanged, subscribe);
+        Console.Current.OnConsoleToggled += OnConsoleToggled;
+        Console.Current.OnContentChanged += OnConsoleContentChanged;
+        Console.Current.OnHintsChanged += OnHintsChanged;
     }
 
     private void CloneHintField()
     {
-        for (int i = 0; i < _targetConsole.MaxHintsAmount; i++)
+        for (int i = 0; i < Console.Current.MaxHintsAmount; i++)
         {
             TMP_InputField toAdd = Instantiate(_hintInputField);
             toAdd.transform.SetParent(_hintInputField.transform.parent, false);
