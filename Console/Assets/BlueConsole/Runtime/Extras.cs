@@ -49,15 +49,15 @@ public class Extras : MonoBehaviour
         OnFPSToggled.Invoke(on);
     }
 
-    [Command("osinfo", "logs operating system information", InstanceTargetType.First)]
-    public void OsInfo()
+    [Command("osinfo", "logs operating system information")]
+    public static void OsInfo()
     {
         string hexDiagnosticsColor = ColorUtility.ToHtmlStringRGB(Console.Current.AdditionalColor);
         Debug.Log(string.Format("OS: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.operatingSystemFamily.ToString()));
     }
 
-    [Command("hwinfo", "logs hardware information", InstanceTargetType.First)]
-    public void HwInfo()
+    [Command("hwinfo", "logs hardware information")]
+    public static void HwInfo()
     {
         if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Other)
         {
