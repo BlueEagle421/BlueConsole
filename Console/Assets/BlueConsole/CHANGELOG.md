@@ -7,6 +7,7 @@
  - Added hwinfo command
  - Added osinfo command
  - Fixed console content not wrapping correctly
+ - Improved bool type parameter
 
 ## [1.2.0] - 24.11.2023
  - Reworked commands system
