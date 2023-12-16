@@ -49,14 +49,14 @@ public class Extras : MonoBehaviour
         OnFPSToggled.Invoke(on);
     }
 
-    [Command("osinfo", "logs operating system information")]
+    [Command("os-info", "logs operating system information")]
     public static void OsInfo()
     {
-        string hexDiagnosticsColor = ColorUtility.ToHtmlStringRGB(Console.Current.AdditionalColor);
-        Debug.Log(string.Format("OS: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.operatingSystemFamily.ToString()));
+        string hexColor = ColorUtility.ToHtmlStringRGB(Console.Current.AdditionalColor);
+        Debug.Log(string.Format("OS: <color=#{0}>{1}</color>", hexColor, SystemInfo.operatingSystemFamily.ToString()));
     }
 
-    [Command("hwinfo", "logs hardware information")]
+    [Command("hw-info", "logs hardware information")]
     public static void HwInfo()
     {
         if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Other)
@@ -65,9 +65,18 @@ public class Extras : MonoBehaviour
             return;
         }
 
-        string hexDiagnosticsColor = ColorUtility.ToHtmlStringRGB(Console.Current.AdditionalColor);
-        Debug.Log(string.Format("CPU: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.processorType));
-        Debug.Log(string.Format("GPU: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.graphicsDeviceName));
+        string hexColor = ColorUtility.ToHtmlStringRGB(Console.Current.AdditionalColor);
+        Debug.Log(string.Format("CPU: <color=#{0}>{1}</color>", hexColor, SystemInfo.processorType));
+        Debug.Log(string.Format("GPU: <color=#{0}>{1}</color>", hexColor, SystemInfo.graphicsDeviceName));
+    }
+
+    [Command("player-info", "logs player information")]
+    public static void PlayerInfo()
+    {
+        string hexColor = ColorUtility.ToHtmlStringRGB(Console.Current.AdditionalColor);
+        Debug.Log(string.Format("Company Name: <color=#{0}>{1}</color>", hexColor, Application.companyName));
+        Debug.Log(string.Format("Product Name: <color=#{0}>{1}</color>", hexColor, Application.productName));
+        Debug.Log(string.Format("Version: <color=#{0}>{1}</color>", hexColor, Application.version));
     }
 
     [Command("quit", "closes the application")]
