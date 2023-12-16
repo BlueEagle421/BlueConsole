@@ -2,14 +2,18 @@ using System.Globalization;
 
 public static class ConsoleTypeParameters
 {
-    [TypeParameter(@"[0|1]")]
+    [TypeParameter(@"[0|1|on|off|true|false]")]
     public static bool BoolParameter(string inputParam)
     {
         return inputParam switch
         {
             "1" => true,
             "0" => false,
-            _ => false,
+            "on" => true,
+            "off" => false,
+            "true" => true,
+            "false" => false,
+            _ => throw new System.Exception()
         };
     }
 
