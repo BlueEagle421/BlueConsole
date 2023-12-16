@@ -14,14 +14,34 @@ public class Console : MonoBehaviour
     [Tooltip("These assemblies will be searched for commands")]
     [SerializeField] private List<AssemblyDefinitionAsset> _assembliesWithCommands;
     [Tooltip("The amount of hints the console should generate for the user")]
-    [SerializeField] private int _maxHintsAmount = 5;
+    [field: SerializeField] public int MaxHintsAmount { get; private set; } = 5;
     [Tooltip("A message that will always appear after toggling the console for the first time")]
     [SerializeField] private string _welcomeMessage = "Welcome to <color=#4895EF>BlueConsole</color>!";
 
     [Tooltip("A color that the message will appear in")]
-    [SerializeField] private Color _logColor = Color.white, _errorColor = Color.red, _warningColor = Color.yellow, _exceptionColor = Color.red, _assertColor = Color.yellow, _executableColor = Color.cyan, _parametersColor;
+    [field: SerializeField] public Color LogColor { get; private set; } = Color.white;
 
-    public int MaxHintsAmount { get { return _maxHintsAmount; } }
+    [Tooltip("A color that the message will appear in")]
+    [field: SerializeField] public Color ErrorColor { get; private set; } = Color.red;
+
+    [Tooltip("A color that the message will appear in")]
+    [field: SerializeField] public Color WarningColor { get; private set; } = Color.yellow;
+
+    [Tooltip("A color that the message will appear in")]
+    [field: SerializeField] public Color ExceptionColor { get; private set; } = Color.red;
+
+    [Tooltip("A color that the message will appear in")]
+    [field: SerializeField] public Color AssertColor { get; private set; } = Color.yellow;
+
+    [Tooltip("A color that the message will appear in")]
+    [field: SerializeField] public Color ExecutableColor { get; private set; } = Color.blue;
+
+    [Tooltip("A color that the parameters will appear in")]
+    [field: SerializeField] public Color ParametersColor { get; private set; } = Color.white;
+
+    [Tooltip("An additional color used by specific commands")]
+    [field: SerializeField] public Color AdditionalColor { get; private set; } = Color.green;
+
     public static string Content { get; private set; }
     public static bool IsToggled { get; private set; }
     public static List<string> Hints { get; private set; } = new();
@@ -159,7 +179,7 @@ public class Console : MonoBehaviour
         if (Attribute.IsDefined(methodInfo, typeof(CommandAttribute)))
         {
             CommandAttribute attribute = methodInfo.GetCustomAttribute(typeof(CommandAttribute)) as CommandAttribute;
-            Command consoleCommand = new(methodInfo, attribute, _parametersColor);
+            Command consoleCommand = new(methodInfo, attribute, ParametersColor);
 
             if (invokingObject != null)
             {
@@ -261,7 +281,7 @@ public class Console : MonoBehaviour
         {
             string id = Commands[i].ID;
 
-            if (Hints.Count >= _maxHintsAmount)
+            if (Hints.Count >= MaxHintsAmount)
                 continue;
 
             if (Hints.Contains(id))
@@ -294,20 +314,20 @@ public class Console : MonoBehaviour
         switch (type)
         {
             case LogType.Log:
-                AppendContentLine(logString, "\n> ", ColorUtility.ToHtmlStringRGB(_logColor));
+                AppendContentLine(logString, "\n> ", ColorUtility.ToHtmlStringRGB(LogColor));
                 break;
             case LogType.Error:
-                AppendTracedLogContent(logString, stackTrace, "\n> [error] ", ColorUtility.ToHtmlStringRGB(_errorColor));
+                AppendTracedLogContent(logString, stackTrace, "\n> [error] ", ColorUtility.ToHtmlStringRGB(ErrorColor));
                 Toggle(true);
                 break;
             case LogType.Warning:
-                AppendContentLine(logString, "\n> [warning] ", ColorUtility.ToHtmlStringRGB(_warningColor));
+                AppendContentLine(logString, "\n> [warning] ", ColorUtility.ToHtmlStringRGB(WarningColor));
                 break;
             case LogType.Exception:
-                AppendTracedLogContent(logString, stackTrace, "\n> [exception] ", ColorUtility.ToHtmlStringRGB(_exceptionColor));
+                AppendTracedLogContent(logString, stackTrace, "\n> [exception] ", ColorUtility.ToHtmlStringRGB(ExceptionColor));
                 break;
             case LogType.Assert:
-                AppendContentLine(logString, "\n> [assert] ", ColorUtility.ToHtmlStringRGB(_assertColor));
+                AppendContentLine(logString, "\n> [assert] ", ColorUtility.ToHtmlStringRGB(AssertColor));
                 break;
         }
     }
@@ -420,7 +440,7 @@ public class Console : MonoBehaviour
 
         if (TryToParseParams(inputSplit, toExecute, out object[] parameters))
         {
-            AppendContentLine(inputContent, "\n> ", ColorUtility.ToHtmlStringRGB(_executableColor));
+            AppendContentLine(inputContent, "\n> ", ColorUtility.ToHtmlStringRGB(ExecutableColor));
             toExecute.Invoke(parameters);
         }
         else
@@ -537,7 +557,7 @@ public class Console : MonoBehaviour
     public void Man(Command command)
     {
         Debug.Log("Description: " + command.Description);
-        Debug.Log("Parameters: " + command.ParametersTypesLabel(ColorUtility.ToHtmlStringRGB(_parametersColor)));
+        Debug.Log("Parameters: " + command.ParametersTypesLabel(ColorUtility.ToHtmlStringRGB(ParametersColor)));
         Debug.Log("Target: " + command.TargetTypeLabel());
         Debug.Log("Source class name: " + command.InvokingClassLabel());
         Debug.Log("Source assembly name: " + command.AssemblyLabel());

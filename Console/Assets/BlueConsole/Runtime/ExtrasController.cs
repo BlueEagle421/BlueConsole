@@ -5,7 +5,6 @@ public class ExtrasController : MonoBehaviour
 {
     [SerializeField] private TMP_Text _fpsTMP;
     [SerializeField] private RectTransform _consoleHeaderTextRect;
-    [SerializeField] private Color _fpsColor;
 
     private void Awake()
     {
@@ -43,8 +42,7 @@ public class ExtrasController : MonoBehaviour
         if (!Extras.IsFPSToggled)
             return;
 
-        string colorHex = ColorUtility.ToHtmlStringRGB(_fpsColor);
-        _fpsTMP.text = string.Format("<color=#{0}>{1}</color>", colorHex, Extras.CurrentFPSFormatted());
+        _fpsTMP.text = Extras.CurrentFPSFormatted();
     }
 
     private void SetConsoleHeaderTextRect()

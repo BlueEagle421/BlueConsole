@@ -404,15 +404,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _includeAssemblyCSharp: 1
   _assembliesWithCommands: []
-  _maxHintsAmount: 5
+  <MaxHintsAmount>k__BackingField: 5
   _welcomeMessage: Welcome to <color=#4895EF>BlueConsole</color>!
-  _logColor: {r: 1, g: 1, b: 1, a: 1}
-  _errorColor: {r: 0.7529412, g: 0.047058824, b: 0.047058824, a: 1}
-  _warningColor: {r: 0.8666667, g: 0.627451, b: 0.09411765, a: 1}
-  _exceptionColor: {r: 0.7529412, g: 0.047058824, b: 0.047058824, a: 1}
-  _assertColor: {r: 0.8666667, g: 0.627451, b: 0.09411765, a: 1}
-  _executableColor: {r: 0.28235295, g: 0.58431375, b: 0.9372549, a: 1}
-  _parametersColor: {r: 0.19449617, g: 0.21384603, b: 0.22264141, a: 1}
+  <LogColor>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
+  <ErrorColor>k__BackingField: {r: 0.7529412, g: 0.047058824, b: 0.047058824, a: 1}
+  <WarningColor>k__BackingField: {r: 0.8666667, g: 0.627451, b: 0.09411765, a: 1}
+  <ExceptionColor>k__BackingField: {r: 0.7529412, g: 0.047058824, b: 0.047058824, a: 1}
+  <AssertColor>k__BackingField: {r: 0.8666667, g: 0.627451, b: 0.09411765, a: 1}
+  <ExecutableColor>k__BackingField: {r: 0.28235295, g: 0.58431375, b: 0.9372549, a: 1}
+  <ParametersColor>k__BackingField: {r: 0.19449617, g: 0.21384603, b: 0.22264141, a: 1}
+  <AdditionalColor>k__BackingField: {r: 0.09803922, g: 0.8784314, b: 0.09803922, a: 1}
 --- !u!114 &5762235901841213058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,7 +426,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 366af98fd47d62642a3615a0400a797a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _infoLogColor: {r: 0.09803922, g: 0.8784314, b: 0.09803922, a: 1}
 --- !u!114 &1806233474293994219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,7 +440,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fpsTMP: {fileID: 6836462671555920435}
   _consoleHeaderTextRect: {fileID: 4757656443741871070}
-  _fpsColor: {r: 0.09803922, g: 0.8784314, b: 0.09803922, a: 1}
 --- !u!1 &1607684849195335962
 GameObject:
   m_ObjectHideFlags: 0
