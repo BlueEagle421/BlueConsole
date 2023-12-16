@@ -53,7 +53,7 @@ public class Extras : MonoBehaviour
     public void OsInfo()
     {
         string hexDiagnosticsColor = ColorUtility.ToHtmlStringRGB(Console.Current.AdditionalColor);
-        UnityEngine.Debug.Log(string.Format("OS: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.operatingSystemFamily.ToString()));
+        Debug.Log(string.Format("OS: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.operatingSystemFamily.ToString()));
     }
 
     [Command("hwinfo", "logs hardware information", InstanceTargetType.First)]
@@ -61,13 +61,13 @@ public class Extras : MonoBehaviour
     {
         if (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Other)
         {
-            UnityEngine.Debug.Log("hwinfo is disabled for this operating system");
+            Debug.Log("hwinfo is disabled for this operating system");
             return;
         }
 
         string hexDiagnosticsColor = ColorUtility.ToHtmlStringRGB(Console.Current.AdditionalColor);
-        UnityEngine.Debug.Log(string.Format("CPU: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.processorType));
-        UnityEngine.Debug.Log(string.Format("GPU: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.graphicsDeviceName));
+        Debug.Log(string.Format("CPU: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.processorType));
+        Debug.Log(string.Format("GPU: <color=#{0}>{1}</color>", hexDiagnosticsColor, SystemInfo.graphicsDeviceName));
     }
 
     [Command("quit", "closes the application")]
