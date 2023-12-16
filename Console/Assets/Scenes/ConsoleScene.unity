@@ -135,62 +135,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Console
       objectReference: {fileID: 0}
-    - target: {fileID: 1806233474293994219, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _usageGradient.ctime0
-      value: 9830
-      objectReference: {fileID: 0}
-    - target: {fileID: 1806233474293994219, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _usageGradient.ctime1
-      value: 32768
-      objectReference: {fileID: 0}
-    - target: {fileID: 1806233474293994219, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _usageGradient.ctime2
-      value: 65535
-      objectReference: {fileID: 0}
-    - target: {fileID: 1806233474293994219, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _usageGradient.key0.b
-      value: 0.09803922
-      objectReference: {fileID: 0}
-    - target: {fileID: 1806233474293994219, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _usageGradient.key0.g
-      value: 0.8784314
-      objectReference: {fileID: 0}
-    - target: {fileID: 1806233474293994219, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _usageGradient.key0.r
-      value: 0.09803922
-      objectReference: {fileID: 0}
-    - target: {fileID: 1806233474293994219, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _usageGradient.key1.b
-      value: 0.09411765
-      objectReference: {fileID: 0}
-    - target: {fileID: 1806233474293994219, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _usageGradient.key1.g
-      value: 0.627451
-      objectReference: {fileID: 0}
-    - target: {fileID: 1806233474293994219, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _usageGradient.key1.r
-      value: 0.8666667
-      objectReference: {fileID: 0}
-    - target: {fileID: 1806233474293994219, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _usageGradient.key2.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1806233474293994219, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _usageGradient.key2.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1806233474293994219, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _usageGradient.key2.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1806233474293994219, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _usageGradient.m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1806233474293994219, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _usageGradient.m_NumColorKeys
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4611218274913177977, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -231,133 +175,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[0].scaleType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[1].scaleType
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[2].scaleType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[3].scaleType
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[4].scaleType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[5].scaleType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[6].scaleType
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[7].scaleType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[0].DisplayName
-      value: ToggleOffButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[1].DisplayName
-      value: ToggleOffButtonText
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[2].DisplayName
-      value: Header
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[3].DisplayName
-      value: HeaderText
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[4].DisplayName
-      value: BodyScrollView
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[5].DisplayName
-      value: BodyScrollViewScrollbar
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[6].DisplayName
-      value: ContentFieldTextComponent
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[7].DisplayName
-      value: InputField
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[8].DisplayName
-      value: InputFieldTextComponent
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[9].DisplayName
-      value: FPSText
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[10].DisplayName
-      value: DiagnosticsHeader
-      objectReference: {fileID: 0}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[0].rectTransform
-      value: 
-      objectReference: {fileID: 590141058}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[1].rectTransform
-      value: 
-      objectReference: {fileID: 667364381}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[2].rectTransform
-      value: 
-      objectReference: {fileID: 410038754}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[3].rectTransform
-      value: 
-      objectReference: {fileID: 1697402986}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[4].rectTransform
-      value: 
-      objectReference: {fileID: 635707749}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[5].rectTransform
-      value: 
-      objectReference: {fileID: 1931609395}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[6].rectTransform
-      value: 
-      objectReference: {fileID: 1923219176}
-    - target: {fileID: 6946176888372141058, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: _reckTransformsToScale.Array.data[7].rectTransform
-      value: 
-      objectReference: {fileID: 62682602}
-    - target: {fileID: 7991358539926536039, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
---- !u!224 &62682602 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 9181948411435362779, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-  m_PrefabInstance: {fileID: 4936152}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &410038754 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4783825121717887793, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-  m_PrefabInstance: {fileID: 4936152}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &451205596
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,11 +411,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
---- !u!224 &590141058 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7857057466336139537, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-  m_PrefabInstance: {fileID: 4936152}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &615840721
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,16 +582,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -2.2}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!224 &635707749 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6220793768608453923, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-  m_PrefabInstance: {fileID: 4936152}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &667364381 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3639747288778609377, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-  m_PrefabInstance: {fileID: 4936152}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1062514871
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,11 +652,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!224 &1697402986 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4757656443741871070, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-  m_PrefabInstance: {fileID: 4936152}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1917631037
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,16 +758,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!224 &1923219176 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1144337700035059414, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-  m_PrefabInstance: {fileID: 4936152}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &1931609395 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2229867340236440024, guid: 199e86fe67c6b4d44a01efd47a8490f6, type: 3}
-  m_PrefabInstance: {fileID: 4936152}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2033955197
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class Extras : MonoBehaviour
 {
-    [SerializeField] private RectTransform _diagnosticsGUIParent;
     [SerializeField] private Color _infoLogColor;
     public static bool IsFPSToggled { get; private set; }
     public static Action<bool> OnFPSToggled;
