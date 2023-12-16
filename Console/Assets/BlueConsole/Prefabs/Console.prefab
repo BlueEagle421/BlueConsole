@@ -298,6 +298,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4611218274913177977}
+  - component: {fileID: 3527147655478548268}
   - component: {fileID: 6946176888372141058}
   - component: {fileID: 25455114547283507}
   - component: {fileID: 5762235901841213058}
@@ -325,6 +326,20 @@ Transform:
   - {fileID: 5588320296865815033}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3527147655478548268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258155190466125265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cff85adcc1ca684b961a95c69c6b64f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetConsole: {fileID: 25455114547283507}
+  _consoleInputField: {fileID: 5213112243803470482}
 --- !u!114 &6946176888372141058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,7 +357,6 @@ MonoBehaviour:
   _scale: 1
   _consoleGUIParent: {fileID: 117401759784008361}
   _GUIParent: {fileID: 7897713905294076144}
-  _consoleInputField: {fileID: 5213112243803470482}
   _consoleContentField: {fileID: 1731239088874714341}
   _consoleContentScrollRect: {fileID: 3093928147263973618}
   _consoleContentRect: {fileID: 6115030246566732356}

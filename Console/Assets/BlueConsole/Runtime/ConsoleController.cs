@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-//using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ConsoleController : MonoBehaviour
@@ -12,11 +11,11 @@ public class ConsoleController : MonoBehaviour
     [SerializeField] private float _height;
     [SerializeField] private float _scale;
     [SerializeField] private RectTransform _consoleGUIParent, _GUIParent;
-    [SerializeField] private TMP_InputField _consoleInputField, _consoleContentField;
+    [SerializeField] private TMP_InputField _consoleContentField;
     [SerializeField] private ScrollRect _consoleContentScrollRect;
     [SerializeField] private RectTransform _consoleContentRect;
     [SerializeField] private TMP_InputField _hintInputField;
-    private List<TMP_InputField> _hintsInputFields = new();
+    private readonly List<TMP_InputField> _hintsInputFields = new();
     [SerializeField] private List<ScalableRect> _reckTransformsToScale;
 
 
@@ -50,13 +49,9 @@ public class ConsoleController : MonoBehaviour
 
     private void SetEvents(bool subscribe)
     {
-        if (subscribe)
-            _consoleInputField.onValueChanged.AddListener(_targetConsole.InputFieldChangedInput);
         ConsoleUtils.SetActionListener(ref Console.OnConsoleToggled, OnConsoleToggled, subscribe);
         ConsoleUtils.SetActionListener(ref Console.OnContentChanged, OnConsoleContentChanged, subscribe);
         ConsoleUtils.SetActionListener(ref Console.OnHintsChanged, OnHintsChanged, subscribe);
-        ConsoleUtils.SetActionListener(ref Console.OnHistoryRecall, OnHistoryRecall, subscribe);
-        ConsoleUtils.SetActionListener(ref Console.OnHintAccept, OnHintAccept, subscribe);
     }
 
     private void CloneHintField()
@@ -72,85 +67,6 @@ public class ConsoleController : MonoBehaviour
         Destroy(_hintInputField.gameObject);
     }
 
-    private void Update()
-    {
-        CheckConsoleInput();
-    }
-
-    private void CheckConsoleInput()
-    {
-        CheckInputManagerInput();
-        CheckInputSystemInput();
-    }
-
-    private void CheckInputManagerInput()
-    {
-        if (Input.GetKeyDown(KeyCode.BackQuote))
-            PerformToggleInput();
-
-        if (Input.GetKeyDown(KeyCode.Return))
-            PerformEnterInput();
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-            PerformHistoryRecallDownInput();
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-            PerformHistoryRecallUpInput();
-
-        if (Input.GetKeyDown(KeyCode.Tab))
-            PerformAcceptHintInput();
-
-    }
-
-    private void CheckInputSystemInput()
-    {
-        //uncomment this to use the InputSystem
-
-        // if (Keyboard.current.backquoteKey.wasPressedThisFrame)
-        //     PerformToggleInput();
-
-        // if (Keyboard.current.backquoteKey.wasPressedThisFrame)
-        //     PerformEnterInput();
-
-        // if (Keyboard.current.downArrowKey.wasPressedThisFrame)
-        //     PerformHistoryRecallDownInput();
-
-        // if (Keyboard.current.upArrowKey.wasPressedThisFrame)
-        //     PerformHistoryRecallUpInput();
-
-        // if (Keyboard.current.tabKey.wasPressedThisFrame)
-        //     PerformAcceptHintInput();
-    }
-
-    private void PerformToggleInput()
-    {
-        _targetConsole.ToggleConsoleInput();
-    }
-
-    private void PerformEnterInput()
-    {
-        if (!IsInputFieldSelected())
-            return;
-
-        _targetConsole.EnterInput(_consoleInputField.text);
-        ClearAndSelectInputField();
-    }
-
-    private void PerformHistoryRecallUpInput()
-    {
-        _targetConsole.RecallHistoryUpInput();
-    }
-
-    private void PerformHistoryRecallDownInput()
-    {
-        _targetConsole.RecallHistoryDownInput();
-    }
-
-    private void PerformAcceptHintInput()
-    {
-        _targetConsole.AcceptHintInput();
-    }
-
     private void OnConsoleToggled(bool toggled)
     {
         _consoleGUIParent.gameObject.SetActive(toggled);
@@ -161,7 +77,6 @@ public class ConsoleController : MonoBehaviour
 
             ResizeContentRect();
             ScrollDown();
-            ClearAndSelectInputField();
         }
     }
 
@@ -186,23 +101,6 @@ public class ConsoleController : MonoBehaviour
 
             _hintsInputFields[i].gameObject.SetActive(i < hintsCount);
         }
-    }
-
-    private void OnHistoryRecall(string recalledInput)
-    {
-        _consoleInputField.text = recalledInput;
-        RepositionInputFieldCaret();
-    }
-
-    private void OnHintAccept(string hint)
-    {
-        _consoleInputField.text = hint;
-        RepositionInputFieldCaret();
-    }
-
-    private void RepositionInputFieldCaret()
-    {
-        _consoleInputField.caretPosition = _consoleInputField.text.Length;
     }
 
     private void SetGUIHeight(float height)
@@ -260,21 +158,10 @@ public class ConsoleController : MonoBehaviour
         _consoleContentRect.sizeDelta = new Vector2(0, height);
     }
 
-    private void ClearAndSelectInputField()
-    {
-        _consoleInputField.text = string.Empty;
-        _consoleInputField.ActivateInputField();
-    }
-
     private void ScrollDown()
     {
         if (_consoleContentScrollRect)
             _consoleContentScrollRect.verticalNormalizedPosition = 0f;
-    }
-
-    private bool IsInputFieldSelected()
-    {
-        return EventSystem.current.currentSelectedGameObject == _consoleInputField.gameObject;
     }
 
     [Serializable]
