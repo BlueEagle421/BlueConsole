@@ -167,6 +167,7 @@ public class ConsoleController : MonoBehaviour
     [Serializable]
     private class ScalableRect
     {
+        public string DisplayName;
         [SerializeField] private RectTransform rectTransform;
         [SerializeField] private ScaleType scaleType;
 

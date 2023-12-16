@@ -362,27 +362,38 @@ MonoBehaviour:
   _consoleContentRect: {fileID: 6115030246566732356}
   _hintInputField: {fileID: 2897116652399421076}
   _reckTransformsToScale:
-  - rectTransform: {fileID: 9181948411435362779}
-    scaleType: 0
-  - rectTransform: {fileID: 4783825121717887793}
-    scaleType: 0
-  - rectTransform: {fileID: 6220793768608453923}
-    scaleType: 0
-  - rectTransform: {fileID: 1144337700035059414}
-    scaleType: 3
-  - rectTransform: {fileID: 7857057466336139537}
+  - DisplayName: ToggleOffButton
+    rectTransform: {fileID: 7857057466336139537}
     scaleType: 2
-  - rectTransform: {fileID: 3639747288778609377}
+  - DisplayName: ToggleOffButtonText
+    rectTransform: {fileID: 3639747288778609377}
     scaleType: 3
-  - rectTransform: {fileID: 2229867340236440024}
+  - DisplayName: Header
+    rectTransform: {fileID: 4783825121717887793}
+    scaleType: 0
+  - DisplayName: HeaderText
+    rectTransform: {fileID: 4757656443741871070}
+    scaleType: 3
+  - DisplayName: BodyScrollView
+    rectTransform: {fileID: 6220793768608453923}
+    scaleType: 0
+  - DisplayName: BodyScrollViewScrollbar
+    rectTransform: {fileID: 2229867340236440024}
     scaleType: 1
-  - rectTransform: {fileID: 4757656443741871070}
+  - DisplayName: ContentFieldTextComponent
+    rectTransform: {fileID: 1144337700035059414}
     scaleType: 3
-  - rectTransform: {fileID: 5207084699868117920}
+  - DisplayName: InputField
+    rectTransform: {fileID: 9181948411435362779}
+    scaleType: 0
+  - DisplayName: InputFieldTextComponent
+    rectTransform: {fileID: 5207084699868117920}
     scaleType: 3
-  - rectTransform: {fileID: 7527601877885858807}
+  - DisplayName: FPSText
+    rectTransform: {fileID: 7527601877885858807}
     scaleType: 3
-  - rectTransform: {fileID: 7917878524092134929}
+  - DisplayName: DiagnosticsHeader
+    rectTransform: {fileID: 7917878524092134929}
     scaleType: 0
 --- !u!114 &25455114547283507
 MonoBehaviour:
