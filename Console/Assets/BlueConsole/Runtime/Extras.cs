@@ -52,8 +52,7 @@ public class Extras : MonoBehaviour
     [Command("os-info", "logs operating system information")]
     public static void OsInfo()
     {
-        string hexColor = ColorUtility.ToHtmlStringRGB(Console.Current.AdditionalColor);
-        Debug.Log(string.Format("OS: <color=#{0}>{1}</color>", hexColor, SystemInfo.operatingSystemFamily.ToString()));
+        Debug.Log(string.Format("OS: {0}", SystemInfo.operatingSystemFamily.ToString()));
     }
 
     [Command("hw-info", "logs hardware information")]
@@ -65,18 +64,16 @@ public class Extras : MonoBehaviour
             return;
         }
 
-        string hexColor = ColorUtility.ToHtmlStringRGB(Console.Current.AdditionalColor);
-        Debug.Log(string.Format("CPU: <color=#{0}>{1}</color>", hexColor, SystemInfo.processorType));
-        Debug.Log(string.Format("GPU: <color=#{0}>{1}</color>", hexColor, SystemInfo.graphicsDeviceName));
+        Debug.Log(string.Format("CPU: {0}", SystemInfo.processorType));
+        Debug.Log(string.Format("GPU: {0}", SystemInfo.graphicsDeviceName));
     }
 
     [Command("player-info", "logs player information")]
     public static void PlayerInfo()
     {
-        string hexColor = ColorUtility.ToHtmlStringRGB(Console.Current.AdditionalColor);
-        Debug.Log(string.Format("Company Name: <color=#{0}>{1}</color>", hexColor, Application.companyName));
-        Debug.Log(string.Format("Product Name: <color=#{0}>{1}</color>", hexColor, Application.productName));
-        Debug.Log(string.Format("Version: <color=#{0}>{1}</color>", hexColor, Application.version));
+        Debug.Log(string.Format("Company Name: {0}", Application.companyName));
+        Debug.Log(string.Format("Product Name: {0}", Application.productName));
+        Debug.Log(string.Format("Version: {0}", Application.version));
     }
 
     [Command("quit", "closes the application")]

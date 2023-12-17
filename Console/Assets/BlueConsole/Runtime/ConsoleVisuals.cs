@@ -7,14 +7,24 @@ using UnityEngine.UI;
 
 public class ConsoleVisuals : MonoBehaviour
 {
+    [Tooltip("Height of the console")]
     [SerializeField] private float _height;
+    [Tooltip("Scale multiplier applied to the console")]
     [SerializeField] private float _scale;
-    [SerializeField] private RectTransform _consoleGUIParent, _GUIParent;
+    [Tooltip("The rect transform containing the entire console")]
+    [SerializeField] private RectTransform _consoleGUIParent;
+    [Tooltip("The rect transform containing the entire console")]
+    [SerializeField] private RectTransform _GUIParent;
+    [Tooltip("The read only input field displaying console content")]
     [SerializeField] private TMP_InputField _consoleContentField;
+    [Tooltip("The scroll rect that allows console content field to be moved vertically")]
     [SerializeField] private ScrollRect _consoleContentScrollRect;
+    [Tooltip("The rect transform containing console content field")]
     [SerializeField] private RectTransform _consoleContentRect;
+    [Tooltip("The read only input field displaying console hints")]
     [SerializeField] private TMP_InputField _hintInputField;
     private readonly List<TMP_InputField> _hintsInputFields = new();
+    [Tooltip("The list containing all rect transform meant to be scaled with the console")]
     [SerializeField] private List<ScalableRect> _reckTransformsToScale;
 
 

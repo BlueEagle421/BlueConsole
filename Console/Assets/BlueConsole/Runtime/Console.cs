@@ -39,9 +39,6 @@ public class Console : MonoBehaviour
     [Tooltip("A color that the parameters will appear in")]
     [field: SerializeField] public Color ParametersColor { get; private set; } = Color.white;
 
-    [Tooltip("An additional color used by specific commands")]
-    [field: SerializeField] public Color AdditionalColor { get; private set; } = Color.green;
-
     public static string Content { get; private set; }
     public static bool IsToggled { get; private set; }
     public static List<string> Hints { get; private set; } = new();
