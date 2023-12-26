@@ -5,6 +5,7 @@
  - Fixed command type parameter
  - Fixed bool type parameter
  - Fixed command input error with no parameters found
+ - Fixed enter input in InputSystem method
 
 ## [1.3.0] - 5.12.2023
  - Overhauled commands class

@@ -69,7 +69,7 @@ public class ConsoleInput : MonoBehaviour
         // if (Keyboard.current.backquoteKey.wasPressedThisFrame)
         //     PerformToggleInput();
 
-        // if (Keyboard.current.backquoteKey.wasPressedThisFrame)
+        // if (Keyboard.current.enterKey.wasPressedThisFrame)
         //     PerformEnterInput();
 
         // if (Keyboard.current.downArrowKey.wasPressedThisFrame)
