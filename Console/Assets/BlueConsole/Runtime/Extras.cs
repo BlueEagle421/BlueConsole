@@ -2,13 +2,20 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[DefaultExecutionOrder(-1)]
 public class Extras : MonoBehaviour
 {
     public static bool IsFPSToggled { get; private set; }
-    public static Action<bool> OnFPSToggled;
+    public static Extras Current;
+    public Action<bool> OnFPSToggled;
 
     private static float[] _frameDeltaTimings = new float[50];
     private int _lastFrameIndex;
+
+    private void Awake()
+    {
+        Current = this;
+    }
 
     private void Start()
     {
@@ -103,7 +110,7 @@ public class Extras : MonoBehaviour
     [Command("log_error", "logs an error without stack trace")]
     public static void Log_Error(string message, bool trace)
     {
-        Debug.LogError(message + (trace ? string.Empty : Console.NO_TRACE));
+        Debug.LogError(message + (trace ? string.Empty : ConsoleProcessor.NO_TRACE));
     }
 
     [Command("log_warning", "logs warning")]

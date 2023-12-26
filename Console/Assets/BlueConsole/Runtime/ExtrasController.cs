@@ -23,8 +23,8 @@ public class ExtrasController : MonoBehaviour
 
     private void SetEvents(bool subscribe)
     {
-        Console.Current.OnConsoleToggled += OnConsoleToggled;
-        Extras.OnFPSToggled += OnFPSToggled;
+        ConsoleProcessor.Current.OnConsoleToggled += OnConsoleToggled;
+        Extras.Current.OnFPSToggled += OnFPSToggled;
     }
 
     private void OnConsoleToggled(bool toggled)

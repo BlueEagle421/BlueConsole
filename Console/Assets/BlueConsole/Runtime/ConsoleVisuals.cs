@@ -45,7 +45,7 @@ public class ConsoleVisuals : MonoBehaviour
     {
         if (EventSystem.current == null)
         {
-            Console.Current.Toggle(true);
+            ConsoleProcessor.Current.Toggle(true);
             Debug.LogError("Missing EventSystem. Console will not work properly.");
             enabled = false;
         }
@@ -53,14 +53,14 @@ public class ConsoleVisuals : MonoBehaviour
 
     private void SetEvents()
     {
-        Console.Current.OnConsoleToggled += OnConsoleToggled;
-        Console.Current.OnContentChanged += OnConsoleContentChanged;
-        Console.Current.OnHintsChanged += OnHintsChanged;
+        ConsoleProcessor.Current.OnConsoleToggled += OnConsoleToggled;
+        ConsoleProcessor.Current.OnContentChanged += OnConsoleContentChanged;
+        ConsoleProcessor.Current.OnHintsChanged += OnHintsChanged;
     }
 
     private void CloneHintField()
     {
-        for (int i = 0; i < Console.Current.MaxHintsAmount; i++)
+        for (int i = 0; i < ConsoleProcessor.Current.MaxHintsAmount; i++)
         {
             TMP_InputField toAdd = Instantiate(_hintInputField);
             toAdd.transform.SetParent(_hintInputField.transform.parent, false);
@@ -77,7 +77,7 @@ public class ConsoleVisuals : MonoBehaviour
 
         if (toggled)
         {
-            _consoleContentField.text = Console.Content;
+            _consoleContentField.text = ConsoleProcessor.Content;
 
             ResizeContentRect();
             ScrollDown();
@@ -86,7 +86,7 @@ public class ConsoleVisuals : MonoBehaviour
 
     private void OnConsoleContentChanged()
     {
-        _consoleContentField.text = Console.Content;
+        _consoleContentField.text = ConsoleProcessor.Content;
 
         ResizeContentRect();
         ScrollDown();
@@ -94,12 +94,12 @@ public class ConsoleVisuals : MonoBehaviour
 
     private void OnHintsChanged()
     {
-        int hintsCount = Console.Hints.Count;
+        int hintsCount = ConsoleProcessor.Hints.Count;
         for (int i = 0; i < _hintsInputFields.Count; i++)
         {
             if (i < hintsCount)
             {
-                _hintsInputFields[i].text = Console.Hints[i];
+                _hintsInputFields[i].text = ConsoleProcessor.Hints[i];
                 _hintsInputFields[i].textComponent.ForceMeshUpdate();
             }
 

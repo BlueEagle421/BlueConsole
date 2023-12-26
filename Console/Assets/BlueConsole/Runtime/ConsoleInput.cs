@@ -20,10 +20,10 @@ public class ConsoleInput : MonoBehaviour
     private void SetEvents(bool subscribe)
     {
         if (subscribe)
-            _consoleInputField.onValueChanged.AddListener(Console.Current.GenerateHints);
-        Console.Current.OnConsoleToggled += OnConsoleToggled;
-        Console.Current.OnHistoryRecall += OnHistoryRecall;
-        Console.Current.OnHintAccept += OnHintAccept;
+            _consoleInputField.onValueChanged.AddListener(ConsoleProcessor.Current.GenerateHints);
+        ConsoleProcessor.Current.OnConsoleToggled += OnConsoleToggled;
+        ConsoleProcessor.Current.OnHistoryRecall += OnHistoryRecall;
+        ConsoleProcessor.Current.OnHintAccept += OnHintAccept;
     }
 
     private void OnConsoleToggled(bool toggled)
@@ -84,7 +84,7 @@ public class ConsoleInput : MonoBehaviour
 
     private void PerformToggleInput()
     {
-        Console.Current.InvertToggle();
+        ConsoleProcessor.Current.InvertToggle();
     }
 
     private void PerformEnterInput()
@@ -92,23 +92,23 @@ public class ConsoleInput : MonoBehaviour
         if (!IsInputFieldSelected())
             return;
 
-        Console.Current.ReadInput(_consoleInputField.text);
+        ConsoleProcessor.Current.ReadInput(_consoleInputField.text);
         ClearAndSelectInputField();
     }
 
     private void PerformHistoryRecallUpInput()
     {
-        Console.Current.RecallHistory(-1);
+        ConsoleProcessor.Current.RecallHistory(-1);
     }
 
     private void PerformHistoryRecallDownInput()
     {
-        Console.Current.RecallHistory(1);
+        ConsoleProcessor.Current.RecallHistory(1);
     }
 
     private void PerformAcceptHintInput()
     {
-        Console.Current.AcceptHint();
+        ConsoleProcessor.Current.AcceptHint();
     }
 
     private void OnHistoryRecall(string recalledInput)

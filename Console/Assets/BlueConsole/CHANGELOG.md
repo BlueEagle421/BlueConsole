@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.1] - 22.12.2023
+ - Renamed Console to ConsoleProcessor
+ - Fixed command type parameter
+ - Fixed bool type parameter
+ - Fixed command input error with no parameters found
+
 ## [1.3.0] - 5.12.2023
  - Overhauled commands class
  - Added man command

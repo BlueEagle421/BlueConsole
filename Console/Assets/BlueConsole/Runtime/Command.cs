@@ -80,7 +80,7 @@ public class Command
         for (int i = 0; i < MethodInfo.GetParameters().Length; i++)
         {
             Type type = MethodInfo.GetParameters()[i].ParameterType;
-            if (!Console.TypeRegexKeysDictionary.TryGetValue(type, out string typeKey))
+            if (!ConsoleProcessor.TypeRegexKeysDictionary.TryGetValue(type, out string typeKey))
                 return false;
         }
 

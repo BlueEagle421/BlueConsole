@@ -2,7 +2,7 @@ using System.Globalization;
 
 public static class ConsoleTypeParameters
 {
-    [TypeParameter(@"[0|1|on|off|true|false]")]
+    [TypeParameter(@"(0|1|on|off|true|false)")]
     public static bool BoolParameter(string inputParam)
     {
         return inputParam switch
@@ -68,7 +68,8 @@ public static class ConsoleTypeParameters
     [TypeParameter(@"\S*?", false)]
     public static Command CommandParameter(string inputParam)
     {
-        return Console.Commands.Find(x => x.ID == inputParam);
+        Command result = ConsoleProcessor.Commands.Find(x => x.ID == inputParam) ?? throw new System.Exception();
+        return result;
     }
 
     [TypeParameter("'.'")]

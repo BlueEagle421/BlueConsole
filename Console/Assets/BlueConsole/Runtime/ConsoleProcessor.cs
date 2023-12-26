@@ -7,7 +7,7 @@ using UnityEditorInternal;
 using UnityEngine;
 
 [DefaultExecutionOrder(-1)]
-public class Console : MonoBehaviour
+public class ConsoleProcessor : MonoBehaviour
 {
     [Tooltip("Should the default assembly be searched for commands?")]
     [SerializeField] private bool _includeAssemblyCSharp = true;
@@ -53,7 +53,7 @@ public class Console : MonoBehaviour
     private bool _wasToggledInScene;
     private int _currentHistoryRecall = 0;
 
-    public static Console Current;
+    public static ConsoleProcessor Current;
 
     public Action<bool> OnConsoleToggled;
     public Action OnContentChanged;
