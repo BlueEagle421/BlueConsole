@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.4.0] - 25.02.2023
+ - Renamed time command to date command
+ - Added proper time command
+
 ## [1.3.1] - 22.12.2023
  - Renamed Console to ConsoleProcessor
  - Fixed command type parameter

@@ -119,9 +119,17 @@ public class Extras : MonoBehaviour
         Debug.LogWarning(message);
     }
 
-    [Command("time", "logs current time")]
-    public static void Time()
+    [Command("date", "logs current date")]
+    public static void Date()
     {
         Debug.Log(DateTime.Now);
+    }
+
+    [Command("time", "logs engine time")]
+    public static void Time()
+    {
+        Debug.Log("Time.time: " + UnityEngine.Time.time);
+        Debug.Log("Time.unscaledTime: " + UnityEngine.Time.unscaledTime);
+        Debug.Log("Time.timeScale: " + UnityEngine.Time.timeScale);
     }
 }
