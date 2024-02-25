@@ -10,7 +10,7 @@ public class ConsoleProcessor : MonoBehaviour
 {
     [Tooltip("Should the default assembly be searched for commands?")]
     [SerializeField] private bool _includeAssemblyCSharp = true;
-    [Tooltip("These assemblies will be searched for commands")]
+    [Tooltip("These assemblies will be searched for commands. Entered names should come directly from AssemblyDefinitionAsset Name field")]
     [SerializeField] private List<string> _assembliesNamesWithCommands;
     [Tooltip("The amount of hints the console should generate for the user")]
     [field: SerializeField] public int MaxHintsAmount { get; private set; } = 5;
