@@ -3,6 +3,7 @@
 ## [1.4.0] - 25.02.2023
  - Renamed time command to date command
  - Added proper time command
+ - Fixed a bug that was crashing application builds
 
 ## [1.3.1] - 22.12.2023
  - Renamed Console to ConsoleProcessor

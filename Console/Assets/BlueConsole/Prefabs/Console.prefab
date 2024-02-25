@@ -403,7 +403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _includeAssemblyCSharp: 1
-  _assembliesWithCommands: []
+  _assembliesNamesWithCommands: []
   <MaxHintsAmount>k__BackingField: 5
   _welcomeMessage: Welcome to <color=#4895EF>BlueConsole</color>!
   <LogColor>k__BackingField: {r: 1, g: 1, b: 1, a: 1}

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using UnityEditorInternal;
 using UnityEngine;
 
 [DefaultExecutionOrder(-1)]
@@ -12,7 +11,7 @@ public class ConsoleProcessor : MonoBehaviour
     [Tooltip("Should the default assembly be searched for commands?")]
     [SerializeField] private bool _includeAssemblyCSharp = true;
     [Tooltip("These assemblies will be searched for commands")]
-    [SerializeField] private List<AssemblyDefinitionAsset> _assembliesWithCommands;
+    [SerializeField] private List<string> _assembliesNamesWithCommands;
     [Tooltip("The amount of hints the console should generate for the user")]
     [field: SerializeField] public int MaxHintsAmount { get; private set; } = 5;
     [Tooltip("A message that will always appear after toggling the console for the first time")]
@@ -113,8 +112,8 @@ public class ConsoleProcessor : MonoBehaviour
     {
         List<string> userDefinedAssembliesNames = new();
 
-        foreach (AssemblyDefinitionAsset assemblyAsset in _assembliesWithCommands)
-            userDefinedAssembliesNames.Add(GetAssemblyNameFromAsset(assemblyAsset));
+        foreach (string assemblyName in _assembliesNamesWithCommands)
+            userDefinedAssembliesNames.Add(assemblyName);
 
         List<Assembly> allAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
 
@@ -198,23 +197,6 @@ public class ConsoleProcessor : MonoBehaviour
             Commands.Add(consoleCommand);
         }
     }
-
-    private string GetAssemblyNameFromAsset(AssemblyDefinitionAsset assemblyAsset)
-    {
-        string fileContent = assemblyAsset.text;
-
-        Match match = Regex.Match(fileContent, "\"name\":\\s*\"([^\"]+)\"");
-        if (match.Success)
-        {
-            return match.Groups[1].Value;
-        }
-        else
-        {
-            Debug.LogWarning("Unable to extract assembly name from AssemblyDefinitionAsset: " + assemblyAsset.name);
-            return null;
-        }
-    }
-
     public void InvertToggle()
     {
         Toggle(!IsToggled);
