@@ -7,7 +7,7 @@ public class HeaderEntriesVisuals : MonoBehaviour
     [SerializeField] private TMP_Text _headerEntryPrefab;
     [SerializeField] private RectTransform _consoleHeaderTextRect;
 
-    private List<ConsoleHeaderEntry> _entries = new();
+    private List<HeaderEntry> _entries = new();
     private List<TMP_Text> _entriesTMPs = new();
 
     private void OnEnable()
@@ -30,12 +30,12 @@ public class HeaderEntriesVisuals : MonoBehaviour
         //_consoleHeaderTextRect.gameObject.SetActive(!FPSCommand.IsFPSToggled);
     }
 
-    public void AddHeaderEntry(ConsoleHeaderEntry entry)
+    public void AddHeaderEntry(HeaderEntry entry)
     {
         _entries.Add(entry);
     }
 
-    public void RemoveHeaderEntry(ConsoleHeaderEntry entry)
+    public void RemoveHeaderEntry(HeaderEntry entry)
     {
         _entries.Remove(entry);
     }
