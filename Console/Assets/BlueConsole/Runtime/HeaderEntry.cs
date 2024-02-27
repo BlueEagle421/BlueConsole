@@ -1,10 +1,23 @@
 using System;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class HeaderEntry
 {
     public Func<string> LabelFunc;
     public Func<Color> ColorFunc;
+
+    public int Width
+    {
+        get
+        {
+            return Width;
+        }
+        set
+        {
+            Mathf.Max(0, value);
+        }
+    }
 
     public int Priority
     {
@@ -19,7 +32,7 @@ public class HeaderEntry
         }
     }
 
-    public HeaderEntry(Func<string> labelFunc, Func<Color> colorFunc, int priority)
+    public HeaderEntry(Func<string> labelFunc, Func<Color> colorFunc, [Optional] int priority)
     {
         LabelFunc = labelFunc;
         ColorFunc = colorFunc;
