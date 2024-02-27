@@ -300,9 +300,9 @@ GameObject:
   - component: {fileID: 4611218274913177977}
   - component: {fileID: 3527147655478548268}
   - component: {fileID: 6946176888372141058}
+  - component: {fileID: 1806233474293994219}
   - component: {fileID: 25455114547283507}
   - component: {fileID: 5762235901841213058}
-  - component: {fileID: 1806233474293994219}
   m_Layer: 0
   m_Name: Console
   m_TagString: Untagged
@@ -393,6 +393,21 @@ MonoBehaviour:
   - DisplayName: InputFieldTextComponent
     rectTransform: {fileID: 5207084699868117920}
     scaleType: 3
+--- !u!114 &1806233474293994219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258155190466125265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffe062b1bd3cb7e4bb897b26922e6fde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _entryDisplayerPrefab: {fileID: 2296367949861748388, guid: 27d1b5774e7ae594eaa08bbb80e4cda4, type: 3}
+  _consoleHeaderTextRect: {fileID: 4757656443741871070}
+  _entriesLayoutGroup: {fileID: 350710060419300743}
 --- !u!114 &25455114547283507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,21 +444,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fpsTextColor: {r: 0, g: 1, b: 0, a: 1}
---- !u!114 &1806233474293994219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258155190466125265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffe062b1bd3cb7e4bb897b26922e6fde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _entryDisplayerPrefab: {fileID: 2296367949861748388, guid: 27d1b5774e7ae594eaa08bbb80e4cda4, type: 3}
-  _consoleHeaderTextRect: {fileID: 4757656443741871070}
-  _entriesLayoutGroup: {fileID: 350710060419300743}
 --- !u!1 &1607684849195335962
 GameObject:
   m_ObjectHideFlags: 0

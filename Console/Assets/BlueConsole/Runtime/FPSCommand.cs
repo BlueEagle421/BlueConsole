@@ -49,10 +49,6 @@ public class FPSCommand : MonoBehaviour
     public void FPS(bool on)
     {
         IsFPSToggled = on;
-
-        if (on)
-            HeaderEntriesVisuals.Current.AddEntry(_fpsHeaderEntry);
-        else
-            HeaderEntriesVisuals.Current.RemoveEntry(_fpsHeaderEntry);
+        HeaderEntriesVisuals.Current.ManageEntry(_fpsHeaderEntry, on);
     }
 }
