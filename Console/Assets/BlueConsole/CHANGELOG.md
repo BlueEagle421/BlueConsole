@@ -3,8 +3,10 @@
 ## [1.4.0] - 25.02.2023
  - Renamed time command to date command
  - Added proper time command
+ - Added timescale command
  - Fixed a bug that was crashing application builds
  - Fixed fps text disappearing on console toggle off
+ - Fixed log-error and log-warning commands IDs
 
 ## [1.3.1] - 22.12.2023
  - Renamed Console to ConsoleProcessor
