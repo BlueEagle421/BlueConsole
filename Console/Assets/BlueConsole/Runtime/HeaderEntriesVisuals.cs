@@ -1,14 +1,14 @@
 using System.Collections.Generic;
-using TMPro;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HeaderEntriesVisuals : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _headerEntryPrefab;
+    [SerializeField] private HeaderEntryDisplayer _entryDisplayerPrefab;
     [SerializeField] private RectTransform _consoleHeaderTextRect;
-
-    private List<HeaderEntry> _entries = new();
-    private List<TMP_Text> _entriesTMPs = new();
+    [SerializeField] private HorizontalLayoutGroup _entriesLayoutGroup;
+    private List<HeaderEntryDisplayer> _entriesDisplayers = new();
 
     private void OnEnable()
     {
@@ -32,11 +32,21 @@ public class HeaderEntriesVisuals : MonoBehaviour
 
     public void AddHeaderEntry(HeaderEntry entry)
     {
-        _entries.Add(entry);
+        if (_entriesDisplayers.Any(x => x.InternalHeaderEntry == entry))
+            return;
+
+        HeaderEntryDisplayer newDisplayer = Instantiate(_entryDisplayerPrefab, _entriesLayoutGroup.transform);
+        _entriesDisplayers.Add(newDisplayer);
     }
 
     public void RemoveHeaderEntry(HeaderEntry entry)
     {
-        _entries.Remove(entry);
+        HeaderEntryDisplayer toRemove = _entriesDisplayers.Find(x => x.InternalHeaderEntry == entry);
+
+        if (!toRemove)
+            return;
+
+        Destroy(toRemove);
+        _entriesDisplayers.Remove(toRemove);
     }
 }
