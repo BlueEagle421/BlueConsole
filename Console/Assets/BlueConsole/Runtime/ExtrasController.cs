@@ -24,7 +24,7 @@ public class ExtrasController : MonoBehaviour
     private void SetEvents(bool subscribe)
     {
         ConsoleProcessor.Current.OnConsoleToggled += OnConsoleToggled;
-        Extras.Current.OnFPSToggled += OnFPSToggled;
+        FPSCommand.Current.OnFPSToggled += OnFPSToggled;
     }
 
     private void OnConsoleToggled(bool toggled)
@@ -39,14 +39,14 @@ public class ExtrasController : MonoBehaviour
     }
     private void FormatTextFPS()
     {
-        if (!Extras.IsFPSToggled)
+        if (!FPSCommand.IsFPSToggled)
             return;
 
-        _fpsTMP.text = Extras.CurrentFPSFormatted();
+        _fpsTMP.text = FPSCommand.CurrentFPSFormatted();
     }
 
     private void SetConsoleHeaderTextRect()
     {
-        _consoleHeaderTextRect.gameObject.SetActive(!Extras.IsFPSToggled);
+        _consoleHeaderTextRect.gameObject.SetActive(!FPSCommand.IsFPSToggled);
     }
 }
