@@ -107,13 +107,13 @@ public class Extras : MonoBehaviour
         Debug.Log(message);
     }
 
-    [Command("log_error", "logs an error without stack trace")]
+    [Command("log-error", "logs an error without stack trace")]
     public static void Log_Error(string message, bool trace)
     {
         Debug.LogError(message + (trace ? string.Empty : ConsoleProcessor.NO_TRACE));
     }
 
-    [Command("log_warning", "logs warning")]
+    [Command("log-warning", "logs warning")]
     public static void Log_Warning(string message)
     {
         Debug.LogWarning(message);
