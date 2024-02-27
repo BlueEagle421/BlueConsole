@@ -118,6 +118,13 @@ public class ConsoleVisuals : MonoBehaviour
         {
             ScalableRect scalableRect = _reckTransformsToScale[i];
             RectTransform rectToScale = scalableRect.RectTransform;
+
+            if (!rectToScale)
+            {
+                Debug.LogWarning(_reckTransformsToScale[i].DisplayName + " is null in " + nameof(ConsoleVisuals));
+                continue;
+            }
+
             switch (scalableRect.ScaleType)
             {
                 case ScaleType.Height:
