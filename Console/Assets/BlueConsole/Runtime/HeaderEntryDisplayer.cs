@@ -4,6 +4,7 @@ using UnityEngine;
 public class HeaderEntryDisplayer : MonoBehaviour
 {
     [SerializeField] private TMP_Text _entryTMP;
+    [SerializeField] private RectTransform _rectTransform;
     public HeaderEntry InternalHeaderEntry { get; private set; }
 
     public void SetInternalHeaderEntry(HeaderEntry entry)
@@ -19,5 +20,10 @@ public class HeaderEntryDisplayer : MonoBehaviour
     public void SetTMPColor(Color color)
     {
         _entryTMP.color = color;
+    }
+
+    public void SetWidth(int width)
+    {
+        _rectTransform.sizeDelta = new(width, _rectTransform.sizeDelta.y);
     }
 }
