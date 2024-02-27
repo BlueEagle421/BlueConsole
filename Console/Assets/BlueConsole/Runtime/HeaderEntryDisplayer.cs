@@ -24,6 +24,9 @@ public class HeaderEntryDisplayer : MonoBehaviour
 
     public void SetWidth(int width)
     {
+        if (width == 0)
+            return;
+
         _rectTransform.sizeDelta = new(width, _rectTransform.sizeDelta.y);
     }
 }

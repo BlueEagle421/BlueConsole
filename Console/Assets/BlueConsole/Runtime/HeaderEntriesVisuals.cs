@@ -60,6 +60,7 @@ public class HeaderEntriesVisuals : MonoBehaviour
 
         HeaderEntryDisplayer newDisplayer = Instantiate(_entryDisplayerPrefab, _entriesLayoutGroup.transform);
         newDisplayer.SetInternalHeaderEntry(entry);
+        newDisplayer.SetWidth(entry.Width);
         _entriesDisplayers.Add(newDisplayer);
     }
 
