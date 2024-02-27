@@ -132,4 +132,10 @@ public class Extras : MonoBehaviour
         Debug.Log("Time.unscaledTime: " + UnityEngine.Time.unscaledTime);
         Debug.Log("Time.timeScale: " + UnityEngine.Time.timeScale);
     }
+
+    [Command("timescale", "sets time scale")]
+    public static void Timescale(float value)
+    {
+        UnityEngine.Time.timeScale = value;
+    }
 }
