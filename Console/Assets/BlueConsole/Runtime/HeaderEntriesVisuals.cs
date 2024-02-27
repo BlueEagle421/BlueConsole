@@ -53,7 +53,7 @@ public class HeaderEntriesVisuals : MonoBehaviour
         return _entriesDisplayers.Count == 0;
     }
 
-    public void AddHeaderEntry(HeaderEntry entry)
+    public void AddEntry(HeaderEntry entry)
     {
         if (_entriesDisplayers.Any(x => x.InternalHeaderEntry == entry))
             return;
@@ -63,14 +63,14 @@ public class HeaderEntriesVisuals : MonoBehaviour
         _entriesDisplayers.Add(newDisplayer);
     }
 
-    public void RemoveHeaderEntry(HeaderEntry entry)
+    public void RemoveEntry(HeaderEntry entry)
     {
         HeaderEntryDisplayer toRemove = _entriesDisplayers.Find(x => x.InternalHeaderEntry == entry);
 
         if (!toRemove)
             return;
 
-        Destroy(toRemove);
+        Destroy(toRemove.gameObject);
         _entriesDisplayers.Remove(toRemove);
     }
 }

@@ -4,9 +4,9 @@ using UnityEngine;
 public class FPSCommand : MonoBehaviour
 {
     public static bool IsFPSToggled { get; private set; }
-    private static float[] _frameDeltaTimings = new float[50];
+    private static readonly float[] _frameDeltaTimings = new float[50];
     private int _lastFrameIndex;
-    private HeaderEntry _fpsHeaderEntry = new(() => CurrentFPSFormatted(), () => Color.green, 1);
+    private readonly HeaderEntry _fpsHeaderEntry = new(() => CurrentFPSFormatted(), () => Color.green, 1);
 
     private void Start()
     {
@@ -46,8 +46,8 @@ public class FPSCommand : MonoBehaviour
         IsFPSToggled = on;
 
         if (on)
-            HeaderEntriesVisuals.Current.AddHeaderEntry(_fpsHeaderEntry);
+            HeaderEntriesVisuals.Current.AddEntry(_fpsHeaderEntry);
         else
-            HeaderEntriesVisuals.Current.RemoveHeaderEntry(_fpsHeaderEntry);
+            HeaderEntriesVisuals.Current.RemoveEntry(_fpsHeaderEntry);
     }
 }
