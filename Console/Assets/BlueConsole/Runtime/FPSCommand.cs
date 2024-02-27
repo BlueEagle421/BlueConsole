@@ -1,12 +1,17 @@
 using UnityEngine;
 
-[DefaultExecutionOrder(-1)]
 public class FPSCommand : MonoBehaviour
 {
+    [SerializeField] private Color _fpsTextColor;
     public static bool IsFPSToggled { get; private set; }
     private static readonly float[] _frameDeltaTimings = new float[50];
     private int _lastFrameIndex;
-    private readonly HeaderEntry _fpsHeaderEntry = new(() => CurrentFPSFormatted(), () => Color.green, 1);
+    private HeaderEntry _fpsHeaderEntry;
+
+    private void Awake()
+    {
+        _fpsHeaderEntry = new(() => CurrentFPSFormatted(), () => _fpsTextColor, 1);
+    }
 
     private void Start()
     {

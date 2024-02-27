@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 366af98fd47d62642a3615a0400a797a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fpsTMP: {fileID: 0}
+  _fpsTextColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &1806233474293994219
 MonoBehaviour:
   m_ObjectHideFlags: 0
