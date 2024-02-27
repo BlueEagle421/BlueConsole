@@ -73,4 +73,12 @@ public class HeaderEntriesVisuals : MonoBehaviour
         Destroy(toRemove.gameObject);
         _entriesDisplayers.Remove(toRemove);
     }
+
+    public void ManageEntry(HeaderEntry entry, bool add)
+    {
+        if (add)
+            AddEntry(entry);
+        else
+            RemoveEntry(entry);
+    }
 }
