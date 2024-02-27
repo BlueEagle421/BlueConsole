@@ -27,7 +27,12 @@ public class HeaderEntriesVisuals : MonoBehaviour
 
     private void SetConsoleHeaderTextRect()
     {
-        //_consoleHeaderTextRect.gameObject.SetActive(!FPSCommand.IsFPSToggled);
+        _consoleHeaderTextRect.gameObject.SetActive(!DisplayConsoleHeaderText());
+    }
+
+    private bool DisplayConsoleHeaderText()
+    {
+        return _entriesDisplayers.Count == 0;
     }
 
     public void AddHeaderEntry(HeaderEntry entry)
