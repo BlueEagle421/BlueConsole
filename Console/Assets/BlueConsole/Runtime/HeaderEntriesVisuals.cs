@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class ExtrasController : MonoBehaviour
+public class HeaderEntriesVisuals : MonoBehaviour
 {
     [SerializeField] private TMP_Text _fpsTMP;
     [SerializeField] private RectTransform _consoleHeaderTextRect;
