@@ -1,30 +1,17 @@
-using TMPro;
 using UnityEngine;
 
 public class HeaderEntriesVisuals : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _fpsTMP;
     [SerializeField] private RectTransform _consoleHeaderTextRect;
 
-    private void Awake()
+    private void OnEnable()
     {
-        SetEvents(true);
+        ConsoleProcessor.Current.OnConsoleToggled += OnConsoleToggled;
     }
 
     private void OnDisable()
     {
-        SetEvents(false);
-    }
-
-    private void Update()
-    {
-        FormatTextFPS();
-    }
-
-    private void SetEvents(bool subscribe)
-    {
-        ConsoleProcessor.Current.OnConsoleToggled += OnConsoleToggled;
-        FPSCommand.Current.OnFPSToggled += OnFPSToggled;
+        ConsoleProcessor.Current.OnConsoleToggled -= OnConsoleToggled;
     }
 
     private void OnConsoleToggled(bool toggled)
@@ -32,21 +19,8 @@ public class HeaderEntriesVisuals : MonoBehaviour
         SetConsoleHeaderTextRect();
     }
 
-    private void OnFPSToggled(bool toggled)
-    {
-        _fpsTMP.gameObject.SetActive(toggled);
-        SetConsoleHeaderTextRect();
-    }
-    private void FormatTextFPS()
-    {
-        if (!FPSCommand.IsFPSToggled)
-            return;
-
-        _fpsTMP.text = FPSCommand.CurrentFPSFormatted();
-    }
-
     private void SetConsoleHeaderTextRect()
     {
-        _consoleHeaderTextRect.gameObject.SetActive(!FPSCommand.IsFPSToggled);
+
     }
 }
