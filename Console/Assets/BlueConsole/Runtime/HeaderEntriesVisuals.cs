@@ -10,6 +10,13 @@ public class HeaderEntriesVisuals : MonoBehaviour
     [SerializeField] private HorizontalLayoutGroup _entriesLayoutGroup;
     private List<HeaderEntryDisplayer> _entriesDisplayers = new();
 
+    public static HeaderEntriesVisuals Current;
+
+    private void Awake()
+    {
+        Current = this;
+    }
+
     private void OnEnable()
     {
         ConsoleProcessor.Current.OnConsoleToggled += OnConsoleToggled;
@@ -18,6 +25,17 @@ public class HeaderEntriesVisuals : MonoBehaviour
     private void OnDisable()
     {
         ConsoleProcessor.Current.OnConsoleToggled -= OnConsoleToggled;
+    }
+
+    private void Update()
+    {
+        foreach (HeaderEntryDisplayer entryDisplayer in _entriesDisplayers)
+        {
+            HeaderEntry internalEntry = entryDisplayer.InternalHeaderEntry;
+
+            entryDisplayer.SetTMPText(internalEntry.LabelFunc());
+            entryDisplayer.SetTMPColor(internalEntry.ColorFunc());
+        }
     }
 
     private void OnConsoleToggled(bool toggled)
@@ -41,6 +59,7 @@ public class HeaderEntriesVisuals : MonoBehaviour
             return;
 
         HeaderEntryDisplayer newDisplayer = Instantiate(_entryDisplayerPrefab, _entriesLayoutGroup.transform);
+        newDisplayer.SetInternalHeaderEntry(entry);
         _entriesDisplayers.Add(newDisplayer);
     }
 

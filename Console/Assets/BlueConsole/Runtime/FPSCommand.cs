@@ -1,23 +1,12 @@
-using System;
-using TMPro;
 using UnityEngine;
 
 [DefaultExecutionOrder(-1)]
 public class FPSCommand : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _fpsTMP;
-
     public static bool IsFPSToggled { get; private set; }
-    public static FPSCommand Current;
-    public Action<bool> OnFPSToggled;
-
     private static float[] _frameDeltaTimings = new float[50];
     private int _lastFrameIndex;
-
-    private void Awake()
-    {
-        Current = this;
-    }
+    private HeaderEntry _fpsHeaderEntry = new(() => CurrentFPSFormatted(), () => Color.green, 1);
 
     private void Start()
     {
@@ -28,21 +17,12 @@ public class FPSCommand : MonoBehaviour
     private void Update()
     {
         UpdateFPSLastFrame();
-        FormatTextFPS();
     }
 
     private void UpdateFPSLastFrame()
     {
         _frameDeltaTimings[_lastFrameIndex] = UnityEngine.Time.unscaledDeltaTime;
         _lastFrameIndex = (_lastFrameIndex + 1) % _frameDeltaTimings.Length;
-    }
-
-    private void FormatTextFPS()
-    {
-        if (!IsFPSToggled)
-            return;
-
-        _fpsTMP.text = CurrentFPSFormatted();
     }
 
     public static float CurrentFPS()
@@ -60,16 +40,14 @@ public class FPSCommand : MonoBehaviour
         return Mathf.RoundToInt(CurrentFPS()).ToString();
     }
 
-    private void FPSToggled(bool on)
-    {
-        _fpsTMP.gameObject.SetActive(on);
-        OnFPSToggled.Invoke(on);
-    }
-
     [Command("fps", "toggles fps counter", InstanceTargetType.First)]
     public void FPS(bool on)
     {
         IsFPSToggled = on;
-        FPSToggled(on);
+
+        if (on)
+            HeaderEntriesVisuals.Current.AddHeaderEntry(_fpsHeaderEntry);
+        else
+            HeaderEntriesVisuals.Current.RemoveHeaderEntry(_fpsHeaderEntry);
     }
 }
