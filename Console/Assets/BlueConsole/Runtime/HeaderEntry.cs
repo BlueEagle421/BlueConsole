@@ -15,6 +15,7 @@ public class HeaderEntry
         }
         set
         {
+            //if Width is 0 it will be ignored and set to prefab's default
             Mathf.Max(0, value);
         }
     }
@@ -32,10 +33,11 @@ public class HeaderEntry
         }
     }
 
-    public HeaderEntry(Func<string> labelFunc, Func<Color> colorFunc, [Optional] int priority)
+    public HeaderEntry(Func<string> labelFunc, Func<Color> colorFunc, [Optional] int priority, [Optional] int width)
     {
         LabelFunc = labelFunc;
         ColorFunc = colorFunc;
         Priority = priority;
+        Width = width;
     }
 }
