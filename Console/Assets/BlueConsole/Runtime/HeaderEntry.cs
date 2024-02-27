@@ -15,7 +15,7 @@ public class HeaderEntry
         }
         set
         {
-            //if Width is 0 it will be ignored and set to prefab's default
+            //if width is 0 it will be ignored and set to prefab's default
             Mathf.Max(0, value);
         }
     }

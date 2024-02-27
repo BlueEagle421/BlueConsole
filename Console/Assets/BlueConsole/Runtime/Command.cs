@@ -69,13 +69,13 @@ public class Command
     }
     public bool IsValid()
     {
-        if (!HasAllTypeParameters(MethodInfo))
+        if (!HasAllTypeParameters())
             return false;
 
         return true;
     }
 
-    private bool HasAllTypeParameters(MethodInfo methodInfo)
+    private bool HasAllTypeParameters()
     {
         for (int i = 0; i < MethodInfo.GetParameters().Length; i++)
         {
