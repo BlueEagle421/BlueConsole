@@ -1,40 +1,43 @@
 using TMPro;
 using UnityEngine;
 
-public class HeaderEntryDisplayer : MonoBehaviour
+namespace BlueConsole
 {
-    [SerializeField] private TMP_Text _entryTMP;
-    [field: SerializeField] public RectTransform RectTransform { get; private set; }
-    public HeaderEntry InternalHeaderEntry { get; private set; }
-
-    public void SetInternalHeaderEntry(HeaderEntry entry)
+    public class HeaderEntryDisplayer : MonoBehaviour
     {
-        InternalHeaderEntry = entry;
-    }
+        [SerializeField] private TMP_Text _entryTMP;
+        [field: SerializeField] public RectTransform RectTransform { get; private set; }
+        public HeaderEntry InternalHeaderEntry { get; private set; }
 
-    public void SetTMPText(string text)
-    {
-        _entryTMP.text = text;
-    }
+        public void SetInternalHeaderEntry(HeaderEntry entry)
+        {
+            InternalHeaderEntry = entry;
+        }
 
-    public void SetTMPColor(Color color)
-    {
-        _entryTMP.color = color;
-    }
+        public void SetTMPText(string text)
+        {
+            _entryTMP.text = text;
+        }
 
-    public void SetWidth(int width)
-    {
-        if (width == 0)
-            return;
+        public void SetTMPColor(Color color)
+        {
+            _entryTMP.color = color;
+        }
 
-        RectTransform.sizeDelta = new(width, RectTransform.sizeDelta.y);
-    }
+        public void SetWidth(int width)
+        {
+            if (width == 0)
+                return;
 
-    public void SetHeight(int height)
-    {
-        if (height == 0)
-            return;
+            RectTransform.sizeDelta = new(width, RectTransform.sizeDelta.y);
+        }
 
-        RectTransform.sizeDelta = new(RectTransform.sizeDelta.x, height);
+        public void SetHeight(int height)
+        {
+            if (height == 0)
+                return;
+
+            RectTransform.sizeDelta = new(RectTransform.sizeDelta.x, height);
+        }
     }
 }

@@ -3,90 +3,93 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HeaderEntriesVisuals : MonoBehaviour
+namespace BlueConsole
 {
-    [SerializeField] private ConsoleVisuals _consoleVisuals;
-    [SerializeField] private HeaderEntryDisplayer _entryDisplayerPrefab;
-    [SerializeField] private RectTransform _consoleHeaderTextRect;
-    [SerializeField] private HorizontalLayoutGroup _entriesLayoutGroup;
-    private List<HeaderEntryDisplayer> _entriesDisplayers = new();
-
-    public static HeaderEntriesVisuals Current;
-
-    private void Awake()
+    public class HeaderEntriesVisuals : MonoBehaviour
     {
-        Current = this;
-    }
+        [SerializeField] private ConsoleVisuals _consoleVisuals;
+        [SerializeField] private HeaderEntryDisplayer _entryDisplayerPrefab;
+        [SerializeField] private RectTransform _consoleHeaderTextRect;
+        [SerializeField] private HorizontalLayoutGroup _entriesLayoutGroup;
+        private List<HeaderEntryDisplayer> _entriesDisplayers = new();
 
-    private void OnEnable()
-    {
-        ConsoleProcessor.Current.OnConsoleToggled += OnConsoleToggled;
-    }
+        public static HeaderEntriesVisuals Current;
 
-    private void OnDisable()
-    {
-        ConsoleProcessor.Current.OnConsoleToggled -= OnConsoleToggled;
-    }
-
-    private void Update()
-    {
-        foreach (HeaderEntryDisplayer entryDisplayer in _entriesDisplayers)
+        private void Awake()
         {
-            HeaderEntry internalEntry = entryDisplayer.InternalHeaderEntry;
-
-            entryDisplayer.SetTMPText(internalEntry.LabelFunc());
-            entryDisplayer.SetTMPColor(internalEntry.ColorFunc());
+            Current = this;
         }
-    }
 
-    private void OnConsoleToggled(bool toggled)
-    {
-        UpdateConsoleHeaderText();
-    }
+        private void OnEnable()
+        {
+            ConsoleProcessor.Current.OnConsoleToggled += OnConsoleToggled;
+        }
 
-    private void UpdateConsoleHeaderText()
-    {
-        _consoleHeaderTextRect.gameObject.SetActive(DisplayConsoleHeaderText());
-    }
+        private void OnDisable()
+        {
+            ConsoleProcessor.Current.OnConsoleToggled -= OnConsoleToggled;
+        }
 
-    private bool DisplayConsoleHeaderText()
-    {
-        return _entriesDisplayers.Count == 0;
-    }
+        private void Update()
+        {
+            foreach (HeaderEntryDisplayer entryDisplayer in _entriesDisplayers)
+            {
+                HeaderEntry internalEntry = entryDisplayer.InternalHeaderEntry;
 
-    public void AddEntry(HeaderEntry entry)
-    {
-        if (_entriesDisplayers.Any(x => x.InternalHeaderEntry == entry))
-            return;
+                entryDisplayer.SetTMPText(internalEntry.LabelFunc());
+                entryDisplayer.SetTMPColor(internalEntry.ColorFunc());
+            }
+        }
 
-        HeaderEntryDisplayer newDisplayer = Instantiate(_entryDisplayerPrefab, _entriesLayoutGroup.transform);
-        newDisplayer.SetInternalHeaderEntry(entry);
-        newDisplayer.SetWidth(entry.Width);
-        _entriesDisplayers.Add(newDisplayer);
+        private void OnConsoleToggled(bool toggled)
+        {
+            UpdateConsoleHeaderText();
+        }
 
-        _consoleVisuals.AddScalableRect(newDisplayer.RectTransform, ConsoleVisuals.ScaleType.FontSize);
-        UpdateConsoleHeaderText();
-    }
+        private void UpdateConsoleHeaderText()
+        {
+            _consoleHeaderTextRect.gameObject.SetActive(DisplayConsoleHeaderText());
+        }
 
-    public void RemoveEntry(HeaderEntry entry)
-    {
-        HeaderEntryDisplayer toRemove = _entriesDisplayers.Find(x => x.InternalHeaderEntry == entry);
+        private bool DisplayConsoleHeaderText()
+        {
+            return _entriesDisplayers.Count == 0;
+        }
 
-        if (!toRemove)
-            return;
+        public void AddEntry(HeaderEntry entry)
+        {
+            if (_entriesDisplayers.Any(x => x.InternalHeaderEntry == entry))
+                return;
 
-        Destroy(toRemove.gameObject);
-        _entriesDisplayers.Remove(toRemove);
+            HeaderEntryDisplayer newDisplayer = Instantiate(_entryDisplayerPrefab, _entriesLayoutGroup.transform);
+            newDisplayer.SetInternalHeaderEntry(entry);
+            newDisplayer.SetWidth(entry.Width);
+            _entriesDisplayers.Add(newDisplayer);
 
-        _consoleVisuals.RemoveScalableRect(toRemove.GetComponent<RectTransform>());
-        UpdateConsoleHeaderText();
-    }
+            _consoleVisuals.AddScalableRect(newDisplayer.RectTransform, ConsoleVisuals.ScaleType.FontSize);
+            UpdateConsoleHeaderText();
+        }
 
-    public void ManageEntry(HeaderEntry entry, bool add)
-    {
-        if (add)
-            AddEntry(entry);
-        else
-            RemoveEntry(entry);
+        public void RemoveEntry(HeaderEntry entry)
+        {
+            HeaderEntryDisplayer toRemove = _entriesDisplayers.Find(x => x.InternalHeaderEntry == entry);
+
+            if (!toRemove)
+                return;
+
+            Destroy(toRemove.gameObject);
+            _entriesDisplayers.Remove(toRemove);
+
+            _consoleVisuals.RemoveScalableRect(toRemove.GetComponent<RectTransform>());
+            UpdateConsoleHeaderText();
+        }
+
+        public void ManageEntry(HeaderEntry entry, bool add)
+        {
+            if (add)
+                AddEntry(entry);
+            else
+                RemoveEntry(entry);
+        }
     }
 }

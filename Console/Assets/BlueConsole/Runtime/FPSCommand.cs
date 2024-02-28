@@ -1,54 +1,57 @@
 using UnityEngine;
 
-public class FPSCommand : MonoBehaviour
+namespace BlueConsole
 {
-    [SerializeField] private Color _fpsTextColor;
-    public static bool IsFPSToggled { get; private set; }
-    private static readonly float[] _frameDeltaTimings = new float[50];
-    private int _lastFrameIndex;
-    private HeaderEntry _fpsHeaderEntry;
-
-    private void Awake()
+    public class FPSCommand : MonoBehaviour
     {
-        _fpsHeaderEntry = new(() => CurrentFPSFormatted(), () => _fpsTextColor, 1);
-    }
+        [SerializeField] private Color _fpsTextColor;
+        public static bool IsFPSToggled { get; private set; }
+        private static readonly float[] _frameDeltaTimings = new float[50];
+        private int _lastFrameIndex;
+        private HeaderEntry _fpsHeaderEntry;
 
-    private void Start()
-    {
-        if (IsFPSToggled)
-            FPS(true);
-    }
-
-    private void Update()
-    {
-        UpdateFPSLastFrame();
-    }
-
-    private void UpdateFPSLastFrame()
-    {
-        _frameDeltaTimings[_lastFrameIndex] = UnityEngine.Time.unscaledDeltaTime;
-        _lastFrameIndex = (_lastFrameIndex + 1) % _frameDeltaTimings.Length;
-    }
-
-    public static float CurrentFPS()
-    {
-        float total = 0f;
-        foreach (float deltaTime in _frameDeltaTimings)
+        private void Awake()
         {
-            total += deltaTime;
+            _fpsHeaderEntry = new(() => CurrentFPSFormatted(), () => _fpsTextColor, 1);
         }
-        return _frameDeltaTimings.Length / total;
-    }
 
-    public static string CurrentFPSFormatted()
-    {
-        return Mathf.RoundToInt(CurrentFPS()).ToString();
-    }
+        private void Start()
+        {
+            if (IsFPSToggled)
+                FPS(true);
+        }
 
-    [Command("fps", "toggles fps counter", InstanceTargetType.First)]
-    public void FPS(bool on)
-    {
-        IsFPSToggled = on;
-        HeaderEntriesVisuals.Current.ManageEntry(_fpsHeaderEntry, on);
+        private void Update()
+        {
+            UpdateFPSLastFrame();
+        }
+
+        private void UpdateFPSLastFrame()
+        {
+            _frameDeltaTimings[_lastFrameIndex] = UnityEngine.Time.unscaledDeltaTime;
+            _lastFrameIndex = (_lastFrameIndex + 1) % _frameDeltaTimings.Length;
+        }
+
+        public static float CurrentFPS()
+        {
+            float total = 0f;
+            foreach (float deltaTime in _frameDeltaTimings)
+            {
+                total += deltaTime;
+            }
+            return _frameDeltaTimings.Length / total;
+        }
+
+        public static string CurrentFPSFormatted()
+        {
+            return Mathf.RoundToInt(CurrentFPS()).ToString();
+        }
+
+        [Command("fps", "toggles fps counter", InstanceTargetType.First)]
+        public void FPS(bool on)
+        {
+            IsFPSToggled = on;
+            HeaderEntriesVisuals.Current.ManageEntry(_fpsHeaderEntry, on);
+        }
     }
 }
