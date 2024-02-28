@@ -40,10 +40,10 @@ public class HeaderEntriesVisuals : MonoBehaviour
 
     private void OnConsoleToggled(bool toggled)
     {
-        SetConsoleHeaderTextRect();
+        UpdateConsoleHeaderText();
     }
 
-    private void SetConsoleHeaderTextRect()
+    private void UpdateConsoleHeaderText()
     {
         _consoleHeaderTextRect.gameObject.SetActive(DisplayConsoleHeaderText());
     }
@@ -62,6 +62,8 @@ public class HeaderEntriesVisuals : MonoBehaviour
         newDisplayer.SetInternalHeaderEntry(entry);
         newDisplayer.SetWidth(entry.Width);
         _entriesDisplayers.Add(newDisplayer);
+
+        UpdateConsoleHeaderText();
     }
 
     public void RemoveEntry(HeaderEntry entry)
@@ -73,6 +75,8 @@ public class HeaderEntriesVisuals : MonoBehaviour
 
         Destroy(toRemove.gameObject);
         _entriesDisplayers.Remove(toRemove);
+
+        UpdateConsoleHeaderText();
     }
 
     public void ManageEntry(HeaderEntry entry, bool add)

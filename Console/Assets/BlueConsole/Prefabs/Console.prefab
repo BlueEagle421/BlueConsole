@@ -375,9 +375,6 @@ MonoBehaviour:
   - DisplayName: HeaderText
     rectTransform: {fileID: 4757656443741871070}
     scaleType: 3
-  - DisplayName: HeaderFPSText
-    rectTransform: {fileID: 0}
-    scaleType: 3
   - DisplayName: BodyScrollView
     rectTransform: {fileID: 6220793768608453923}
     scaleType: 0
