@@ -9,10 +9,10 @@ namespace BlueConsole
         public Func<string> LabelFunc;
         public Func<Color> ColorFunc;
 
-        private int _width;
+        private float _width;
         private int _priority;
 
-        public int Width
+        public float Width
         {
             get
             {
@@ -21,7 +21,7 @@ namespace BlueConsole
             set
             {
                 //if width is 0 it will be ignored and set to prefab's default
-                _priority = Mathf.Max(0, value);
+                _width = Mathf.Max(0, value);
             }
         }
 
@@ -33,8 +33,8 @@ namespace BlueConsole
             }
             set
             {
-                //if priority is 0 it will be ignored and added as the last one
-                _priority = Mathf.Max(0, value);
+                //the priority determines entry's position in the header
+                _priority = value;
             }
         }
 

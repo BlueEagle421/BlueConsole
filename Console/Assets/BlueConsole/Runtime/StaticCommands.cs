@@ -89,5 +89,13 @@ namespace BlueConsole
         {
             UnityEngine.Time.timeScale = value;
         }
+
+        private static readonly HeaderEntry _timeHeaderEntry = new(() => "time: " + UnityEngine.Time.time, () => Color.white, 0, 200);
+
+        [Command("time-header", "logs engine time on the header")]
+        public static void TimeHeader(bool on)
+        {
+            HeaderEntriesVisuals.Current.ManageEntry(_timeHeaderEntry, on);
+        }
     }
 }

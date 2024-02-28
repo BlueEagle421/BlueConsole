@@ -24,20 +24,12 @@ namespace BlueConsole
             _entryTMP.color = color;
         }
 
-        public void SetWidth(int width)
+        public void SetWidth(float width)
         {
             if (width == 0)
                 return;
 
             RectTransform.sizeDelta = new(width, RectTransform.sizeDelta.y);
-        }
-
-        public void SetHeight(int height)
-        {
-            if (height == 0)
-                return;
-
-            RectTransform.sizeDelta = new(RectTransform.sizeDelta.x, height);
         }
     }
 }
