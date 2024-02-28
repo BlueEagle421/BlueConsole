@@ -67,6 +67,7 @@ namespace BlueConsole
             HeaderEntryDisplayer newDisplayer = Instantiate(_entryDisplayerPrefab, _entriesLayoutGroup.transform);
             newDisplayer.SetInternalHeaderEntry(entry);
             newDisplayer.SetWidth(entry.Width);
+            UpdateEntryDisplayer(newDisplayer);
             _entriesDisplayers.Add(newDisplayer);
 
             _consoleVisuals.AddScalableRect(newDisplayer.RectTransform, ConsoleVisuals.ScaleType.FontSize);
