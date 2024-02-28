@@ -33,12 +33,15 @@ namespace BlueConsole
         private void Update()
         {
             foreach (HeaderEntryDisplayer entryDisplayer in _entriesDisplayers)
-            {
-                HeaderEntry internalEntry = entryDisplayer.InternalHeaderEntry;
+                UpdateEntryDisplayer(entryDisplayer);
+        }
 
-                entryDisplayer.SetTMPText(internalEntry.LabelFunc());
-                entryDisplayer.SetTMPColor(internalEntry.ColorFunc());
-            }
+        private void UpdateEntryDisplayer(HeaderEntryDisplayer entryDisplayer)
+        {
+            HeaderEntry internalEntry = entryDisplayer.InternalHeaderEntry;
+
+            entryDisplayer.SetTMPText(internalEntry.LabelFunc());
+            entryDisplayer.SetTMPColor(internalEntry.ColorFunc());
         }
 
         private void OnConsoleToggled(bool toggled)
