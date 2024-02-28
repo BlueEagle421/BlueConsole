@@ -29,4 +29,12 @@ public class HeaderEntryDisplayer : MonoBehaviour
 
         _rectTransform.sizeDelta = new(width, _rectTransform.sizeDelta.y);
     }
+
+    public void SetHeight(int height)
+    {
+        if (height == 0)
+            return;
+
+        _rectTransform.sizeDelta = new(_rectTransform.sizeDelta.x, height);
+    }
 }
