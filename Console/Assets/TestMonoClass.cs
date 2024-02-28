@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using BlueConsole;
 public class TestMonoClass : MonoBehaviour
 {
     [Command("test", "tests the console", InstanceTargetType.All)]
