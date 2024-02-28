@@ -4,7 +4,7 @@ using UnityEngine;
 public class HeaderEntryDisplayer : MonoBehaviour
 {
     [SerializeField] private TMP_Text _entryTMP;
-    [SerializeField] private RectTransform _rectTransform;
+    [field: SerializeField] public RectTransform RectTransform { get; private set; }
     public HeaderEntry InternalHeaderEntry { get; private set; }
 
     public void SetInternalHeaderEntry(HeaderEntry entry)
@@ -27,7 +27,7 @@ public class HeaderEntryDisplayer : MonoBehaviour
         if (width == 0)
             return;
 
-        _rectTransform.sizeDelta = new(width, _rectTransform.sizeDelta.y);
+        RectTransform.sizeDelta = new(width, RectTransform.sizeDelta.y);
     }
 
     public void SetHeight(int height)
@@ -35,6 +35,6 @@ public class HeaderEntryDisplayer : MonoBehaviour
         if (height == 0)
             return;
 
-        _rectTransform.sizeDelta = new(_rectTransform.sizeDelta.x, height);
+        RectTransform.sizeDelta = new(RectTransform.sizeDelta.x, height);
     }
 }

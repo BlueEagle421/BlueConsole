@@ -402,6 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffe062b1bd3cb7e4bb897b26922e6fde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _consoleVisuals: {fileID: 6946176888372141058}
   _entryDisplayerPrefab: {fileID: 2296367949861748388, guid: 27d1b5774e7ae594eaa08bbb80e4cda4, type: 3}
   _consoleHeaderTextRect: {fileID: 4757656443741871070}
   _entriesLayoutGroup: {fileID: 350710060419300743}

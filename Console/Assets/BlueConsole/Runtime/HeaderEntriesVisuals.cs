@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class HeaderEntriesVisuals : MonoBehaviour
 {
+    [SerializeField] private ConsoleVisuals _consoleVisuals;
     [SerializeField] private HeaderEntryDisplayer _entryDisplayerPrefab;
     [SerializeField] private RectTransform _consoleHeaderTextRect;
     [SerializeField] private HorizontalLayoutGroup _entriesLayoutGroup;
@@ -63,6 +64,7 @@ public class HeaderEntriesVisuals : MonoBehaviour
         newDisplayer.SetWidth(entry.Width);
         _entriesDisplayers.Add(newDisplayer);
 
+        _consoleVisuals.AddScalableRect(newDisplayer.RectTransform, ConsoleVisuals.ScaleType.FontSize);
         UpdateConsoleHeaderText();
     }
 
@@ -76,6 +78,7 @@ public class HeaderEntriesVisuals : MonoBehaviour
         Destroy(toRemove.gameObject);
         _entriesDisplayers.Remove(toRemove);
 
+        _consoleVisuals.RemoveScalableRect(toRemove.GetComponent<RectTransform>());
         UpdateConsoleHeaderText();
     }
 

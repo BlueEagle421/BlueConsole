@@ -38,7 +38,7 @@ public class ConsoleVisuals : MonoBehaviour
     {
         CloneHintField();
         SetGUIHeight(_height);
-        SetGUIScale(_scale);
+        SetAllGUIScale(_scale);
     }
 
     private void CheckEventSystem()
@@ -112,44 +112,63 @@ public class ConsoleVisuals : MonoBehaviour
         _GUIParent.sizeDelta = new Vector2(_GUIParent.sizeDelta.x, height);
     }
 
-    private void SetGUIScale(float scale)
+    private void SetAllGUIScale(float scale)
     {
         for (int i = 0; i < _reckTransformsToScale.Count; i++)
+            SetGUIScale(_reckTransformsToScale[i], scale);
+    }
+
+    private void SetGUIScale(ScalableRect scalableRect, float scale)
+    {
+        RectTransform rectToScale = scalableRect.RectTransform;
+
+        if (!rectToScale)
         {
-            ScalableRect scalableRect = _reckTransformsToScale[i];
-            RectTransform rectToScale = scalableRect.RectTransform;
-
-            if (!rectToScale)
-            {
-                Debug.LogWarning(_reckTransformsToScale[i].DisplayName + " is null in " + nameof(ConsoleVisuals));
-                continue;
-            }
-
-            switch (scalableRect.ScaleType)
-            {
-                case ScaleType.Height:
-                    {
-                        rectToScale.sizeDelta = new(rectToScale.sizeDelta.x, rectToScale.sizeDelta.y * scale);
-                        break;
-                    }
-                case ScaleType.Width:
-                    {
-                        rectToScale.sizeDelta = new(rectToScale.sizeDelta.x * scale, rectToScale.sizeDelta.y);
-                        break;
-                    }
-                case ScaleType.Both:
-                    {
-                        rectToScale.sizeDelta *= scale;
-                        break;
-                    }
-                case ScaleType.FontSize:
-                    {
-                        TMP_Text componentTMP = rectToScale.GetComponent<TMP_Text>();
-                        componentTMP.fontSize *= scale;
-                        break;
-                    }
-            }
+            Debug.LogWarning(scalableRect.DisplayName + " is null in " + nameof(ConsoleVisuals));
+            return;
         }
+
+        switch (scalableRect.ScaleType)
+        {
+            case ScaleType.Height:
+                {
+                    rectToScale.sizeDelta = new(rectToScale.sizeDelta.x, rectToScale.sizeDelta.y * scale);
+                    break;
+                }
+            case ScaleType.Width:
+                {
+                    rectToScale.sizeDelta = new(rectToScale.sizeDelta.x * scale, rectToScale.sizeDelta.y);
+                    break;
+                }
+            case ScaleType.Both:
+                {
+                    rectToScale.sizeDelta *= scale;
+                    break;
+                }
+            case ScaleType.FontSize:
+                {
+                    TMP_Text componentTMP = rectToScale.GetComponent<TMP_Text>();
+                    componentTMP.fontSize *= scale;
+                    break;
+                }
+        }
+    }
+
+    public void AddScalableRect(RectTransform rectTransform, ScaleType scaleType)
+    {
+        ScalableRect scalableRect = new(rectTransform, scaleType);
+        _reckTransformsToScale.Add(scalableRect);
+        SetGUIScale(scalableRect, _scale);
+    }
+
+    public void RemoveScalableRect(RectTransform rectTransform)
+    {
+        ScalableRect scalableRect = _reckTransformsToScale.Find(x => x.RectTransform == rectTransform);
+
+        if (scalableRect == null)
+            return;
+
+        _reckTransformsToScale.Remove(scalableRect);
     }
 
     private void ResizeContentRect()
@@ -176,7 +195,7 @@ public class ConsoleVisuals : MonoBehaviour
     }
 
     [Serializable]
-    private class ScalableRect
+    public class ScalableRect
     {
         public string DisplayName;
         [SerializeField] private RectTransform rectTransform;
@@ -192,13 +211,13 @@ public class ConsoleVisuals : MonoBehaviour
         public ScaleType ScaleType { get { return scaleType; } }
     }
 
-    private enum InputType
+    public enum InputType
     {
         InputManager,
         InputSystem
     }
 
-    private enum ScaleType
+    public enum ScaleType
     {
         Height,
         Width,
