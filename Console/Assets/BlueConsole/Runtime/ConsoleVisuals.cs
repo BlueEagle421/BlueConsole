@@ -29,7 +29,18 @@ namespace BlueConsole
         [Tooltip("The list containing all rect transform meant to be scaled with the console")]
         [SerializeField] private List<ScalableRect> _reckTransformsToScale;
 
-        public float Scale { get { return _scale; } set { _scale = Mathf.Max(0, value); } }
+        public float Scale
+        {
+            get
+            {
+                return _scale;
+            }
+            set
+            {
+                _scale = Mathf.Max(0, value);
+                SetAllGUIScale(_scale);
+            }
+        }
 
 
         private void Awake()
