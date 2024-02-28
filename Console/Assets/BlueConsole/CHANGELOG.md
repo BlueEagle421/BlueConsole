@@ -4,6 +4,8 @@
  - Renamed time command to date command
  - Added proper time command
  - Added timescale command
+ - Added BlueConsole namespace
+ - Added header entries
  - Separated Extras to StaticCommands and FPSCommand classes
  - Fixed a bug that was crashing application builds
  - Fixed fps text disappearing on console toggle off
