@@ -45,7 +45,7 @@ public class HeaderEntriesVisuals : MonoBehaviour
 
     private void SetConsoleHeaderTextRect()
     {
-        _consoleHeaderTextRect.gameObject.SetActive(!DisplayConsoleHeaderText());
+        _consoleHeaderTextRect.gameObject.SetActive(DisplayConsoleHeaderText());
     }
 
     private bool DisplayConsoleHeaderText()
