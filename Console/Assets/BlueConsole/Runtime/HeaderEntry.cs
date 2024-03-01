@@ -46,16 +46,25 @@ namespace BlueConsole
             Width = width;
         }
 
+        /// <summary>
+        /// Adds the entry to current console header
+        /// </summary>
         public void AddToHeader()
         {
             HeaderEntriesVisuals.Current.AddEntry(this);
         }
 
+        /// <summary>
+        /// Removes the entry to current console header
+        /// </summary>
         public void RemoveFromHeader()
         {
             HeaderEntriesVisuals.Current.RemoveEntry(this);
         }
 
+        /// <summary>
+        /// Adds or removes the entry from current console header based on the "add" parameter
+        /// </summary>
         public void Manage(bool add)
         {
             if (add)
