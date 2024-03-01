@@ -95,7 +95,8 @@ namespace BlueConsole
         [Command("time-header", "logs engine time on the header")]
         public static void TimeHeader(bool on)
         {
-            HeaderEntriesVisuals.Current.ManageEntry(_timeHeaderEntry, on);
+            _timeHeaderEntry.Manage(on);
+            //HeaderEntriesVisuals.Current.ManageEntry(_timeHeaderEntry, on);
         }
     }
 }
