@@ -51,7 +51,8 @@ namespace BlueConsole
         public void FPS(bool on)
         {
             IsFPSToggled = on;
-            HeaderEntriesVisuals.Current.ManageEntry(_fpsHeaderEntry, on);
+            _fpsHeaderEntry.Manage(on);
+            //HeaderEntriesVisuals.Current.ManageEntry(_fpsHeaderEntry, on);
         }
     }
 }

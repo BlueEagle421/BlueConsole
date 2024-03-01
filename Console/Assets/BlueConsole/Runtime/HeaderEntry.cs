@@ -45,5 +45,23 @@ namespace BlueConsole
             Priority = priority;
             Width = width;
         }
+
+        public void AddToHeader()
+        {
+            HeaderEntriesVisuals.Current.AddEntry(this);
+        }
+
+        public void RemoveFromHeader()
+        {
+            HeaderEntriesVisuals.Current.RemoveEntry(this);
+        }
+
+        public void Manage(bool add)
+        {
+            if (add)
+                HeaderEntriesVisuals.Current.AddEntry(this);
+            else
+                HeaderEntriesVisuals.Current.RemoveEntry(this);
+        }
     }
 }
