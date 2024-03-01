@@ -12,7 +12,7 @@ namespace BlueConsole
 
         private void Awake()
         {
-            _fpsHeaderEntry = new(() => CurrentFPSFormatted(), () => _fpsTextColor, 1);
+            _fpsHeaderEntry = new(() => CurrentFPSFormatted(), () => _fpsTextColor, 10, 50);
         }
 
         private void Start()
