@@ -12,8 +12,7 @@ namespace BlueConsole
         [SerializeField] private TMP_Text _entryDisplayerPrefab;
         [SerializeField] private RectTransform _consoleHeaderTextRect;
         [SerializeField] private HorizontalLayoutGroup _entriesLayoutGroup;
-        private List<HeaderEntryHandler> _entryDisplayers = new();
-
+        private List<HeaderEntryHandler> _entryHandlers = new();
         public static HeaderEntriesVisuals Current;
 
         private void Awake()
@@ -33,7 +32,7 @@ namespace BlueConsole
 
         private void Update()
         {
-            foreach (HeaderEntryHandler entryDisplayer in _entryDisplayers)
+            foreach (HeaderEntryHandler entryDisplayer in _entryHandlers)
                 entryDisplayer.UpdateEntry();
         }
 
@@ -49,26 +48,26 @@ namespace BlueConsole
 
         private bool DisplayConsoleHeaderText()
         {
-            return _entryDisplayers.Count == 0;
+            return _entryHandlers.Count == 0;
         }
 
         private void SortEntryDisplayers()
         {
-            _entryDisplayers = _entryDisplayers.OrderByDescending(x => x.InternalHeaderEntry.Priority).ToList();
-            for (int i = 0; i < _entryDisplayers.Count; i++)
-                _entryDisplayers[i].RectTransform.SetSiblingIndex(i);
+            _entryHandlers = _entryHandlers.OrderByDescending(x => x.InternalHeaderEntry.Priority).ToList();
+            for (int i = 0; i < _entryHandlers.Count; i++)
+                _entryHandlers[i].RectTransform.SetSiblingIndex(i);
         }
 
         public void AddEntry(HeaderEntry entry)
         {
-            if (_entryDisplayers.Any(x => x.InternalHeaderEntry == entry))
+            if (_entryHandlers.Any(x => x.InternalHeaderEntry == entry))
                 return;
 
 
             TMP_Text newTMP = Instantiate(_entryDisplayerPrefab, _entriesLayoutGroup.transform);
             HeaderEntryHandler newDisplayer = new(newTMP, newTMP.rectTransform, entry);
             newDisplayer.SetWidth(entry.Width * _consoleVisuals.Scale);
-            _entryDisplayers.Add(newDisplayer);
+            _entryHandlers.Add(newDisplayer);
 
             SortEntryDisplayers();
 
@@ -78,13 +77,13 @@ namespace BlueConsole
 
         public void RemoveEntry(HeaderEntry entry)
         {
-            HeaderEntryHandler toRemove = _entryDisplayers.Find(x => x.InternalHeaderEntry == entry);
+            HeaderEntryHandler toRemove = _entryHandlers.Find(x => x.InternalHeaderEntry == entry);
 
             if (toRemove == null)
                 return;
 
             Destroy(toRemove.RectTransform.gameObject);
-            _entryDisplayers.Remove(toRemove);
+            _entryHandlers.Remove(toRemove);
 
             _consoleVisuals.RemoveScalableRect(toRemove.RectTransform);
             UpdateConsoleHeaderText();
