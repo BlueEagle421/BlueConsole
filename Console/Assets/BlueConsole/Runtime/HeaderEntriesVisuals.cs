@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +9,10 @@ namespace BlueConsole
     public class HeaderEntriesVisuals : MonoBehaviour
     {
         [SerializeField] private ConsoleVisuals _consoleVisuals;
-        [SerializeField] private HeaderEntryDisplayer _entryDisplayerPrefab;
+        [SerializeField] private TMP_Text _entryDisplayerPrefab;
         [SerializeField] private RectTransform _consoleHeaderTextRect;
         [SerializeField] private HorizontalLayoutGroup _entriesLayoutGroup;
-        private List<HeaderEntryDisplayer> _entryDisplayers = new();
+        private List<HeaderEntryHandler> _entryDisplayers = new();
 
         public static HeaderEntriesVisuals Current;
 
@@ -32,16 +33,8 @@ namespace BlueConsole
 
         private void Update()
         {
-            foreach (HeaderEntryDisplayer entryDisplayer in _entryDisplayers)
-                UpdateEntryDisplayer(entryDisplayer);
-        }
-
-        private void UpdateEntryDisplayer(HeaderEntryDisplayer entryDisplayer)
-        {
-            HeaderEntry internalEntry = entryDisplayer.InternalHeaderEntry;
-
-            entryDisplayer.SetTMPText(internalEntry.LabelFunc());
-            entryDisplayer.SetTMPColor(internalEntry.ColorFunc());
+            foreach (HeaderEntryHandler entryDisplayer in _entryDisplayers)
+                entryDisplayer.UpdateEntry();
         }
 
         private void OnConsoleToggled(bool toggled)
@@ -63,7 +56,7 @@ namespace BlueConsole
         {
             _entryDisplayers = _entryDisplayers.OrderByDescending(x => x.InternalHeaderEntry.Priority).ToList();
             for (int i = 0; i < _entryDisplayers.Count; i++)
-                _entryDisplayers[i].transform.SetSiblingIndex(i);
+                _entryDisplayers[i].RectTransform.SetSiblingIndex(i);
         }
 
         public void AddEntry(HeaderEntry entry)
@@ -71,10 +64,10 @@ namespace BlueConsole
             if (_entryDisplayers.Any(x => x.InternalHeaderEntry == entry))
                 return;
 
-            HeaderEntryDisplayer newDisplayer = Instantiate(_entryDisplayerPrefab, _entriesLayoutGroup.transform);
-            newDisplayer.SetInternalHeaderEntry(entry);
+
+            TMP_Text newTMP = Instantiate(_entryDisplayerPrefab, _entriesLayoutGroup.transform);
+            HeaderEntryHandler newDisplayer = new(newTMP, newTMP.rectTransform, entry);
             newDisplayer.SetWidth(entry.Width * _consoleVisuals.Scale);
-            UpdateEntryDisplayer(newDisplayer);
             _entryDisplayers.Add(newDisplayer);
 
             SortEntryDisplayers();
@@ -85,15 +78,15 @@ namespace BlueConsole
 
         public void RemoveEntry(HeaderEntry entry)
         {
-            HeaderEntryDisplayer toRemove = _entryDisplayers.Find(x => x.InternalHeaderEntry == entry);
+            HeaderEntryHandler toRemove = _entryDisplayers.Find(x => x.InternalHeaderEntry == entry);
 
-            if (!toRemove)
+            if (toRemove == null)
                 return;
 
-            Destroy(toRemove.gameObject);
+            Destroy(toRemove.RectTransform.gameObject);
             _entryDisplayers.Remove(toRemove);
 
-            _consoleVisuals.RemoveScalableRect(toRemove.GetComponent<RectTransform>());
+            _consoleVisuals.RemoveScalableRect(toRemove.RectTransform);
             UpdateConsoleHeaderText();
         }
 
@@ -103,6 +96,46 @@ namespace BlueConsole
                 AddEntry(entry);
             else
                 RemoveEntry(entry);
+        }
+
+        private class HeaderEntryHandler
+        {
+            [SerializeField] private TMP_Text _entryTMP;
+            [field: SerializeField] public RectTransform RectTransform { get; private set; }
+            public HeaderEntry InternalHeaderEntry { get; private set; }
+
+            public HeaderEntryHandler(TMP_Text entryTMP, RectTransform rectTransform, HeaderEntry internalEntry)
+            {
+                _entryTMP = entryTMP;
+                RectTransform = rectTransform;
+                InternalHeaderEntry = internalEntry;
+
+                UpdateEntry();
+            }
+
+            public void SetTMPText(string text)
+            {
+                _entryTMP.text = text;
+            }
+
+            public void SetTMPColor(Color color)
+            {
+                _entryTMP.color = color;
+            }
+
+            public void UpdateEntry()
+            {
+                SetTMPText(InternalHeaderEntry.LabelFunc());
+                SetTMPColor(InternalHeaderEntry.ColorFunc());
+            }
+
+            public void SetWidth(float width)
+            {
+                if (width == 0)
+                    return;
+
+                RectTransform.sizeDelta = new(width, RectTransform.sizeDelta.y);
+            }
         }
     }
 }
