@@ -103,5 +103,17 @@ namespace BlueConsole
 
             return result;
         }
+
+        [TypeParameter(@"\([-+]?([0-9]*[.])?[0-9]+([eE][-+]?\d+)?, [-+]?([0-9]*[.])?[0-9]+([eE][-+]?\d+)?, [-+]?([0-9]*[.])?[0-9]+([eE][-+]?\d+)?, [-+]?([0-9]*[.])?[0-9]+([eE][-+]?\d+)?\)", true)]
+        public static UnityEngine.Vector4 Vector4Parameter(string inputParam)
+        {
+            string[] inputSplit = inputParam.Replace(")", string.Empty).Replace("(", string.Empty).Split(", ");
+            UnityEngine.Vector4 result = new();
+
+            for (int i = 0; i < 4; i++)
+                result[i] = FloatParameter(inputSplit[i]);
+
+            return result;
+        }
     }
 }
