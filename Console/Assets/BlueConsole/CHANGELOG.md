@@ -4,8 +4,10 @@
  - Renamed time command to date command
  - Added proper time command
  - Added timescale command
+ - Added params command
  - Added BlueConsole namespace
  - Added header entries
+ - Added Vector2, Vector3, Vector4 and Quaternion parameter types
  - Separated Extras to StaticCommands and FPSCommand classes
  - Fixed a bug that was crashing application builds
  - Fixed fps text disappearing on console toggle off
