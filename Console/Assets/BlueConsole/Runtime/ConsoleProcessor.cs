@@ -533,7 +533,7 @@ namespace BlueConsole
             Debug.Log(string.Format("Found {0} parameter types:", TypeRegexKeysDictionary.Count.ToString()));
 
             for (int i = 0; i < TypeRegexKeysDictionary.Count; i++)
-                Debug.Log(TypeRegexKeysDictionary.Keys.ElementAt(i) + " - " + TypeRegexKeysDictionary.Values.ElementAt(i));
+                Debug.Log(TypeRegexKeysDictionary.Keys.ElementAt(i).Name);
         }
 
         [Command("history", "logs input history")]
