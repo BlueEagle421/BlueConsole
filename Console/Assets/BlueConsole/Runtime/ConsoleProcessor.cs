@@ -527,6 +527,15 @@ namespace BlueConsole
                 Debug.Log(Commands[i].Format + (string.IsNullOrEmpty(Commands[i].Description) ? string.Empty : " - " + Commands[i].Description));
         }
 
+        [Command("params", "displays all parameter types")]
+        public void DisplayParameters()
+        {
+            Debug.Log(string.Format("Found {0} parameter types:", TypeRegexKeysDictionary.Count.ToString()));
+
+            for (int i = 0; i < TypeRegexKeysDictionary.Count; i++)
+                Debug.Log(TypeRegexKeysDictionary.Keys.ElementAt(i) + " - " + TypeRegexKeysDictionary.Values.ElementAt(i));
+        }
+
         [Command("history", "logs input history")]
         public void DisplayHistory()
         {
