@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Numerics;
 
 namespace BlueConsole
 {
@@ -112,6 +113,18 @@ namespace BlueConsole
 
             for (int i = 0; i < 4; i++)
                 result[i] = FloatParameter(inputSplit[i]);
+
+            return result;
+        }
+
+        [TypeParameter(@"\([-+]?([0-9]*[.])?[0-9]+([eE][-+]?\d+)?, [-+]?([0-9]*[.])?[0-9]+([eE][-+]?\d+)?, [-+]?([0-9]*[.])?[0-9]+([eE][-+]?\d+)?, [-+]?([0-9]*[.])?[0-9]+([eE][-+]?\d+)?\)", true)]
+        public static UnityEngine.Quaternion QuaternionParameter(string inputParam)
+        {
+            UnityEngine.Vector4 vector4 = Vector4Parameter(inputParam);
+            UnityEngine.Quaternion result = new();
+
+            for (int i = 0; i < 4; i++)
+                result[i] = vector4[i];
 
             return result;
         }
