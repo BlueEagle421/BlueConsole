@@ -79,5 +79,15 @@ namespace BlueConsole
         {
             return inputParam.Replace("'", string.Empty).ToCharArray()[0];
         }
+
+        [TypeParameter(@"\([-+]?([0-9]*[.])?[0-9]+([eE][-+]?\d+)?, [-+]?([0-9]*[.])?[0-9]+([eE][-+]?\d+)?\)", true)]
+        public static UnityEngine.Vector2 Vector2Parameter(string inputParam)
+        {
+            string[] inputSplit = inputParam.Replace(")", string.Empty).Replace("(", string.Empty).Split(", ");
+            float x = FloatParameter(inputSplit[0]);
+            float y = FloatParameter(inputSplit[1]);
+
+            return new(x, y);
+        }
     }
 }
