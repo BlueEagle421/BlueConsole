@@ -84,10 +84,24 @@ namespace BlueConsole
         public static UnityEngine.Vector2 Vector2Parameter(string inputParam)
         {
             string[] inputSplit = inputParam.Replace(")", string.Empty).Replace("(", string.Empty).Split(", ");
-            float x = FloatParameter(inputSplit[0]);
-            float y = FloatParameter(inputSplit[1]);
+            UnityEngine.Vector2 result = new();
 
-            return new(x, y);
+            for (int i = 0; i < 2; i++)
+                result[i] = FloatParameter(inputSplit[i]);
+
+            return result;
+        }
+
+        [TypeParameter(@"\([-+]?([0-9]*[.])?[0-9]+([eE][-+]?\d+)?, [-+]?([0-9]*[.])?[0-9]+([eE][-+]?\d+)?, [-+]?([0-9]*[.])?[0-9]+([eE][-+]?\d+)?\)", true)]
+        public static UnityEngine.Vector3 Vector3Parameter(string inputParam)
+        {
+            string[] inputSplit = inputParam.Replace(")", string.Empty).Replace("(", string.Empty).Split(", ");
+            UnityEngine.Vector3 result = new();
+
+            for (int i = 0; i < 3; i++)
+                result[i] = FloatParameter(inputSplit[i]);
+
+            return result;
         }
     }
 }
