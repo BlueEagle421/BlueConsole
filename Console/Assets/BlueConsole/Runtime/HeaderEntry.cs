@@ -51,7 +51,7 @@ namespace BlueConsole
         /// </summary>
         public void AddToHeader()
         {
-            HeaderEntriesVisuals.Current.AddEntry(this);
+            ConsoleHeader.Current.AddEntry(this);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace BlueConsole
         /// </summary>
         public void RemoveFromHeader()
         {
-            HeaderEntriesVisuals.Current.RemoveEntry(this);
+            ConsoleHeader.Current.RemoveEntry(this);
         }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace BlueConsole
         public void Manage(bool add)
         {
             if (add)
-                HeaderEntriesVisuals.Current.AddEntry(this);
+                ConsoleHeader.Current.AddEntry(this);
             else
-                HeaderEntriesVisuals.Current.RemoveEntry(this);
+                ConsoleHeader.Current.RemoveEntry(this);
         }
     }
 }

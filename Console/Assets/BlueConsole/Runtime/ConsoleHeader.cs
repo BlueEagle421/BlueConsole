@@ -6,14 +6,14 @@ using UnityEngine.UI;
 
 namespace BlueConsole
 {
-    public class HeaderEntriesVisuals : MonoBehaviour
+    public class ConsoleHeader : MonoBehaviour
     {
         [SerializeField] private ConsoleVisuals _consoleVisuals;
         [SerializeField] private TMP_Text _entryDisplayerPrefab;
         [SerializeField] private RectTransform _consoleHeaderTextRect;
         [SerializeField] private HorizontalLayoutGroup _entriesLayoutGroup;
         private List<HeaderEntryHandler> _entryHandlers = new();
-        public static HeaderEntriesVisuals Current;
+        public static ConsoleHeader Current;
 
         private void Awake()
         {
