@@ -29,6 +29,8 @@ namespace BlueConsole
         [Tooltip("The list containing all rect transform meant to be scaled with the console")]
         [SerializeField] private List<ScalableRect> _reckTransformsToScale;
 
+        public Action<bool> OnVisualsToggled;
+
         public float Scale
         {
             get
@@ -97,6 +99,8 @@ namespace BlueConsole
                 ResizeContentRect();
                 ScrollDown();
             }
+
+            OnVisualsToggled?.Invoke(toggled);
         }
 
         private void OnConsoleContentChanged()

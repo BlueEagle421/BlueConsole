@@ -338,6 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cff85adcc1ca684b961a95c69c6b64f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _consoleVisuals: {fileID: 6946176888372141058}
   _consoleInputField: {fileID: 5213112243803470482}
 --- !u!114 &6946176888372141058
 MonoBehaviour:

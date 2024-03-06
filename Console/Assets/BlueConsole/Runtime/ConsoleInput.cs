@@ -8,6 +8,7 @@ namespace BlueConsole
 {
     public class ConsoleInput : MonoBehaviour
     {
+        [SerializeField] private ConsoleVisuals _consoleVisuals;
         [SerializeField] private TMP_InputField _consoleInputField;
 
         private void Awake()
@@ -24,7 +25,7 @@ namespace BlueConsole
         {
             if (subscribe)
                 _consoleInputField.onValueChanged.AddListener(ConsoleProcessor.Current.GenerateHints);
-            ConsoleProcessor.Current.OnConsoleToggled += OnConsoleToggled;
+            _consoleVisuals.OnVisualsToggled += OnConsoleToggled;
             ConsoleProcessor.Current.OnHistoryRecall += OnHistoryRecall;
             ConsoleProcessor.Current.OnHintAccept += OnHintAccept;
         }
