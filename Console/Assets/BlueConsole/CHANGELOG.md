@@ -12,6 +12,7 @@
  - Fixed a bug that was crashing application builds
  - Fixed fps text disappearing on console toggle off
  - Fixed log-error and log-warning commands IDs
+ - Fixed console input field not being activated in builds
 
 ## [1.3.1] - 22.12.2023
  - Renamed Console to ConsoleProcessor
