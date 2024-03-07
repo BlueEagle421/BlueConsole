@@ -34,10 +34,13 @@ namespace BlueConsole
             set
             {
                 //the priority determines entry's position in the header
+                //higher priority means it's more to the left
                 _priority = value;
             }
         }
 
+        //example constructor
+        //HeaderEntry exampleEntry = new HeaderEntry(() => "An example header text", () => Color.white, 0, 100)
         public HeaderEntry(Func<string> labelFunc, Func<Color> colorFunc, [Optional] int priority, [Optional] int width)
         {
             LabelFunc = labelFunc;
@@ -49,15 +52,15 @@ namespace BlueConsole
         /// <summary>
         /// Adds the entry to current console header
         /// </summary>
-        public void AddToHeader()
+        public virtual void AddToHeader()
         {
             ConsoleHeader.Current.AddEntry(this);
         }
 
         /// <summary>
-        /// Removes the entry to current console header
+        /// Removes the entry from current console header
         /// </summary>
-        public void RemoveFromHeader()
+        public virtual void RemoveFromHeader()
         {
             ConsoleHeader.Current.RemoveEntry(this);
         }
@@ -65,7 +68,7 @@ namespace BlueConsole
         /// <summary>
         /// Adds or removes the entry from current console header based on the "add" parameter
         /// </summary>
-        public void Manage(bool add)
+        public virtual void Manage(bool add)
         {
             if (add)
                 ConsoleHeader.Current.AddEntry(this);
