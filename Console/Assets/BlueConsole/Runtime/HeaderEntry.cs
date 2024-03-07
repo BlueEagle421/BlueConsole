@@ -71,9 +71,9 @@ namespace BlueConsole
         public virtual void Manage(bool add)
         {
             if (add)
-                ConsoleHeader.Current.AddEntry(this);
+                AddToHeader();
             else
-                ConsoleHeader.Current.RemoveEntry(this);
+                RemoveFromHeader();
         }
     }
 }
