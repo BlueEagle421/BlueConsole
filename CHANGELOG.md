@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.4.0] - 25.02.2023
+## [1.4.0] - 09.03.2023
  - Renamed time command to date command
  - Added proper time command
  - Added timescale command
