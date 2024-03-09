@@ -14,6 +14,7 @@
  <p align="center">
   <a href="#about">About</a> •
   <a href="#installation">Installation</a> •
+  <a href="#how-to-use">How-To-Use</a> •
   <a href="#features">Features</a> •
   <a href="#feedback">Feedback</a> •
   <a href="#resources">Resources</a> •
@@ -38,7 +39,17 @@ https://github.com/BlueEagle421/BlueConsole.git
  <img src="https://i.imgur.com/uf6pXfu.png">
 </p>
 
-You can also download it directly from [Releases](https://github.com/BlueEagle421/BlueConsole/releases)
+You can also download it directly from [Releases](https://github.com/BlueEagle421/BlueConsole/releases).
+
+## How-To-Use
+
+After installing the package you can just simply drag the "Console" prefab into your scene. And that's it! You now have a working BlueConsole.
+The main prefab can be found in BlueConsole/Prefabs folder.
+
+- Use <kbd>~</kbd> to toggle the console on and off
+- Use <kbd>enter</kbd> to execute text content from the input
+- Use <kbd>↑</kbd> and <kbd>↓</kbd> to scroll through history
+- Use <kbd>tab</kbd> to accept maching hint
 
 ## Features
 
@@ -55,8 +66,6 @@ public static void Quit()
 }
 ```
 
-
-
 ### Commands use custom parameter types.
 Every type is parsed and checked differently. BlueConsole, by default, supports almost every C# type and a bunch of Unity types. If you want, you can easily allow your own types to be parsed in arguments – it could be a struct, scriptable object, or anything you prefer!
 
@@ -67,8 +76,6 @@ public static string StringParameter(string inputParam)
     return inputParam.Replace("\"", string.Empty);    
 }
 ```
-
-
 
 ### Regex-based hint system.
 The console tells you the closest command to what you are typing in the input field using a simple regex matching function. This feature makes it intuitive to find what you want and ensures that you didn't misspell anything.
@@ -83,7 +90,7 @@ By default BlueConsole subscribes to all Unity logs and shows them in-game. This
 
 Please let me know what you think about the console and its presentation. I hope that my explanations are somewhat C# newcomer-friendly. It's my first game tool, and every piece of feedback is valuable to me.
 Every issue with the package can be reported here:
-[Issues](https://github.com/BlueEagle421/BlueConsole/issues)
+[Issues](https://github.com/BlueEagle421/BlueConsole/issues).
 
 ## Resources
 Here are some sites I used for learning during the development of BlueConsole. If your interested in these topics I highly recommend them!
