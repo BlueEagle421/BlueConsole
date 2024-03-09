@@ -81,7 +81,7 @@ By default BlueConsole subscribes to all Unity logs and shows them in-game. This
 
 ## Feedback
 
-Please let me know what you think about the console and its presentation. I hope that my explanations are somewhat C# newcomer-friendly. It's my first game tool, and every piece of feedback is valuable to me. Thanks!
+Please let me know what you think about the console and its presentation. I hope that my explanations are somewhat C# newcomer-friendly. It's my first game tool, and every piece of feedback is valuable to me.
 Every issue with the package can be reported here:
 [Issues](https://github.com/BlueEagle421/BlueConsole/issues)
 
