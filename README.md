@@ -48,8 +48,8 @@ Main features of the console:
 Every command is essentially a method with a custom "ConsoleCommandAttribute." Adding your own commands is a straightforward process – just add the attribute, customize the command's ID and description, and write the code for your function. The console reads all methods from specified assemblies and adds them as executables.
 
 ```c#
-[ConsoleCommand("quit", "closes the application")]
-public void Quit()
+[Command("quit", "closes the application")]
+public static void Quit()
 {
     Application.Quit();
 }
@@ -62,7 +62,7 @@ Every type is parsed and checked differently. BlueConsole, by default, supports 
 
 ```c#
 [TypeParameter("\".*?\"", true)]     
-public string StringParameter(string inputParam)     
+public static string StringParameter(string inputParam)     
 {         
     return inputParam.Replace("\"", string.Empty);    
 }
