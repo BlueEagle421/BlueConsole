@@ -46,6 +46,8 @@ You can also download it directly from [Releases](https://github.com/BlueEagle42
 After installing the package you can just simply drag the "Console" prefab into your scene. And that's it! You now have a working BlueConsole.
 The main prefab can be found in BlueConsole/Prefabs folder.
 
+Key bindings:
+
 - Use <kbd>~</kbd> to toggle the console on and off
 - Use <kbd>enter</kbd> to execute text content from the input
 - Use <kbd>↑</kbd> and <kbd>↓</kbd> to scroll through history
@@ -89,8 +91,7 @@ By default BlueConsole subscribes to all Unity logs and shows them in-game. This
 ## Feedback
 
 Please let me know what you think about the console and its presentation. I hope that my explanations are somewhat C# newcomer-friendly. It's my first game tool, and every piece of feedback is valuable to me.
-Every issue with the package can be reported here:
-[Issues](https://github.com/BlueEagle421/BlueConsole/issues).
+Every issue with the package can be reported in [Issues](https://github.com/BlueEagle421/BlueConsole/issues).
 
 ## Resources
 Here are some sites I used for learning during the development of BlueConsole. If your interested in these topics I highly recommend them!
