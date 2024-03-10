@@ -53,6 +53,10 @@ Key bindings:
 - Use <kbd>↑</kbd> and <kbd>↓</kbd> to scroll through history
 - Use <kbd>tab</kbd> to accept maching hint
 
+If you downloaded the package with git URL I recommend to create a local copy of the console prefab, because otherwise you won't be able to make changes to it.
+
+Note that you need to have an EventSystem in you scene for the input working properly.
+
 ## Features
 
 Main features of the console:
