@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.4.1] - working in progress
+## [1.4.1] - work in progress
 
 ## [1.4.0] - 09.03.2023
  - Renamed time command to date command
